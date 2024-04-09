@@ -1,4 +1,4 @@
-package app.sigipe.entity;
+package app.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +16,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Curso {
+public class Instituicao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idCurso;
-	@NotBlank(message = "Campo nome do Curso não pode ser nulo!")
 	
-	private String nome;	
+	private long idInstituicao;
+	@NotBlank(message = "Campo nome da Instituição não pode ser Nulo!")
+	private String nome;
+	private String cidade;
+	private String cep;
+	private String razaoSocial;
+	
+	
+	
 	
 
 }

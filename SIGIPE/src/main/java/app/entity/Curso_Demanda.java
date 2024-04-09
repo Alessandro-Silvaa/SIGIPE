@@ -1,4 +1,4 @@
-	package app.sigipe.entity;
+	package app.entity;
 
 public class Curso_Demanda {
 
