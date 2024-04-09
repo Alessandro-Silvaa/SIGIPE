@@ -24,8 +24,11 @@ public class Instituicao {
 	private long idInstituicao;
 	@NotBlank(message = "Campo nome da Instituição não pode ser Nulo!")
 	private String nome;
+	@NotBlank(message = "Campo cidade  não pode ser nulo!")
 	private String cidade;
+	@NotBlank(message = "Campo cep não pode ser nulo!")
 	private String cep;
+	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;
 	
 	

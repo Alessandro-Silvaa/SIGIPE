@@ -20,10 +20,12 @@ public class Demandante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private long id_demandante;
+	private long idDemandante;
 	@NotBlank(message = "Campo nome demandante não pode ser nulo!")
 	private String nome;
+	@NotBlank(message = "Campo nome e-mail não pode ser nulo!")
 	private String email;
+	@NotBlank(message = "Campo nome telefone não pode ser nulo!")
 	private String telefone;
 	
 

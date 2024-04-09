@@ -26,5 +26,5 @@ public class Funcao {
 	@NotBlank(message = "Campo Nome não pode ser nulo!")
 	private String nome;
 	
-
+	
 }
