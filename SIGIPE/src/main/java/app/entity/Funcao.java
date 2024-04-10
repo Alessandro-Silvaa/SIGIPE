@@ -22,6 +22,7 @@ public class Funcao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
 	@NotBlank(message = "Campo Nome não pode ser nulo!")
 	private String nome;

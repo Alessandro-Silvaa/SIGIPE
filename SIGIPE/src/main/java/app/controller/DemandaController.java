@@ -27,7 +27,7 @@ public class DemandaController {
 	public ResponseEntity<List<Demanda>> findAll() {
 		try {
 			List<Demanda> lista = this.demandaService.findAll();
-			if (lista.size() <= 0)
+			if (lista == null)
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 			return ResponseEntity.ok().body(lista);
 		} catch (Exception e) {
