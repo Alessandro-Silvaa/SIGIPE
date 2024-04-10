@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,13 +27,9 @@ public class Instituicao {
 	private String nome;
 	@NotBlank(message = "Campo cidade  não pode ser nulo!")
 	private String cidade;
-	@NotBlank(message = "Campo cep não pode ser nulo!")
+	@Pattern(regexp = "^\\d{5}-\\d{3}$")
 	private String cep;
 	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;
 	
-	
-	
-	
-
 }
