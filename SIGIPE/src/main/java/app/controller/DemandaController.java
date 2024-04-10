@@ -27,14 +27,14 @@ public class DemandaController {
 	public ResponseEntity<List<Demanda>> findAll() {
 		try {
 			List<Demanda> lista = this.demandaService.findAll();
-			if(lista.size()<=0)
+			if (lista.size() <= 0)
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 			return ResponseEntity.ok().body(lista);
 		} catch (Exception e) {
 			// Log a exceção para fins de depuração
-	        e.printStackTrace();
-	        // Retornar uma resposta com status 500 (Internal Server Error)
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			e.printStackTrace();
+			// Retornar uma resposta com status 500 (Internal Server Error)
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
 
@@ -42,24 +42,25 @@ public class DemandaController {
 	public ResponseEntity<Demanda> findById(@PathVariable long id) {
 		try {
 			Demanda demanda = this.demandaService.findById(id);
-			if(id<=0)
+			if (id <= 0)
 				return ResponseEntity.badRequest().body(null);
-			else if(demanda==null)
+			else if (demanda == null)
 				return ResponseEntity.notFound().build();
 			return ResponseEntity.ok().body(demanda);
 		} catch (Exception e) {
 			// Log a exceção para fins de depuração
-	        e.printStackTrace();
-	        // Retornar uma resposta com status 500 (Internal Server Error)
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);		}
+			e.printStackTrace();
+			// Retornar uma resposta com status 500 (Internal Server Error)
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
 	}
 
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable long id) {
 		try {
-
+			return null;
 		} catch (Exception e) {
-			// TODO: handle exception
+			return null;
 		}
 
 	}
@@ -67,9 +68,9 @@ public class DemandaController {
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Demanda demanda) {
 		try {
-
+			return null;
 		} catch (Exception e) {
-			// TODO: handle exception
+			return null;
 		}
 
 	}
@@ -77,9 +78,9 @@ public class DemandaController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updade(@PathVariable long id, @RequestBody Demanda demanda) {
 		try {
-
+			return null;
 		} catch (Exception e) {
-			// TODO: handle exception
+			return null;
 		}
 
 	}
