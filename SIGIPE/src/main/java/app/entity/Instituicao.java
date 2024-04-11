@@ -21,13 +21,13 @@ public class Instituicao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long idInstituicao;
 	@NotBlank(message = "Campo nome da Instituição não pode ser Nulo!")
 	private String nome;
 	@NotBlank(message = "Campo cidade  não pode ser nulo!")
 	private String cidade;
 	@Pattern(regexp = "^\\d{5}-\\d{3}$")
+	@NotBlank(message = "Campo ce não pode ficar em branco")
 	private String cep;
 	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;
