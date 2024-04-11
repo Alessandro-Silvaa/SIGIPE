@@ -46,7 +46,7 @@ public class DemandaController {
 				return ResponseEntity.badRequest().body(null);
 			if (demanda != null)
 				return ResponseEntity.ok().body(demanda);
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		} catch (Exception e) {
 			// Log a exceção para fins de depuração
 			e.printStackTrace();
@@ -58,9 +58,16 @@ public class DemandaController {
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable long id) {
 		try {
-			return null;
+			if (id <= 0)
+				return ResponseEntity.badRequest().body(id + " é um id inválido.");
+			if (this.demandaService.deleteById(id))
+				return ResponseEntity.ok().body("Demanda excluída com sucesso");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Demanda não encontrada");
 		} catch (Exception e) {
-			return null;
+			// Log a exceção para fins de depuração
+			e.printStackTrace();
+			// Retornar uma resposta com status 500 (Internal Server Error)
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 
 	}

@@ -1,6 +1,7 @@
 package app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class DemandaControllerTest {
 		when(this.demandaRepository.findById((long) 1)).thenReturn(Optional.of(new Demanda()));
 		when(this.demandaRepository.findById((long) 0)).thenReturn(Optional.of(new Demanda()));
 		when(this.demandaRepository.findById((long) 2)).thenReturn(null);
+		
+		doNothing().when(this.demandaRepository).deleteById((long) 1);
 	}
 	
 	@Test
@@ -58,6 +61,27 @@ public class DemandaControllerTest {
 	@Test
 	void findById404() {
 		ResponseEntity<Demanda> response = this.demandaController.findById(2);
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(404, httpStatus);
+	}
+	
+	@Test
+	void deleteById200() {
+		ResponseEntity<String> response = this.demandaController.deleteById(1);
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(200, httpStatus);
+	}
+	
+	@Test
+	void deleteById400() {
+		ResponseEntity<String> response = this.demandaController.deleteById(0);
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(400, httpStatus);
+	}
+	
+	@Test
+	void deleteById2404() {
+		ResponseEntity<String> response = this.demandaController.deleteById(2);
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(404, httpStatus);
 	}

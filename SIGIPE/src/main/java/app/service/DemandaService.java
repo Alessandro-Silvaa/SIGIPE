@@ -24,4 +24,11 @@ public class DemandaService {
 			return null;
 		return optionalDemanda.get();
 	}
+
+	public boolean deleteById(long id) {
+		if(findById(id)==null)
+			return false;
+		this.demandaRepository.deleteById(id);
+		return true;
+	}
 }
