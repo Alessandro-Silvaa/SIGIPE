@@ -1,6 +1,7 @@
 package app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ public class DemandaService {
 	DemandaRepository demandaRepository;
 
 	public List<Demanda> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.demandaRepository.findAll();
 	}
 
 	public Demanda findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Demanda> optionalDemanda = this.demandaRepository.findById(id);
+		if(optionalDemanda==null)
+			return null;
+		return optionalDemanda.get();
 	}
 }

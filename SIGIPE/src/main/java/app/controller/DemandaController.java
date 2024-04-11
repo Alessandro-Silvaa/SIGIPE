@@ -44,9 +44,9 @@ public class DemandaController {
 			Demanda demanda = this.demandaService.findById(id);
 			if (id <= 0)
 				return ResponseEntity.badRequest().body(null);
-			else if (demanda == null)
-				return ResponseEntity.notFound().build();
-			return ResponseEntity.ok().body(demanda);
+			if (demanda != null)
+				return ResponseEntity.ok().body(demanda);
+			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			// Log a exceção para fins de depuração
 			e.printStackTrace();

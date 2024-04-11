@@ -28,12 +28,36 @@ public class DemandaControllerTest {
 	@BeforeEach
 	void setup() {
 		when(this.demandaRepository.findAll()).thenReturn(new ArrayList<Demanda>());
+		
 		when(this.demandaRepository.findById((long) 1)).thenReturn(Optional.of(new Demanda()));
+		when(this.demandaRepository.findById((long) 0)).thenReturn(Optional.of(new Demanda()));
+		when(this.demandaRepository.findById((long) 2)).thenReturn(null);
 	}
 	
 	@Test
-	void findAll1() {
+	void findAll200() {
 		ResponseEntity<List<Demanda>> response = this.demandaController.findAll();
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(200, httpStatus);
+	}
+	
+	@Test
+	void findById200() {
+		ResponseEntity<Demanda> response = this.demandaController.findById(1);
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(200, httpStatus);
+	}
+	
+	@Test
+	void findById400() {
+		ResponseEntity<Demanda> response = this.demandaController.findById(0);
+		int httpStatus = response.getStatusCode().value();
+		assertEquals(400, httpStatus);
+	}
+	
+	@Test
+	void findById404() {
+		ResponseEntity<Demanda> response = this.demandaController.findById(2);
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(404, httpStatus);
 	}
