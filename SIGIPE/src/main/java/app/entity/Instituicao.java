@@ -27,7 +27,7 @@ public class Instituicao {
 	@NotBlank(message = "Campo cidade  não pode ser nulo!")
 	private String cidade;
 	@Pattern(regexp = "^\\d{5}-\\d{3}$")
-	@NotBlank(message = "Campo ce não pode ficar em branco")
+	@NotBlank(message = "Campo cep não pode ficar em branco")
 	private String cep;
 	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;

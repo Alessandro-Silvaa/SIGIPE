@@ -69,7 +69,7 @@ public class InstituicaoController {
        try {
 
            List<Instituicao> lista = this.instituicaoService.listAll();
-           return new ResponseEntity<>(lista, HttpStatus.BAD_REQUEST);
+           return new ResponseEntity<>(lista, HttpStatus.OK);
 
        } catch (Exception e) {
 

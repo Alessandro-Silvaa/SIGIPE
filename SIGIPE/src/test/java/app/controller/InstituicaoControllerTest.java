@@ -60,7 +60,7 @@ public class InstituicaoControllerTest {
 
        assertEquals(HttpStatus.CREATED,response.getStatusCode());
 
-       System.out.println("Instituição Salva " + instituicao.getNome());
+       System.out.println("Instituição Salva: " + instituicao.getNome());
     }
 
     @Test
