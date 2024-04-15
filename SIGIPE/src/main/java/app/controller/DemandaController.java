@@ -69,13 +69,12 @@ public class DemandaController {
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Demanda demanda) {
 		try {
-			if(demanda == null)
-				return ResponseEntity.badRequest().body("Chamada inválida");
 			this.demandaService.save(demanda);
 			return ResponseEntity.ok().body("Demanda salva com sucesso");
 		}  catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Ocorreu a excessão: " + e.getMessage());
+			if(e.getMessage().equals("Chamada inválida"))
+				return ResponseEntity.badRequest().body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
 
 	}

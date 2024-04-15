@@ -36,6 +36,8 @@ public class DemandaService {
 	}
 
 	public void save(Demanda demanda) {
+		if(demanda == null)
+			throw new RuntimeException("Chamada inválida");
 		this.demandaRepository.save(demanda);
 	}
 }
