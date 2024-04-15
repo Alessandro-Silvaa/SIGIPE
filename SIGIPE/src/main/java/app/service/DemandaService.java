@@ -15,20 +15,27 @@ public class DemandaService {
 	DemandaRepository demandaRepository;
 
 	public List<Demanda> findAll() {
-		return this.demandaRepository.findAll();
+		List<Demanda> lista = this.demandaRepository.findAll();
+		if(lista==null)
+			throw new RuntimeException("Não há demandas cadastradas");
+		return lista;
 	}
 
 	public Demanda findById(long id) {
 		Optional<Demanda> optionalDemanda = this.demandaRepository.findById(id);
+		if (id <= 0)
+			throw new RuntimeException("Id inválido");
 		if(optionalDemanda==null)
-			return null;
+			throw new RuntimeException("Demanda não encontrada");
 		return optionalDemanda.get();
 	}
 
-	public boolean deleteById(long id) {
-		if(findById(id)==null)
-			return false;
-		this.demandaRepository.deleteById(id);
-		return true;
+	public void deleteById(long id) {
+		if(findById(id)!=null)
+			this.demandaRepository.deleteById(id);
+	}
+
+	public void save(Demanda demanda) {
+		this.demandaRepository.save(demanda);
 	}
 }
