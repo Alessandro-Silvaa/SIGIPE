@@ -82,9 +82,14 @@ public class DemandaController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updade(@Valid @PathVariable long id, @RequestBody Demanda demanda) {
 		try {
-			return null;
+			this.demandaService.update(id, demanda);
+			return ResponseEntity.ok().body("Demanda "+demanda.getIdDemanda()+" atualizada com sucesso");
 		} catch (Exception e) {
-			return null;
+			if(e.getMessage().equals("Id inválido") || e.getMessage().equals("Chamada inválida"))
+				return ResponseEntity.badRequest().body(e.getMessage());
+			if(e.getMessage().equals("Demanda não encontrada"))
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
 
 	}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import app.entity.Demanda;
 import app.repository.DemandaRepository;
+import jakarta.validation.Valid;
 
 @Service
 public class DemandaService {
@@ -39,5 +40,15 @@ public class DemandaService {
 		if(demanda == null)
 			throw new RuntimeException("Chamada inválida");
 		this.demandaRepository.save(demanda);
+	}
+
+	public void update(@Valid long id, Demanda demanda) {
+		if(demanda == null)
+			throw new RuntimeException("Chamada inválida");
+		if(findById(id)!=null) {
+			demanda.setIdDemanda(id);
+			this.demandaRepository.save(demanda);
+		}
+		
 	}
 }

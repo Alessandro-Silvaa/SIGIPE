@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Demanda;
@@ -34,8 +35,8 @@ public class DemandaControllerTest {
 		
 		doNothing().when(this.demandaRepository).deleteById((long) 1);//ok
 
-		//doNothing().when(this.demandaRepository).save(new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa"));//ok
-		
+		when(this.demandaRepository.save(new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa"))).thenReturn(new Demanda());
+		when(this.demandaRepository.save(null)).thenReturn(null);
 	}
 	
 	@Test
@@ -94,7 +95,7 @@ public class DemandaControllerTest {
 		ResponseEntity<String> response = this.demandaController.deleteById(2);
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(404, httpStatus);
-	}/*
+	}
 	
 	@Test
 	void save200() {
@@ -104,9 +105,33 @@ public class DemandaControllerTest {
 	}
 	
 	@Test
-	void save404() {
-		ResponseEntity<String> response = this.demandaController.save(new Demanda(1, 1, null, null, null, null));
+	void save400() {
+		ResponseEntity<String> response = this.demandaController.save(null);
 		int httpStatus = response.getStatusCode().value();
-		assertEquals(404, httpStatus);
-	}*/
+		assertEquals(400, httpStatus);
+	}
+	
+	@Test
+	void update200() {
+		ResponseEntity<String> response = this.demandaController.updade(1, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa"));
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	void update400() {
+		ResponseEntity<String> response = this.demandaController.updade(0, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa"));
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	void update404_1() {
+		ResponseEntity<String> response = this.demandaController.updade(2, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa"));
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
+	
+	@Test
+	void update404_2() {
+		ResponseEntity<String> response = this.demandaController.updade(1, null);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
 }
