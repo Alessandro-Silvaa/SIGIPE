@@ -1,9 +1,19 @@
 package app.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +42,29 @@ public class Demanda {
 	@NotBlank(message = "Campo Prazo não pode ser nulo!")
 	private String prazo;
 	
+	@OneToMany(mappedBy = "demanda")
+	@JsonIgnoreProperties("demanda")
+	private List<Grupo> grupos;
 	
-
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("demandas")
+	private Instituicao insituicao;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("demandas")
+	private Demandante demandante;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("demandas")
+	private Status status;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("demandas")
+	@JoinTable
+	(
+		name="Curso_Demanda",
+		joinColumns = @JoinColumn(name = "idDemanda"),
+		inverseJoinColumns = @JoinColumn(name = "idCurso")
+	)
+	private List<Curso> cursos;
 }
