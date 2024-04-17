@@ -39,6 +39,8 @@ public class DemandaService {
 	public void save(Demanda demanda) {
 		if (demanda == null)
 			throw new RuntimeException("Chamada inválida");
+		if(!verificaquantidadeGrupo(demanda))
+			throw new RuntimeException("Quantidade de grupos inválida");
 		this.demandaRepository.save(demanda);
 	}
 
@@ -49,5 +51,11 @@ public class DemandaService {
 			demanda.setIdDemanda(id);
 			this.demandaRepository.save(demanda);
 		}
+	}
+	
+	public boolean verificaquantidadeGrupo(Demanda demanda) {
+		if(demanda.getQuantidadeGrupo()<=0)
+			return false;
+		return true;
 	}
 }

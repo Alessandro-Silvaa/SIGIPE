@@ -72,7 +72,7 @@ public class DemandaController {
 			this.demandaService.save(demanda);
 			return ResponseEntity.ok().body("Demanda salva com sucesso");
 		}  catch (Exception e) {
-			if(e.getMessage().equals("Chamada inválida"))
+			if(e.getMessage().equals("Chamada inválida") || e.getMessage().equals("Quantidade de grupos inválida"))
 				return ResponseEntity.badRequest().body(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
