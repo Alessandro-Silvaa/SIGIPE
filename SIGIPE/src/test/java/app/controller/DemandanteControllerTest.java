@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import app.entity.Demanda;
 import app.entity.Demandante;
+import app.entity.Instituicao;
 import app.repository.DemandanteRepository;
 
 @SpringBootTest
@@ -28,7 +31,7 @@ public class DemandanteControllerTest{
 	void setup(){
 		when(this.demandanteRepository.findById((long) 1)).thenReturn(Optional.of(new Demandante()));
 		when(this.demandanteRepository.findById((long) 0)).thenReturn(Optional.of(new Demandante()));
-		when(this.demandanteRepository.save(new Demandante(1,"Cesar","cesar@gmail.com","45999999999"))).thenReturn(new Demandante());
+		when(this.demandanteRepository.save(new Demandante(1,"Cesar","cesar@gmail.com","45999999999", new Instituicao(), new ArrayList<Demanda>()))).thenReturn(new Demandante());
 		when(this.demandanteRepository.save(null)).thenReturn(null);
 		doNothing().when(this.demandanteRepository).deleteById((long) 1);
 	}
@@ -64,7 +67,7 @@ public class DemandanteControllerTest{
 	
 	@Test
 	void saveOk() {
-		ResponseEntity<String> response = this.demandanteController.save(new Demandante(1,"Abc","abc@gasm.com","435345345"));
+		ResponseEntity<String> response = this.demandanteController.save(new Demandante(1,"Abc","abc@gasm.com","435345345", new Instituicao(), new ArrayList<Demanda>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(201,httpStatus);
 	}
@@ -78,7 +81,7 @@ public class DemandanteControllerTest{
 	
 	@Test
 	void updateOk() {
-		ResponseEntity<String> response = this.demandanteController.update(1,new Demandante(1,"Dcz","asdasd@asdasdasd.com","3333333333333"));
+		ResponseEntity<String> response = this.demandanteController.update(1,new Demandante(1,"Dcz","asdasd@asdasdasd.com","3333333333333", new Instituicao(), new ArrayList<Demanda>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200,httpStatus);
 	}

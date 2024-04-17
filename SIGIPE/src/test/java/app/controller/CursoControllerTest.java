@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Curso;
+import app.entity.Demanda;
 import app.repository.CursoRepository;
 
 @SpringBootTest
@@ -35,7 +36,7 @@ public class CursoControllerTest {
 		
 		doNothing().when(this.cursoRepository).deleteById((long) 1);//ok
 
-		when(this.cursoRepository.save(new Curso(1, "aaa"))).thenReturn(new Curso());
+		when(this.cursoRepository.save(new Curso(1, "aaa", new ArrayList<Demanda>()))).thenReturn(new Curso());
 		when(this.cursoRepository.save(null)).thenReturn(null);
 	}
 	
@@ -99,7 +100,7 @@ public class CursoControllerTest {
 	
 	@Test
 	void save200() {
-		ResponseEntity<String> response = this.cursoController.save(new Curso(1, "aaa"));
+		ResponseEntity<String> response = this.cursoController.save(new Curso(1, "aaa", new ArrayList<Demanda>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -113,19 +114,19 @@ public class CursoControllerTest {
 	
 	@Test
 	void update200() {
-		ResponseEntity<String> response = this.cursoController.updade(1, new Curso(1, "aaa"));
+		ResponseEntity<String> response = this.cursoController.updade(1, new Curso(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	@Test
 	void update400() {
-		ResponseEntity<String> response = this.cursoController.updade(0, new Curso(1, "aaa"));
+		ResponseEntity<String> response = this.cursoController.updade(0, new Curso(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
 	@Test
 	void update404_1() {
-		ResponseEntity<String> response = this.cursoController.updade(2, new Curso(1, "aaa"));
+		ResponseEntity<String> response = this.cursoController.updade(2, new Curso(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	

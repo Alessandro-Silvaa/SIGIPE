@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import app.entity.Demanda;
 import app.entity.Status;
 import app.repository.StatusRepository;
 
@@ -35,7 +36,7 @@ public class StatusControllerTest {
 		
 		doNothing().when(this.statusRepository).deleteById((long) 1);//ok
 
-		when(this.statusRepository.save(new Status(1, "aaa"))).thenReturn(new Status());
+		when(this.statusRepository.save(new Status(1, "aaa", new ArrayList<Demanda>()))).thenReturn(new Status());
 		when(this.statusRepository.save(null)).thenReturn(null);
 	}
 	
@@ -99,7 +100,7 @@ public class StatusControllerTest {
 	
 	@Test
 	void save200() {
-		ResponseEntity<String> response = this.statusController.save(new Status(1, "aaa"));
+		ResponseEntity<String> response = this.statusController.save(new Status(1, "aaa", new ArrayList<Demanda>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -113,19 +114,19 @@ public class StatusControllerTest {
 	
 	@Test
 	void update200() {
-		ResponseEntity<String> response = this.statusController.updade(1, new Status(1, "aaa"));
+		ResponseEntity<String> response = this.statusController.updade(1, new Status(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	@Test
 	void update400() {
-		ResponseEntity<String> response = this.statusController.updade(0, new Status(1, "aaa"));
+		ResponseEntity<String> response = this.statusController.updade(0, new Status(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
 	@Test
 	void update404_1() {
-		ResponseEntity<String> response = this.statusController.updade(2, new Status(1, "aaa"));
+		ResponseEntity<String> response = this.statusController.updade(2, new Status(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	

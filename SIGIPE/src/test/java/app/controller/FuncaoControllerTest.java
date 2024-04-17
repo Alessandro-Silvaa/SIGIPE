@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Funcao;
+import app.entity.Pessoa;
 import app.repository.FuncaoRepository;
 
 @SpringBootTest
@@ -35,7 +36,7 @@ public class FuncaoControllerTest {
 		
 		doNothing().when(this.funcaoRepository).deleteById((long) 1);//ok
 
-		when(this.funcaoRepository.save(new Funcao(1, "aaa"))).thenReturn(new Funcao());
+		when(this.funcaoRepository.save(new Funcao(1, "aaa", new ArrayList<Pessoa>()))).thenReturn(new Funcao());
 		when(this.funcaoRepository.save(null)).thenReturn(null);
 	}
 	
@@ -99,7 +100,7 @@ public class FuncaoControllerTest {
 	
 	@Test
 	void save200() {
-		ResponseEntity<String> response = this.funcaoController.save(new Funcao(1, "aaa"));
+		ResponseEntity<String> response = this.funcaoController.save(new Funcao(1, "aaa", new ArrayList<Pessoa>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -113,19 +114,19 @@ public class FuncaoControllerTest {
 	
 	@Test
 	void update200() {
-		ResponseEntity<String> response = this.funcaoController.updade(1, new Funcao(1, "aaa"));
+		ResponseEntity<String> response = this.funcaoController.updade(1, new Funcao(1, "aaa", new ArrayList<Pessoa>()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	@Test
 	void update400() {
-		ResponseEntity<String> response = this.funcaoController.updade(0, new Funcao(1, "aaa"));
+		ResponseEntity<String> response = this.funcaoController.updade(0, new Funcao(1, "aaa", new ArrayList<Pessoa>()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
 	@Test
 	void update404_1() {
-		ResponseEntity<String> response = this.funcaoController.updade(2, new Funcao(1, "aaa"));
+		ResponseEntity<String> response = this.funcaoController.updade(2, new Funcao(1, "aaa", new ArrayList<Pessoa>()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	
