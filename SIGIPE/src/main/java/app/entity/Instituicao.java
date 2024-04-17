@@ -1,9 +1,16 @@
 package app.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +38,15 @@ public class Instituicao {
 	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;
 	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("instituicoes")
+	private Tipo_Instituicao tipoInstituicao;
 	
-	
-	
+	@OneToMany(mappedBy = "instituicao")
+	@JsonIgnoreProperties("instituicao")
+	private List<Demandante> demandantes;
 
+	@OneToMany(mappedBy = "insituicao")
+	@JsonIgnoreProperties("insituicao")
+	private List<Demanda> demandas;
 }
