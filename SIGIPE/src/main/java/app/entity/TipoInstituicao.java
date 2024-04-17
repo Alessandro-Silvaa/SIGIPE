@@ -36,6 +36,12 @@ public class TipoInstituicao {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public TipoInstituicao(long idTipoInstituicao,
+			@NotBlank(message = "Campo tipo de instituição não pode ser nulo!") String nome) {
+		super();
+		this.idTipoInstituicao = idTipoInstituicao;
+		this.nome = nome;
+	}
 	
 	
 

@@ -32,7 +32,7 @@ public class DemandaControllerTest {
 	}
 	
 	@Test
-	void findAll1() {
+	void findAll() {
 		ResponseEntity<List<Demanda>> response = this.demandaController.findAll();
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(404, httpStatus);

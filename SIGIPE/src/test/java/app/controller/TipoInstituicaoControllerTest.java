@@ -1,6 +1,6 @@
 package app.controller;
 
-import static org.mockito.Mockito.doNothing;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,59 +9,130 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.TipoInstituicao;
 import app.repository.TipoInstituicaoRepository;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class TipoInstituicaoControllerTest {
 
 	@Autowired
-	TipoInstituicaoController tipoInstituicaoController;
+	TipoInstituicaoController tipoinstituicaoController;
 	
 	@MockBean
-	TipoInstituicaoRepository tipoInstituicaoRepository;
+	TipoInstituicaoRepository tipoinstituicaoRepository;
 	
 	@BeforeEach
 	void setup() {
-		
-		List<TipoInstituicao> lista = new ArrayList<>();
-		
-		TipoInstituicao tipoinstituicao = new TipoInstituicao();
-		
-		tipoinstituicao.setIdTipoInstituicao(1);
-		tipoinstituicao.setNome("Uniamérica");
-		
-		TipoInstituicao tipoinstituicao2 = new TipoInstituicao();
-		tipoinstituicao2.setIdTipoInstituicao(2);
-		tipoinstituicao2.setNome("Cezufoz");
-		
-		lista.add(tipoinstituicao2);
-		
-		when(this.tipoInstituicaoRepository.findAll()).thenReturn(lista);
-		//when(this.tipoInstituicaoRepository.save(new)).thenReturn(new TipoInstituicao());
-	    when(this.tipoInstituicaoRepository.findById(1L)).thenReturn(Optional.of(new TipoInstituicao()));
-	    doNothing().when(this.tipoInstituicaoRepository).deleteById(1L);
+		when(this.tipoinstituicaoRepository.findAll()).thenReturn(new ArrayList<TipoInstituicao>());
+		when(this.tipoinstituicaoRepository.findById((long) 1)).thenReturn(Optional.of(new TipoInstituicao(5,"asoas")));
 	}
 	
-
 	@Test
-    void Cenario01(){
+	void findAllOK() {
+		ResponseEntity<List<TipoInstituicao>> response = this.tipoinstituicaoController.listAll();
+		HttpStatusCode httpStatus = response.getStatusCode();
+		assertEquals(HttpStatus.OK, httpStatus);
+	}
+	
+	@Test
+    void UpdateOK(){
 
-        ResponseEntity<List<TipoInstituicao>> response = this.tipoInstituicaoController.listAll();
+       TipoInstituicao tipoinstituicao = new TipoInstituicao(2,"service");
 
-       assertEquals(2,response.getBody().size());
+       ResponseEntity<String> response = this.tipoinstituicaoController.update(tipoinstituicao.getIdTipoInstituicao(),tipoinstituicao);
+
+       assertEquals(HttpStatus.OK,response.getStatusCode());
+
+       System.out.println("Instituição alterada com sucesso: " + tipoinstituicao.getNome());
     }
 	
+	@Test
+	void UpdateException() {
+		
+		TipoInstituicao tipoinstituicao = new TipoInstituicao(3,"Zé");
+		
+		ResponseEntity<String> response = this.tipoinstituicaoController.update(tipoinstituicao.getIdTipoInstituicao(),null);
+		
+	    assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+	    
+	    System.out.println("Não foi encontrado");
+	}
+
 	
 	
+	@Test
+    void SaveOK(){
+
+       TipoInstituicao tipoinstituicao = new TipoInstituicao(6,"John");
+
+       ResponseEntity<String> response = this.tipoinstituicaoController.save(tipoinstituicao);
+
+       assertEquals(HttpStatus.CREATED,response.getStatusCode());
+
+       System.out.println("Instituição Salva: " + tipoinstituicao.getNome());
+    }
 	
+	@Test
+	void SaveException(){
+
+        ResponseEntity<String> response = this.tipoinstituicaoController.save(null);
+
+        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+
+
+        System.out.println("Erro ao salvar");
+    }
+	
+	@Test
+    void FindByIdOK(){
+
+        ResponseEntity<TipoInstituicao> response = this.tipoinstituicaoController.findById(1L);
+
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+
+        System.out.println("Instituição encontrada");
+    }
+
+	@Test
+    void FindByIdException(){
+
+        ResponseEntity<TipoInstituicao> response = this.tipoinstituicaoController.findById(-1L);
+
+        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+
+        System.out.println("Instituição não encontrada com o Id pesquisado");
+    }
+	
+	@Test
+    void DeleteByIdOK(){
+
+         TipoInstituicao tipoinstituicao = new TipoInstituicao(8,"José Almeida");
+
+         long id = tipoinstituicao.getIdTipoInstituicao();
+
+         ResponseEntity<String> response = this.tipoinstituicaoController.delete(id);
+
+         assertEquals(HttpStatus.OK,response.getStatusCode());
+
+         System.out.println("Id: " + tipoinstituicao.getIdTipoInstituicao() + " -> Instituição excluida: " + tipoinstituicao.getNome());
+    }
+
+    @Test
+    void DeleteByIdException(){
+
+        ResponseEntity<String> response = this.tipoinstituicaoController.delete(-1L);
+
+        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+
+        System.out.println("Id não encontrado para exclusão");
+    }
+
 	
 }
