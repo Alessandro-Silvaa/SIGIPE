@@ -22,7 +22,6 @@ public class Curso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCurso;
 	@NotBlank(message = "Campo nome do Curso não pode ser nulo!")
-	
 	private String nome;	
 	
 
