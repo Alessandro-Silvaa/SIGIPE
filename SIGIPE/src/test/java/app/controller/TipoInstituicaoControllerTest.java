@@ -1,6 +1,7 @@
 package app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,8 +32,14 @@ public class TipoInstituicaoControllerTest {
 	
 	@BeforeEach
 	void setup() {
+		
 		when(this.tipoinstituicaoRepository.findAll()).thenReturn(new ArrayList<TipoInstituicao>());
 		when(this.tipoinstituicaoRepository.findById((long) 1)).thenReturn(Optional.of(new TipoInstituicao(5,"asoas")));
+        when(this.tipoinstituicaoRepository.save(Mockito.any())).thenReturn(new TipoInstituicao(4,"Bernardo Silva"));
+        when(this.tipoinstituicaoRepository.findById(1L)).thenReturn(Optional.of(new TipoInstituicao(5,"Casemiro")));
+        doNothing().when(this.tipoinstituicaoRepository).deleteById(1L);
+
+		
 	}
 	
 	@Test
