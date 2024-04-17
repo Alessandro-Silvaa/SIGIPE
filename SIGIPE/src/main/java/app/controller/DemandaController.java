@@ -39,7 +39,7 @@ public class DemandaController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable long id) {
+	public ResponseEntity<?> findById(@Valid @PathVariable long id) {
 		try {
 			Demanda demanda = this.demandaService.findById(id);
 			return ResponseEntity.ok().body(demanda);
@@ -53,7 +53,7 @@ public class DemandaController {
 	}
 
 	@DeleteMapping("/deleteById/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable long id) {
+	public ResponseEntity<String> deleteById(@Valid  @PathVariable long id) {
 		try {
 			this.demandaService.deleteById(id);
 			return ResponseEntity.ok().body("Demanda excluída com sucesso");

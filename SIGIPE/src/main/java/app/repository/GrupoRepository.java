@@ -1,5 +1,10 @@
 package app.repository;
 
-public class GrupoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import app.entity.Grupo;
+
+
+public interface GrupoRepository extends JpaRepository<Grupo, Long> {
 
 }

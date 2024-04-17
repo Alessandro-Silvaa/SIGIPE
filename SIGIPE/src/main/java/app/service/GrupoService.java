@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import app.entity.Grupo;
 import app.repository.GrupoRepository;
 
-
+@Service
 public class GrupoService {
 
 	@Autowired
