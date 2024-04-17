@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectRootManager">
 =======
+=======
+>>>>>>> CrudPessoa
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -12,7 +15,10 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK">
+<<<<<<< HEAD
 >>>>>>> CrudInstituicao
+=======
+>>>>>>> CrudPessoa
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
