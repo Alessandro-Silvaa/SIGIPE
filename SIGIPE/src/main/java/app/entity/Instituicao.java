@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,18 +23,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class Instituicao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long idInstituicao;
 	@NotBlank(message = "Campo nome da Instituição não pode ser Nulo!")
 	private String nome;
 	@NotBlank(message = "Campo cidade  não pode ser nulo!")
 	private String cidade;
-	@NotBlank(message = "Campo cep não pode ser nulo!")
+	@Pattern(regexp = "^\\d{5}-\\d{3}$")
+	@NotBlank(message = "Campo cep não pode ficar em branco")
 	private String cep;
 	@NotBlank(message = "Campo Razão Social  não pode ser nulo!")
 	private String razaoSocial;
