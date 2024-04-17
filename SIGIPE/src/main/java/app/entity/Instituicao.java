@@ -40,7 +40,7 @@ public class Instituicao {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("instituicoes")
-	private Tipo_Instituicao tipoInstituicao;
+	private TipoInstituicao tipoInstituicao;
 	
 	@OneToMany(mappedBy = "instituicao")
 	@JsonIgnoreProperties("instituicao")

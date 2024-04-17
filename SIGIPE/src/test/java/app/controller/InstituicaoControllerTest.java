@@ -21,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import app.entity.Demanda;
 import app.entity.Demandante;
 import app.entity.Instituicao;
-import app.entity.Tipo_Instituicao;
+import app.entity.TipoInstituicao;
 import app.repository.InstituicaoRepository;
 
 @SpringBootTest
@@ -38,12 +38,12 @@ public class InstituicaoControllerTest {
     void setup(){
 
         List<Instituicao> lista = new ArrayList<>();
-        lista.add(new Instituicao(1,"João Henrique","Joinville","89788-888","Limitada LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
-        lista.add(new Instituicao(2,"Marcia","Fortaleza","89777-887","Crazy LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
-        lista.add(new Instituicao(3,"Juliana","Curitiba","88888-888","Tigrinho LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
+        lista.add(new Instituicao(1,"João Henrique","Joinville","89788-888","Limitada LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
+        lista.add(new Instituicao(2,"Marcia","Fortaleza","89777-887","Crazy LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
+        lista.add(new Instituicao(3,"Juliana","Curitiba","88888-888","Tigrinho LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
         when(this.instituicaoRepository.findAll()).thenReturn(lista);
-        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
-        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>())));
+        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>()));
+        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>())));
         doNothing().when(this.instituicaoRepository).deleteById(1L);
     }
 
@@ -58,7 +58,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSave(){
 
-       Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-000","Onze Ltda", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
+       Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-000","Onze Ltda", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
 
        ResponseEntity<String> response = this.instituicaoController.save(instituicao);
 
@@ -80,7 +80,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdate(){
 
-       Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
+       Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
 
        ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),instituicao);
 
@@ -92,7 +92,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdateException(){
 
-        Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
+        Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
 
         ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),null);
 
@@ -124,7 +124,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoDeleteById(){
 
-         Instituicao instituicao = new Instituicao(8,"José Almeida","Palmeiras","98784-788","Acer LTDA", new Tipo_Instituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
+         Instituicao instituicao = new Instituicao(8,"José Almeida","Palmeiras","98784-788","Acer LTDA", new TipoInstituicao(), new ArrayList<Demandante>(), new ArrayList<Demanda>());
 
          long id = instituicao.getIdInstituicao();
 

@@ -20,8 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Tipo_Instituicao {
-	
+public class TipoInstituicao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idTipoInstituicao;
