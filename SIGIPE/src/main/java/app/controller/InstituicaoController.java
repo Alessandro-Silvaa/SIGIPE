@@ -2,14 +2,15 @@ package app.controller;
 
 import app.entity.Instituicao;
 import app.service.InstituicaoService;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
 @RequestMapping("/api/instituicao")
 public class InstituicaoController {
@@ -18,7 +19,7 @@ public class InstituicaoController {
     InstituicaoService instituicaoService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody Instituicao instituicao){
+    public ResponseEntity<String> save(@Valid @RequestBody Instituicao instituicao){
 
     try {
 
@@ -33,7 +34,7 @@ public class InstituicaoController {
 }
 
    @PutMapping("/update/{id}")
-   public ResponseEntity<String> update(@PathVariable long id, @RequestBody Instituicao instituicao){
+   public ResponseEntity<String> update(@Valid @PathVariable long id, @RequestBody Instituicao instituicao){
 
       try {
 
@@ -48,7 +49,7 @@ public class InstituicaoController {
     }
 
    @GetMapping("/findById/{id}")
-   public ResponseEntity<Instituicao> findById(@PathVariable long id){
+   public ResponseEntity<Instituicao> findById(@Valid @PathVariable long id){
 
      try {
 
@@ -79,7 +80,7 @@ public class InstituicaoController {
    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id){
+    public ResponseEntity<String> delete(@Valid @PathVariable long id){
         try {
             String deletar = this.instituicaoService.delete(id);
             return new ResponseEntity<>(deletar, HttpStatus.OK);

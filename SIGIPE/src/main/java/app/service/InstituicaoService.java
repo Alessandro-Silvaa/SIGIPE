@@ -15,6 +15,12 @@ public class InstituicaoService {
 
     public String save(Instituicao instituicao){
 
+        String cep = instituicao.getCep();
+
+        if(cep.length() < 9)
+
+            throw new RuntimeException();
+
        this.instituicaoRepository.save(instituicao);
 
        return  instituicao.getNome() + " Instituição salva com sucesso";
@@ -23,6 +29,7 @@ public class InstituicaoService {
     public String update(long id, Instituicao instituicao){
 
          instituicao.setIdInstituicao(id);
+
          this.instituicaoRepository.save(instituicao);
 
          return "Instituição alterada com sucesso";
@@ -50,4 +57,6 @@ public class InstituicaoService {
 
         return instituicao;
     }
+
+
 }

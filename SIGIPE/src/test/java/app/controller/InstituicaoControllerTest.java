@@ -17,27 +17,28 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest //Indica que essa classe será a de testes
+@AutoConfigureMockMvc //Instancia o mockmvc injeta as suas dependencias e simula as requisições Http
 public class InstituicaoControllerTest {
 
     @Autowired
     InstituicaoController instituicaoController;
 
-    @MockBean
+    @MockBean //Cria um mock da classe instituicaoRepository e simula os métodos existentes nela
     InstituicaoRepository instituicaoRepository;
 
-    @BeforeEach
+    @BeforeEach //Indica que o void setup irá configurar os mocks que devem ser executados antes dos testes
     void setup(){
 
         List<Instituicao> lista = new ArrayList<>();
-        lista.add(new Instituicao(1,"João Henrique","Joinville","89788-888","Limitada LTDA"));
-        lista.add(new Instituicao(2,"Marcia","Fortaleza","89777-887","Crazy LTDA"));
-        lista.add(new Instituicao(3,"Juliana","Curitiba","88888-888","Tigrinho LTDA"));
-        when(this.instituicaoRepository.findAll()).thenReturn(lista);
+        lista.add(new Instituicao(1,"Uniamerica","Joinville","89788-888","Limitada LTDA"));
+        lista.add(new Instituicao(2,"Fafig","Fortaleza","89777-887","Crazy LTDA"));
+        lista.add(new Instituicao(3,"Anhanguera","Curitiba","88888-888","Tigrinho LTDA"));
+        when(this.instituicaoRepository.findAll()).thenReturn(lista); //Simulando o comportamento do listAll e retornando uma lista com as instituições cadastradas
         when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA"));
         when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA")));
         doNothing().when(this.instituicaoRepository).deleteById(1L);
@@ -66,11 +67,15 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSaveException(){
 
-        ResponseEntity<String> response = this.instituicaoController.save(null);
+        Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-00","Onze Ltda");
 
-        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
 
-        System.out.println("Erro ao salvar");
+            this.instituicaoController.save(instituicao);
+
+        });
+
+        System.out.println(exception.getMessage());
     }
 
     @Test
@@ -88,7 +93,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdateException(){
 
-        Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA");
+        Instituicao instituicao = new Instituicao(7,"Acer","São Paulo","98788-889","Trix LTDA");
 
         ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),null);
 

@@ -1,14 +1,13 @@
 package app.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +22,5 @@ public abstract class Tipo_Instituicao {
 	private long idTipoInstituicao;
 	@NotBlank(message = "Campo tipo de instituição não pode ser nulo!")
 	private String nome;
-	
-	
 
 }
