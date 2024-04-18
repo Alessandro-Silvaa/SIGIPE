@@ -1,7 +1,11 @@
 package app.controller;
 
-import app.entity.Instituicao;
-import app.repository.InstituicaoRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,36 +15,30 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import app.entity.Instituicao;
+import app.repository.InstituicaoRepository;
 
-@SpringBootTest //Indica que essa classe será a de testes
-@AutoConfigureMockMvc //Instancia o mockmvc injeta as suas dependencias e simula as requisições Http
+@SpringBootTest
+@AutoConfigureMockMvc
 public class InstituicaoControllerTest {
 
     @Autowired
     InstituicaoController instituicaoController;
 
-    @MockBean //Cria um mock da classe instituicaoRepository e simula os métodos existentes nela
+    @MockBean
     InstituicaoRepository instituicaoRepository;
 
-    @BeforeEach //Indica que o void setup irá configurar os mocks que devem ser executados antes dos testes
+    @BeforeEach
     void setup(){
 
         List<Instituicao> lista = new ArrayList<>();
-        lista.add(new Instituicao(1,"Uniamerica","Joinville","89788-888","Limitada LTDA"));
-        lista.add(new Instituicao(2,"Fafig","Fortaleza","89777-887","Crazy LTDA"));
-        lista.add(new Instituicao(3,"Anhanguera","Curitiba","88888-888","Tigrinho LTDA"));
+        lista.add(new Instituicao(1,"Uniamerica","Joinville","89788-888","Limitada LTDA",null,null,null));
+        lista.add(new Instituicao(2,"Fafig","Fortaleza","89777-887","Crazy LTDA",null,null,null));
+        lista.add(new Instituicao(3,"Anhanguera","Curitiba","88888-888","Tigrinho LTDA",null,null,null));
         when(this.instituicaoRepository.findAll()).thenReturn(lista); //Simulando o comportamento do listAll e retornando uma lista com as instituições cadastradas
-        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA"));
-        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA")));
+        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA",null,null,null));
+        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA",null,null,null)));
         doNothing().when(this.instituicaoRepository).deleteById(1L);
     }
 
@@ -55,7 +53,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSave(){
 
-       Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-000","Onze Ltda");
+       Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-000","Onze Ltda",null,null,null);
 
        ResponseEntity<String> response = this.instituicaoController.save(instituicao);
 
@@ -67,7 +65,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSaveException(){
 
-        Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-00","Onze Ltda");
+        Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-00","Onze Ltda",null,null,null);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
 
@@ -81,7 +79,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdate(){
 
-       Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA");
+       Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA",null,null,null);
 
        ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),instituicao);
 
@@ -93,7 +91,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdateException(){
 
-        Instituicao instituicao = new Instituicao(7,"Acer","São Paulo","98788-889","Trix LTDA");
+       Instituicao instituicao = new Instituicao(7,"Acer","São Paulo","98788-889","Trix LTDA",null,null,null);
 
         ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),null);
 
@@ -125,7 +123,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoDeleteById(){
 
-         Instituicao instituicao = new Instituicao(8,"José Almeida","Palmeiras","98784-788","Acer LTDA");
+         Instituicao instituicao = new Instituicao(8,"José Almeida","Palmeiras","98784-788","Acer LTDA",null,null,null);
 
          long id = instituicao.getIdInstituicao();
 

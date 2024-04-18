@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <mapping directory="$PROJECT_DIR$/SIGIPE" vcs="Git" />
+=======
     <mapping directory="" vcs="Git" />
+>>>>>>> CrudInstituicao
+=======
+    <mapping directory="" vcs="Git" />
+>>>>>>> CrudPessoa
   </component>
 </project>

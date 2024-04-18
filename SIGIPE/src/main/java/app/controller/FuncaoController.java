@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Demanda;
-import app.service.DemandaService;
+import app.entity.Funcao;
+import app.service.FuncaoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/demanda")
+@RequestMapping("api/funcao")
 @Validated
-public class DemandaController {
+public class FuncaoController {
 	@Autowired
-	DemandaService demandaService;
+	FuncaoService funcaoService;
 
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
-			List<Demanda> lista = this.demandaService.findAll();
+			List<Funcao> lista = this.funcaoService.findAll();
 			return ResponseEntity.ok().body(lista);
 		} catch (Exception e) {
-			if(e.getMessage().equals("Não há demandas cadastradas"))
+			if(e.getMessage().equals("Não há funções cadastradas"))
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A lista está vazia");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
@@ -41,12 +41,12 @@ public class DemandaController {
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
 		try {
-			Demanda demanda = this.demandaService.findById(id);
-			return ResponseEntity.ok().body(demanda);
+			Funcao funcao = this.funcaoService.findById(id);
+			return ResponseEntity.ok().body(funcao);
 		} catch (Exception e) {
 			if(e.getMessage().equals("Id inválido"))
 				return ResponseEntity.badRequest().body(e.getMessage());
-			if(e.getMessage().equals("Demanda não encontrada"))
+			if(e.getMessage().equals("Função não encontrada"))
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
@@ -55,24 +55,24 @@ public class DemandaController {
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable long id) {
 		try {
-			this.demandaService.deleteById(id);
-			return ResponseEntity.ok().body("Demanda excluída com sucesso");
+			this.funcaoService.deleteById(id);
+			return ResponseEntity.ok().body("Função excluída com sucesso");
 		} catch (Exception e) {
 			if(e.getMessage().equals("Id inválido"))
 				return ResponseEntity.badRequest().body(e.getMessage());
-			if(e.getMessage().equals("Demanda não encontrada"))
+			if(e.getMessage().equals("Função não encontrada"))
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@Valid @RequestBody Demanda demanda) {
+	public ResponseEntity<String> save(@Valid @RequestBody Funcao funcao) {
 		try {
-			this.demandaService.save(demanda);
-			return ResponseEntity.ok().body("Demanda salva com sucesso");
+			this.funcaoService.save(funcao);
+			return ResponseEntity.ok().body("Função salva com sucesso");
 		}  catch (Exception e) {
-			if(e.getMessage().equals("Chamada inválida") || e.getMessage().equals("Quantidade de grupos inválida"))
+			if(e.getMessage().equals("Chamada inválida"))
 				return ResponseEntity.badRequest().body(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
@@ -80,14 +80,14 @@ public class DemandaController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updade(@Valid @PathVariable long id, @RequestBody Demanda demanda) {
+	public ResponseEntity<String> updade(@Valid @PathVariable long id, @RequestBody Funcao funcao) {
 		try {
-			this.demandaService.update(id, demanda);
-			return ResponseEntity.ok().body("Demanda "+demanda.getIdDemanda()+" atualizada com sucesso");
+			this.funcaoService.update(id, funcao);
+			return ResponseEntity.ok().body("Função "+funcao.getNome()+" atualizada com sucesso");
 		} catch (Exception e) {
 			if(e.getMessage().equals("Id inválido") || e.getMessage().equals("Chamada inválida"))
 				return ResponseEntity.badRequest().body(e.getMessage());
-			if(e.getMessage().equals("Demanda não encontrada"))
+			if(e.getMessage().equals("Função não encontrada"))
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}

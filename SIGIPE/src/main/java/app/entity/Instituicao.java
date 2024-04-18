@@ -1,21 +1,25 @@
 package app.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import java.util.List;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class Instituicao {
 	
 	@Id
@@ -30,5 +34,17 @@ public class Instituicao {
 	private String cep;
 	@NotBlank(message = "Campo Razão Social  não pode ser vazio e nem nulo!")
 	private String razaoSocial;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("instituicoes")
+	private TipoInstituicao tipoInstituicao;
+
+	@OneToMany(mappedBy = "instituicao")
+	@JsonIgnoreProperties("instituicao")
+	private List<Demandante> demandantes;
+
+	@OneToMany(mappedBy = "insituicao")
+	@JsonIgnoreProperties("insituicao")
+	private List<Demanda> demandas;
 
 }
