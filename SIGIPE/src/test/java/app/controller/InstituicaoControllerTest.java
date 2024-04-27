@@ -74,6 +74,7 @@ public class InstituicaoControllerTest {
         });
 
         System.out.println(exception.getMessage());
+
     }
 
     @Test

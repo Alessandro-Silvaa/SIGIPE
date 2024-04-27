@@ -25,6 +25,7 @@ public class Instituicao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idInstituicao;
+	@Pattern(regexp = "^[a-zA-Z\\s]{1,50}$", message = "Nome da instituição deve ser único")
 	@NotBlank(message = "Campo nome da Instituição não pode ser Nulo!")
 	private String nome;
 	@NotBlank(message = "Campo cidade  não pode ser vazio e nem nulo!")

@@ -16,6 +16,11 @@ public class InstituicaoService {
     public String save(Instituicao instituicao){
 
         String cep = instituicao.getCep();
+        String nome = instituicao.getNome();
+
+        if(instituicaoRepository.existsByNome(nome))
+
+            throw new RuntimeException();
 
         if(cep.length() < 9)
 
@@ -57,6 +62,5 @@ public class InstituicaoService {
 
         return instituicao;
     }
-
 
 }

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-<<<<<<< HEAD
-    <data-source source="LOCAL" name="SIGIPE@localhost" uuid="fc65f121-e22f-49bd-bfbf-6c0ebac22926">
-=======
-    <data-source source="LOCAL" name="SIGIPE@localhost" uuid="9e7e752d-1666-43fe-86d3-d3e1f4d9066e">
->>>>>>> CrudPessoa
+    <data-source source="LOCAL" name="SIGIPE@localhost" uuid="78c06231-05a0-42ee-9bd1-bdd1b3c5cfbc">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
