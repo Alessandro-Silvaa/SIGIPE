@@ -2,6 +2,7 @@ package app.service;
 
 import app.entity.Instituicao;
 import app.repository.InstituicaoRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,16 @@ public class InstituicaoService {
         Instituicao instituicao = this.instituicaoRepository.findById(id).get();
 
         return instituicao;
+    }
+
+    public List<Instituicao> findByRazaoSocial(String razaoSocial){
+
+        return instituicaoRepository.findByRazaoSocial(razaoSocial);
+    }
+
+    public List<Instituicao> findByCidade(String cidade){
+
+        return instituicaoRepository.findByCidade(cidade);
     }
 
 }

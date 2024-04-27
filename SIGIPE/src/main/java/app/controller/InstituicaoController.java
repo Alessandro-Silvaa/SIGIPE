@@ -94,4 +94,34 @@ public class InstituicaoController {
         }
     }
 
+    @GetMapping("/findByRazaoSocial")
+    public ResponseEntity<List<Instituicao>> findByRazaoSocial(@Valid @RequestParam String razaoSocial){
+
+        try {
+
+            List<Instituicao> instituicao = this.instituicaoService.findByRazaoSocial(razaoSocial);
+            return new ResponseEntity<>(instituicao,HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @GetMapping("/findByCidade")
+    public ResponseEntity<List<Instituicao>> findByCidade(@Valid @RequestParam String cidade){
+
+        try {
+
+            List<Instituicao> instituicao = this.instituicaoService.findByCidade(cidade);
+            return new ResponseEntity<>(instituicao,HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
 }
