@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Instituicao {
+public class Instituicao {git 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
