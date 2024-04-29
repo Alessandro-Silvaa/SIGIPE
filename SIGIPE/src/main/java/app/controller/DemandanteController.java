@@ -81,6 +81,18 @@ public class DemandanteController{
 			return new ResponseEntity<String>("Houve um erro ao deletar o demandante",HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findByCpf")
+	public ResponseEntity<List<Demandante>> findByCpf (@Valid @RequestParam String cpf){
+			try {
+				
+				List<Demandante> demandante = this.demandanteService.findByCpf(cpf);
+				return new ResponseEntity<>(demandante, HttpStatus.OK);
+				
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			}
+		}
 }
 
 
