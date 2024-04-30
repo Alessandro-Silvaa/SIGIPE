@@ -14,62 +14,57 @@ public class InstituicaoService {
     @Autowired
     InstituicaoRepository instituicaoRepository;
 
-    public String save(Instituicao instituicao){
+    public String save(Instituicao instituicao) {
 
         String cep = instituicao.getCep();
-        String nome = instituicao.getNome();
 
-        if(instituicaoRepository.existsByNome(nome))
-
-            throw new RuntimeException();
-
-        if(cep.length() < 9)
+        if (cep.length() < 9)
 
             throw new RuntimeException();
 
-       this.instituicaoRepository.save(instituicao);
+        this.instituicaoRepository.save(instituicao);
 
-       return  instituicao.getNome() + " Instituição salva com sucesso";
+        return instituicao.getNome() + " Instituição salva com sucesso";
     }
 
-    public String update(long id, Instituicao instituicao){
+    public String update(long id, Instituicao instituicao) {
 
-         instituicao.setIdInstituicao(id);
+        instituicao.setIdInstituicao(id);
 
-         this.instituicaoRepository.save(instituicao);
+        this.instituicaoRepository.save(instituicao);
 
-         return "Instituição alterada com sucesso";
+        return "Instituição alterada com sucesso";
     }
 
-    public List<Instituicao> listAll(){
+    public List<Instituicao> listAll() {
 
         return this.instituicaoRepository.findAll();
     }
 
-    public String delete (long id){
+    public String delete(long id) {
 
-      if(id <= 0)
+        if (id <= 0)
 
-         throw  new RuntimeException();
+            throw new RuntimeException();
 
-      this.instituicaoRepository.deleteById(id);
+        this.instituicaoRepository.deleteById(id);
 
-      return "Instituição excluida";
+        return "Instituição excluida";
     }
 
-    public Instituicao findById(long id){
+    public Instituicao findById(long id) {
 
         Instituicao instituicao = this.instituicaoRepository.findById(id).get();
 
         return instituicao;
     }
 
-    public List<Instituicao> findByRazaoSocial(String razaoSocial){
+    public List<Instituicao> findByRazaoSocial(String razaoSocial) {
 
         return instituicaoRepository.findByRazaoSocial(razaoSocial);
     }
 
-    public List<Instituicao> findByCidade(String cidade){
+    public List<Instituicao> findByCidade(String cidade) {
 
         return instituicaoRepository.findByCidade(cidade);
     }
