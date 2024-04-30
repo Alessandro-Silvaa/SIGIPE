@@ -124,4 +124,19 @@ public class InstituicaoController {
         }
     }
 
+    @GetMapping("/findByCnpj")
+    public ResponseEntity<List<Instituicao>> findByCnpj(@Valid @RequestParam String cnpj){
+
+        try {
+
+            List<Instituicao> instituicao = this.instituicaoService.findByCnpj(cnpj);
+            return new ResponseEntity<>(instituicao,HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
 }

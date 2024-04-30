@@ -2,7 +2,6 @@ package app.service;
 
 import app.entity.Instituicao;
 import app.repository.InstituicaoRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,9 @@ public class InstituicaoService {
     public String save(Instituicao instituicao){
 
         String cep = instituicao.getCep();
-        String nome = instituicao.getNome();
+        String cnpj = instituicao.getCnpj();
 
-        if(instituicaoRepository.existsByNome(nome))
+        if(cnpj.length() < 18)
 
             throw new RuntimeException();
 
@@ -72,6 +71,11 @@ public class InstituicaoService {
     public List<Instituicao> findByCidade(String cidade){
 
         return instituicaoRepository.findByCidade(cidade);
+    }
+
+    public List<Instituicao> findByCnpj(String cnpj){
+
+        return instituicaoRepository.finByCnpj(cnpj);
     }
 
 }

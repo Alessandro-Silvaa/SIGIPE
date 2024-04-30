@@ -48,7 +48,7 @@ public class Demanda {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
-	private Instituicao insituicao;
+	private Instituicao instituicao;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")

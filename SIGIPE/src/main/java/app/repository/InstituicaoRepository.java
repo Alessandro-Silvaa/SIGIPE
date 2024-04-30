@@ -10,11 +10,11 @@ public interface InstituicaoRepository extends JpaRepository<Instituicao,Long> {
 
     public List<Instituicao> findByRazaoSocial(String razaoSocial);
 
-    @Query("SELECT COUNT(i) > 0 FROM Instituicao i WHERE i.nome = :nome")
-    public boolean existsByNome(String nome);
-
     @Query("SELECT i FROM Instituicao i WHERE i.cidade LIKE :cidade%")
     List<Instituicao> findByCidade(String cidade);
+
+    @Query("SELECT i FROM Instituicao i WHERE i.cnpj LIKE :cnpj%")
+    List<Instituicao> finByCnpj(String cnpj);
 }
 
 
