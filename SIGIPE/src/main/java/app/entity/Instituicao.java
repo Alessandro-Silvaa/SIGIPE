@@ -36,15 +36,15 @@ public class Instituicao {
 	private String razaoSocial;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("instituicoes")
+	@JsonIgnoreProperties("instituicao")
 	private TipoInstituicao tipoInstituicao;
 
 	@OneToMany(mappedBy = "instituicao")
-	@JsonIgnoreProperties("instituicaoes")
+	@JsonIgnoreProperties("instituicao")
 	private List<Demandante> demandantes;
 
 	@OneToMany(mappedBy = "instituicao")
-	@JsonIgnoreProperties("instituicaoes")
+	@JsonIgnoreProperties("instituicao")
 	private List<Demanda> demandas;
 
 }
