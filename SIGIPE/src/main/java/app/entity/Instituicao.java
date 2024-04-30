@@ -40,9 +40,11 @@ public class Instituicao {
 	private TipoInstituicao tipoInstituicao;
 
 	@OneToMany(mappedBy = "instituicao")
+	@JsonIgnoreProperties("instituicaoes")
 	private List<Demandante> demandantes;
 
 	@OneToMany(mappedBy = "instituicao")
+	@JsonIgnoreProperties("instituicaoes")
 	private List<Demanda> demandas;
 
 }
