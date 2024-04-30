@@ -13,7 +13,7 @@ public interface InstituicaoRepository extends JpaRepository<Instituicao,Long> {
     @Query("SELECT i FROM Instituicao i WHERE i.cidade LIKE :cidade%")
     List<Instituicao> findByCidade(String cidade);
 
-    @Query("SELECT i FROM Instituicao i WHERE i.cnpj LIKE :cnpj%")
+    @Query("SELECT i FROM Instituicao i WHERE i.cnpj LIKE :cnpj%") //Adicionado
     List<Instituicao> finByCnpj(String cnpj);
 }
 
