@@ -36,8 +36,10 @@ public class Pessoa {
 	private String cpf;
 	@NotBlank(message = "Campo telefone não pode ser nulo!")
 	private String telefone;
-	@NotBlank(message = "Campo periodo não pode ser nulo!")
-	private int periodo;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("pessoas")
+	private Periodo periodo;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("pessoas")

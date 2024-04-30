@@ -46,8 +46,8 @@ public class Instituicao {
 	@JsonIgnoreProperties("instituicao")
 	private List<Demandante> demandantes;
 
-	@OneToMany(mappedBy = "insituicao")
-	@JsonIgnoreProperties("insituicao")
+	@OneToMany(mappedBy = "instituicao")
+	@JsonIgnoreProperties("instituicao")
 	private List<Demanda> demandas;
 
 }
