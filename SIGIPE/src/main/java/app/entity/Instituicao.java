@@ -32,6 +32,9 @@ public class Instituicao {
 	@Pattern(regexp = "^\\d{5}-\\d{3}$", message = "Cep não deve ter menos de 9 caracteres")
 	@NotBlank(message = "Campo cep não pode ficar em branco")
 	private String cep;
+	@Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$", message = "CNPJ deve estar no formato xx.xxx.xxx/xxxx-xx")
+	@NotBlank(message = "Campo Cnpj não pode ser vazio e nem nulo!")
+	private String cnpj;
 	@NotBlank(message = "Campo Razão Social  não pode ser vazio e nem nulo!")
 	private String razaoSocial;
 
