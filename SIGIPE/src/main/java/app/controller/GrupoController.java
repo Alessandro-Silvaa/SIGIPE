@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Grupo;
@@ -95,5 +96,21 @@ public class GrupoController {
 
 	}
 
+	@GetMapping("/findByBuscaNome")
+    public ResponseEntity<List<Grupo>> findByBuscaNome(@Valid @RequestParam String nome){
+
+        try {
+
+            List<Grupo> grupo = this.grupoService.findByBuscaNome(nome);
+            return new ResponseEntity<>(grupo,HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+        }
+    }
+	
+	
 
 }

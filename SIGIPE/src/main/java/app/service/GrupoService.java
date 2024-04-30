@@ -50,6 +50,10 @@ public class GrupoService {
 			this.grupoRepository.save(grupo);
 		}
 	}
+	
+	public List<Grupo> findByBuscaNome(String nome){
+		return this.grupoRepository.findByBuscaNome(nome);
+	}
 
 
 }
