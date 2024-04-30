@@ -33,12 +33,12 @@ public class PeriodoControllerTest {
 
         List<Periodo> lista = new ArrayList<>();
 
-        lista.add(new Periodo(1,1));
-        lista.add(new Periodo(2,2));
+        lista.add(new Periodo(1,1,null));
+        lista.add(new Periodo(2,2,null));
 
         when(this.periodoRepository.findAll()).thenReturn(lista);
-        when(this.periodoRepository.save(Mockito.any())).thenReturn(new Periodo(3,3));
-        when(this.periodoRepository.findById(1L)).thenReturn(Optional.of(new Periodo(4,4)));
+        when(this.periodoRepository.save(Mockito.any())).thenReturn(new Periodo(3,3,null));
+        when(this.periodoRepository.findById(1L)).thenReturn(Optional.of(new Periodo(4,4,null)));
         doNothing().when(this.periodoRepository).deleteById(1L);
     }
 
@@ -53,7 +53,7 @@ public class PeriodoControllerTest {
     @Test
     void testMetodoSave(){
 
-        Periodo periodo = new Periodo(5,5);
+        Periodo periodo = new Periodo(5,5,null);
 
         ResponseEntity<String> response = this.periodoController.save(periodo);
 
@@ -65,7 +65,7 @@ public class PeriodoControllerTest {
     @Test
     void testMetodoSaveExceptiom(){
 
-        Periodo periodo = new Periodo(5,5);
+        Periodo periodo = new Periodo(5,5,null);
 
         ResponseEntity<String> response = this.periodoController.save(null);
 
@@ -77,7 +77,7 @@ public class PeriodoControllerTest {
     @Test
     void testMetodoUpdate(){
 
-        Periodo periodo = new Periodo(6,6);
+        Periodo periodo = new Periodo(6,6,null);
 
         ResponseEntity<String> response = this.periodoController.update(periodo.getIdPeriodo(),periodo);
 
@@ -89,7 +89,7 @@ public class PeriodoControllerTest {
     @Test
     void testMetodoUpdateException(){
 
-        Periodo periodo = new Periodo(6,6);
+        Periodo periodo = new Periodo(6,6,null);
 
         ResponseEntity<String> response = this.periodoController.update(periodo.getIdPeriodo(),null);
 
@@ -121,7 +121,7 @@ public class PeriodoControllerTest {
     @Test
     void testMetodoDeleteById(){
 
-        Periodo periodo = new Periodo(7,7);
+        Periodo periodo = new Periodo(7,7,null);
 
         long id = periodo.getIdPeriodo();
 

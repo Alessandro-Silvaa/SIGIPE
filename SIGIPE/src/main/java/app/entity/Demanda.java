@@ -1,9 +1,7 @@
 package app.entity;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +28,6 @@ public class Demanda {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long idDemanda;
 	private int quantidadeGrupo;
 	@NotBlank(message = "Campo Problema não pode ser nulo!")
@@ -42,8 +39,8 @@ public class Demanda {
 	@NotBlank(message = "Campo Prazo não pode ser nulo!")
 	private String prazo;
 	
-	@OneToMany(mappedBy = "demanda")
-	@JsonIgnoreProperties("demanda")
+	@OneToMany(mappedBy = "demandas")
+	@JsonIgnoreProperties("demandas")
 	private List<Grupo> grupos;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -66,5 +63,5 @@ public class Demanda {
 		joinColumns = @JoinColumn(name = "idDemanda"),
 		inverseJoinColumns = @JoinColumn(name = "idCurso")
 	)
-	private List<Curso> cursos;
+	private List<Curso> curso;
 }

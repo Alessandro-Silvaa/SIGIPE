@@ -36,7 +36,7 @@ public class Demandante {
 	private String telefone;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("demandantes")
+	@JsonIgnoreProperties("demandante")
 	private Instituicao instituicao;
 	
 	@OneToMany(mappedBy = "demandante")

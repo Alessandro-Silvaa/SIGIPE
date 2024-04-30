@@ -43,7 +43,7 @@ public class Pessoa {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("pessoas")
-	private Grupo grupo;
+	private Grupo grupos;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("pessoas")

@@ -32,9 +32,9 @@ public class Grupo {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("grupos")
-	private Demanda demanda;
+	private Demanda demandas;
 	
-	@OneToMany(mappedBy = "grupo")
-	@JsonIgnoreProperties("grupo")
+	@OneToMany(mappedBy = "grupos")
+	@JsonIgnoreProperties("grupos")
 	private List<Pessoa> pessoas;
 }

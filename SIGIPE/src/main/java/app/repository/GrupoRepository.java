@@ -11,10 +11,6 @@ public interface GrupoRepository extends JpaRepository<Grupo, Long>{
 
 	public List<Grupo> findByNome(String nome);
 	
-	@Query("SELECT ng"
-			+ "FROM Grupo ng"
-			+ "WHERE ng.nome"
-			+ "LIKE :nome%")
-	
+	@Query("SELECT ng FROM Grupo ng WHERE ng.nome LIKE :nome")
 	 public List<Grupo> findByBuscaNome(String nome);
 }

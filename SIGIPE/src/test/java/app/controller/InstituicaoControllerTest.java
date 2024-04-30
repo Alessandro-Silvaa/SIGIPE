@@ -33,12 +33,12 @@ public class InstituicaoControllerTest {
     void setup(){
 
         List<Instituicao> lista = new ArrayList<>();
-        lista.add(new Instituicao(1,"Uniamerica","Joinville","89788-888","Limitada LTDA",null,null,null));
-        lista.add(new Instituicao(2,"Fafig","Fortaleza","89777-887","Crazy LTDA",null,null,null));
-        lista.add(new Instituicao(3,"Anhanguera","Curitiba","88888-888","Tigrinho LTDA",null,null,null));
+        lista.add(new Instituicao(1,"Uniamérica","Foz do Iguaçu","98989-989","55.555.555/5555-55","Uniamérica Instituicao",null,null,null));
+        lista.add(new Instituicao(2,"Fafig","São Paulo","23536-989","44.444.444/4444-44","Fafig Instituicao",null,null,null));
+        lista.add(new Instituicao(3,"Cambridge","Amapá","25252-252","33.333.333/3333-33","Cambridge Institute",null,null,null));
         when(this.instituicaoRepository.findAll()).thenReturn(lista); //Simulando o comportamento do listAll e retornando uma lista com as instituições cadastradas
-        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"Bernardo Silva","Cascavel","11111-111","Ox LTDA",null,null,null));
-        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Casemiro","Amapá","22222-222","Dragon LTDA",null,null,null)));
+        when(this.instituicaoRepository.save(Mockito.any())).thenReturn(new Instituicao(4,"MIT","São Paulo","98989-989","22.222.222/2222-22","MIT Institute",null,null,null));
+        when(this.instituicaoRepository.findById(1L)).thenReturn(Optional.of(new Instituicao(5,"Harvard","São Paulo","89898-989","11.111.111/1111-11","Harvard Institute",null,null,null)));
         doNothing().when(this.instituicaoRepository).deleteById(1L);
     }
 
@@ -53,7 +53,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSave(){
 
-       Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-000","Onze Ltda",null,null,null);
+       Instituicao instituicao = new Instituicao(6,"Anhanguera","São Paulo","98989-998","77.777.777/7777-77","Anhanguera Instituicao",null,null,null);
 
        ResponseEntity<String> response = this.instituicaoController.save(instituicao);
 
@@ -65,7 +65,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoSaveException(){
 
-        Instituicao instituicao = new Instituicao(6,"John Johns","Maringá","01020-00","Onze Ltda",null,null,null);
+        Instituicao instituicao = new Instituicao(6,"Anhanguera","São Paulo","98989-99","77.777.777/7777-77","Anhanguera Instituicao",null,null,null);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
 
@@ -80,7 +80,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdate(){
 
-       Instituicao instituicao = new Instituicao(7,"Armenio","São Paulo","98788-889","Trix LTDA",null,null,null);
+       Instituicao instituicao = new Instituicao(7,"Unicesumar","Foz do Iguaçu","36565-989","88.888.888/8888-88","Unicesumar Instituicao",null,null,null);
 
        ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),instituicao);
 
@@ -92,7 +92,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoUpdateException(){
 
-       Instituicao instituicao = new Instituicao(7,"Acer","São Paulo","98788-889","Trix LTDA",null,null,null);
+       Instituicao instituicao = new Instituicao(7,"Unicesumar","Foz do Iguaçu","36565-989","88.888.888/8888-88","Unicesumar Instituicao",null,null,null);
 
         ResponseEntity<String> response = this.instituicaoController.update(instituicao.getIdInstituicao(),null);
 
@@ -124,7 +124,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoDeleteById(){
 
-         Instituicao instituicao = new Instituicao(8,"José Almeida","Palmeiras","98784-788","Acer LTDA",null,null,null);
+         Instituicao instituicao = new Instituicao(8,"Cesufoz","Foz do Iguaçu","36363-363","99.999.999/9999-99","Cesufoz Instituição",null,null,null);
 
          long id = instituicao.getIdInstituicao();
 

@@ -31,6 +31,6 @@ public class TipoInstituicao {
 	
 	@OneToMany(mappedBy = "tipoInstituicao")
 	@JsonIgnoreProperties("tipoInstituicao")
-	private List<Instituicao> instituicoes;
+	private List<Instituicao> instituicao;
 
 }

@@ -29,7 +29,7 @@ public class Curso {
 	@NotBlank(message = "Campo nome do Curso não pode ser nulo!")
 	private String nome;	
 	
-	@ManyToMany(mappedBy = "cursos")
-	@JsonIgnoreProperties("cursos")
+	@ManyToMany(mappedBy = "curso")
+	@JsonIgnoreProperties("curso")
 	private List<Demanda> demandas;
 }

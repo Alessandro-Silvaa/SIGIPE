@@ -32,5 +32,5 @@ public class Status {
 	
 	@OneToMany(mappedBy = "status")
 	@JsonIgnoreProperties("status")
-	private List<Demanda> demandas;
+	private List<Demanda> demanda;
 }
