@@ -39,16 +39,12 @@ public abstract class Pessoa {
 	private String cpf;
 	@NotBlank(message = "Campo telefone não pode ser nulo!")
 	private String telefone;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("pessoas")
-	private Periodo periodo;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("pessoas")
-	private Grupo grupos;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("pessoas")
 	private Funcao funcao;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("pessoas")
+	private StatusPessoa statusPessoa;
 }

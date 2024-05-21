@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,16 @@ public class Curso {
 	@ManyToMany(mappedBy = "curso")
 	@JsonIgnoreProperties("curso")
 	private List<Demanda> demandas;
+	
+	@OneToMany(mappedBy = "curso")
+	@JsonIgnoreProperties("curso")
+	private List<CoordenadorCurso> coordenadores;
+	
+	@OneToMany(mappedBy = "curso")
+	@JsonIgnoreProperties("curso")
+	private List<Professor> professores;
+	
+	@OneToMany(mappedBy = "curso")
+	@JsonIgnoreProperties("curso")
+	private List<Aluno> alunos;
 }
