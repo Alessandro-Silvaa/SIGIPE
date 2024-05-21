@@ -1,12 +1,12 @@
 package app.service;
 
-import app.entity.Instituicao;
-import app.repository.InstituicaoRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import app.entity.Instituicao;
+import app.repository.InstituicaoRepository;
 
 @Service
 public class InstituicaoService {
