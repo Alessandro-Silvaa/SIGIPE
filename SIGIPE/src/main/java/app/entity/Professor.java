@@ -16,6 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class Professor extends Pessoa{
+	
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("professores")
 	private Curso curso;

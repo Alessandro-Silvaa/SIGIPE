@@ -51,9 +51,9 @@ public class Demanda {
 	@JsonIgnoreProperties("demandas")
 	private Demandante demandante;
 	
-	@OneToMany(mappedBy = "demandas")
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
-	private List<Status> status;
+	private Status status;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")

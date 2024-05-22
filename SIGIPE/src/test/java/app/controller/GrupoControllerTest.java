@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 
 import app.entity.Demanda;
 import app.entity.Grupo;
-import app.entity.Pessoa;
 import app.repository.GrupoRepository;
 
 @SpringBootTest
@@ -37,7 +36,7 @@ public class GrupoControllerTest {
 		
 		doNothing().when(this.grupoRepository).deleteById((long) 1);//ok
 
-		when(this.grupoRepository.save(new Grupo(1, "aaa", new Demanda(), new ArrayList<Pessoa>()))).thenReturn(new Grupo());
+		when(this.grupoRepository.save(new Grupo(1, "aaa", new Demanda()))).thenReturn(new Grupo());
 		when(this.grupoRepository.save(null)).thenReturn(null);
 	}
 	
@@ -101,7 +100,7 @@ public class GrupoControllerTest {
 	
 	@Test
 	void save200() {
-		ResponseEntity<String> response = this.grupoController.save(new Grupo(1, "aaa", new Demanda(), new ArrayList<Pessoa>()));
+		ResponseEntity<String> response = this.grupoController.save(new Grupo(1, "aaa", new Demanda()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -115,19 +114,19 @@ public class GrupoControllerTest {
 	
 	@Test
 	void update200() {
-		ResponseEntity<String> response = this.grupoController.updade(1, new Grupo(1, "aaa", new Demanda(), new ArrayList<Pessoa>()));
+		ResponseEntity<String> response = this.grupoController.updade(1, new Grupo(1, "aaa", new Demanda()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	@Test
 	void update400() {
-		ResponseEntity<String> response = this.grupoController.updade(0, new Grupo(1, "aaa", new Demanda(), new ArrayList<Pessoa>()));
+		ResponseEntity<String> response = this.grupoController.updade(0, new Grupo(1, "aaa", new Demanda()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
 	@Test
 	void update404_1() {
-		ResponseEntity<String> response = this.grupoController.updade(2, new Grupo(1, "aaa", new Demanda(), new ArrayList<Pessoa>()));
+		ResponseEntity<String> response = this.grupoController.updade(2, new Grupo(1, "aaa", new Demanda()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	
