@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Status;
-import app.service.StatusService;
+import app.entity.StatusDemanda;
+import app.service.StatusDemandaService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/status")
 @Validated
-public class StatusController {
+public class StatusDemandaController {
 	@Autowired
-	StatusService statusService;
+	StatusDemandaService statusService;
 
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
-			List<Status> lista = this.statusService.findAll();
+			List<StatusDemanda> lista = this.statusService.findAll();
 			return ResponseEntity.ok().body(lista);
 		} catch (Exception e) {
 			if(e.getMessage().equals("Não há statuss cadastrados"))
@@ -41,7 +41,7 @@ public class StatusController {
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
 		try {
-			Status status = this.statusService.findById(id);
+			StatusDemanda status = this.statusService.findById(id);
 			return ResponseEntity.ok().body(status);
 		} catch (Exception e) {
 			if(e.getMessage().equals("Id inválido"))
@@ -68,7 +68,7 @@ public class StatusController {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@Valid @RequestBody Status status) {
+	public ResponseEntity<String> save(@Valid @RequestBody StatusDemanda status) {
 		try {
 			this.statusService.save(status);
 			return ResponseEntity.ok().body("Status salvo com sucesso");
@@ -81,7 +81,7 @@ public class StatusController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updade(@Valid @PathVariable long id, @RequestBody Status status) {
+	public ResponseEntity<String> updade(@Valid @PathVariable long id, @RequestBody StatusDemanda status) {
 		try {
 			this.statusService.update(id, status);
 			return ResponseEntity.ok().body("Status "+status.getNome()+" atualizado com sucesso");

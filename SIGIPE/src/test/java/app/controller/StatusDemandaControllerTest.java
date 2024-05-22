@@ -16,33 +16,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Demanda;
-import app.entity.Status;
-import app.repository.StatusRepository;
+import app.entity.StatusDemanda;
+import app.repository.StatusDemandaRepository;
 
 @SpringBootTest
-public class StatusControllerTest {
+public class StatusDemandaControllerTest {
 	@Autowired
-	StatusController statusController;
+	StatusDemandaController statusController;
 	
 	@MockBean
-	StatusRepository statusRepository;
+	StatusDemandaRepository statusRepository;
 	
 	@BeforeEach
 	void setup() {
 		
-		when(this.statusRepository.findById((long) 1)).thenReturn(Optional.of(new Status()));//ok
-		when(this.statusRepository.findById((long) 0)).thenReturn(Optional.of(new Status()));//bad_request
+		when(this.statusRepository.findById((long) 1)).thenReturn(Optional.of(new StatusDemanda()));//ok
+		when(this.statusRepository.findById((long) 0)).thenReturn(Optional.of(new StatusDemanda()));//bad_request
 		when(this.statusRepository.findById((long) 2)).thenReturn(null);//not_found
 		
 		doNothing().when(this.statusRepository).deleteById((long) 1);//ok
 
-		when(this.statusRepository.save(new Status(1, "aaa", new ArrayList<Demanda>()))).thenReturn(new Status());
+		when(this.statusRepository.save(new StatusDemanda(1, "aaa", new ArrayList<Demanda>()))).thenReturn(new StatusDemanda());
 		when(this.statusRepository.save(null)).thenReturn(null);
 	}
 	
 	@Test
 	void findAll200() {//ok
-		when(this.statusRepository.findAll()).thenReturn(new ArrayList<Status>());
+		when(this.statusRepository.findAll()).thenReturn(new ArrayList<StatusDemanda>());
 		ResponseEntity<?> response = this.statusController.findAll();
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
@@ -100,7 +100,7 @@ public class StatusControllerTest {
 	
 	@Test
 	void save200() {
-		ResponseEntity<String> response = this.statusController.save(new Status(1, "aaa", new ArrayList<Demanda>()));
+		ResponseEntity<String> response = this.statusController.save(new StatusDemanda(1, "aaa", new ArrayList<Demanda>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -114,19 +114,19 @@ public class StatusControllerTest {
 	
 	@Test
 	void update200() {
-		ResponseEntity<String> response = this.statusController.updade(1, new Status(1, "aaa", new ArrayList<Demanda>()));
+		ResponseEntity<String> response = this.statusController.updade(1, new StatusDemanda(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	@Test
 	void update400() {
-		ResponseEntity<String> response = this.statusController.updade(0, new Status(1, "aaa", new ArrayList<Demanda>()));
+		ResponseEntity<String> response = this.statusController.updade(0, new StatusDemanda(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
 	@Test
 	void update404_1() {
-		ResponseEntity<String> response = this.statusController.updade(2, new Status(1, "aaa", new ArrayList<Demanda>()));
+		ResponseEntity<String> response = this.statusController.updade(2, new StatusDemanda(1, "aaa", new ArrayList<Demanda>()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	

@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Status {
+public class StatusDemanda {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

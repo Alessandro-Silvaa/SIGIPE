@@ -20,7 +20,7 @@ import app.entity.Demanda;
 import app.entity.Demandante;
 import app.entity.Grupo;
 import app.entity.Instituicao;
-import app.entity.Status;
+import app.entity.StatusDemanda;
 import app.repository.DemandaRepository;
 
 @SpringBootTest
@@ -41,7 +41,7 @@ public class DemandaControllerTest {
 		doNothing().when(this.demandaRepository).deleteById((long) 1);// ok
 
 		when(this.demandaRepository.save(new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa", new ArrayList<Grupo>(),
-				new Instituicao(), new Demandante(), new Status(), new ArrayList<Curso>()))).thenReturn(new Demanda());
+				new Instituicao(), new Demandante(), new StatusDemanda(), new ArrayList<Curso>()))).thenReturn(new Demanda());
 		when(this.demandaRepository.save(null)).thenReturn(null);
 	}
 
@@ -106,7 +106,7 @@ public class DemandaControllerTest {
 	@Test
 	void save200() {
 		ResponseEntity<String> response = this.demandaController.save(new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa", new ArrayList<Grupo>(),
-				new Instituicao(), new Demandante(), new Status(), new ArrayList<Curso>()));
+				new Instituicao(), new Demandante(), new StatusDemanda(), new ArrayList<Curso>()));
 		int httpStatus = response.getStatusCode().value();
 		assertEquals(200, httpStatus);
 	}
@@ -121,21 +121,21 @@ public class DemandaControllerTest {
 	@Test
 	void update200() {
 		ResponseEntity<String> response = this.demandaController.updade(1, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa", new ArrayList<Grupo>(),
-				new Instituicao(), new Demandante(), new Status(), new ArrayList<Curso>()));
+				new Instituicao(), new Demandante(), new StatusDemanda(), new ArrayList<Curso>()));
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
 	@Test
 	void update400() {
 		ResponseEntity<String> response = this.demandaController.updade(0, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa", new ArrayList<Grupo>(),
-				new Instituicao(), new Demandante(), new Status(), new ArrayList<Curso>()));
+				new Instituicao(), new Demandante(), new StatusDemanda(), new ArrayList<Curso>()));
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 
 	@Test
 	void update404_1() {
 		ResponseEntity<String> response = this.demandaController.updade(2, new Demanda(1, 1, "aaa", "aaa", "aaa", "aaa", new ArrayList<Grupo>(),
-				new Instituicao(), new Demandante(), new Status(), new ArrayList<Curso>()));
+				new Instituicao(), new Demandante(), new StatusDemanda(), new ArrayList<Curso>()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 

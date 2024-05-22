@@ -53,7 +53,7 @@ public class Demanda {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
-	private Status status;
+	private StatusDemanda status;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
