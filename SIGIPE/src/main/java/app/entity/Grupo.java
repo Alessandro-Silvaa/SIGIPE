@@ -1,5 +1,7 @@
 package app.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -29,5 +32,9 @@ public class Grupo {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("grupos")
-	private Demanda demandas;
+	private Demanda demanda;
+	
+	@ManyToMany(mappedBy = "grupos")
+	@JsonIgnoreProperties("grupos")
+	private List<Aluno> alunos;
 }

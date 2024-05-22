@@ -39,8 +39,8 @@ public class Demanda {
 	@NotBlank(message = "Campo Prazo não pode ser nulo!")
 	private String prazo;
 	
-	@OneToMany(mappedBy = "demandas")
-	@JsonIgnoreProperties("demandas")
+	@OneToMany(mappedBy = "demanda")
+	@JsonIgnoreProperties("demanda")
 	private List<Grupo> grupos;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
