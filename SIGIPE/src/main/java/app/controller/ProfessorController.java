@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Professor;
 import app.service.ProfessorService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/professor")
 @CrossOrigin("*")
+@Validated
 public class ProfessorController {
 	
 	@Autowired
 	private ProfessorService professorService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Professor professor) {
+	public ResponseEntity<String> save(@Valid @RequestBody Professor professor) {
 		
 		try {
 			
@@ -43,7 +46,7 @@ public class ProfessorController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Professor professor, @PathVariable int id) {
+	public ResponseEntity<String> update(@Valid @RequestBody Professor professor, @PathVariable int id) {
 		
 		try {
 			

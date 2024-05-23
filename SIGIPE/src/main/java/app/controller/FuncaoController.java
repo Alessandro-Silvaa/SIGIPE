@@ -21,7 +21,7 @@ import app.service.FuncaoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/funcao")
+@RequestMapping("/api/funcao")
 @Validated
 @CrossOrigin("*")
 public class FuncaoController {

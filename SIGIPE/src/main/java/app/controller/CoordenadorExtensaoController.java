@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.CoordenadorExtensao;
 import app.service.CoordenadorExtensaoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/coordenadorExtensao")
 @CrossOrigin("*")
+@Validated
 public class CoordenadorExtensaoController {
 
 	@Autowired
 	private CoordenadorExtensaoService coordenadorExtensaoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody CoordenadorExtensao coordenadorExtensao) {
+	public ResponseEntity<String> save(@Valid @RequestBody CoordenadorExtensao coordenadorExtensao) {
 
 		try {
 
@@ -43,7 +46,7 @@ public class CoordenadorExtensaoController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody CoordenadorExtensao coordenadorExtensao, @PathVariable int id) {
+	public ResponseEntity<String> update(@Valid @RequestBody CoordenadorExtensao coordenadorExtensao, @PathVariable int id) {
 
 		try {
 
