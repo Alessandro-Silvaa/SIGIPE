@@ -1,6 +1,6 @@
 package app.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,17 +20,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class StatusDemanda {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private long idStatus;
+	private long idStatusDemanda;
 	@NotBlank(message = "Campo nome Status não pode ser nulo")
 	private String nome;
 	
 	@OneToMany(mappedBy = "status")
 	@JsonIgnoreProperties("status")
-	private ArrayList<Demanda> demandas;
+	private List<Demanda> demandas;
 }

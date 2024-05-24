@@ -46,7 +46,7 @@ public class StatusDemandaService {
 		if (status == null)
 			throw new RuntimeException("Chamada inválida");
 		if (findById(id) != null) {
-			status.setIdStatus(id);
+			status.setIdStatusDemanda(id);
 			this.statusRepository.save(status);
 		}
 	}
