@@ -61,12 +61,12 @@ public class StatusPessoaController {
 
 	}
 
-	@GetMapping("/listAll")
-	public ResponseEntity<List<StatusPessoa>> listAll() {
+	@GetMapping("/findAll")
+	public ResponseEntity<List<StatusPessoa>> findAll() {
 
 		try {
 
-			List<StatusPessoa> lista = this.statusPessoaService.listAll();
+			List<StatusPessoa> lista = this.statusPessoaService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -91,12 +91,12 @@ public class StatusPessoaController {
 
 	}
 
-	@DeleteMapping("/delete/{idStatusPessoa}")
-	public ResponseEntity<String> delete(@PathVariable long idStatusPessoa) {
+	@DeleteMapping("/deleteById/{idStatusPessoa}")
+	public ResponseEntity<String> deleteById(@PathVariable long idStatusPessoa) {
 
 		try {
 
-			String mensagem = this.statusPessoaService.delete(idStatusPessoa);
+			String mensagem = this.statusPessoaService.deleteById(idStatusPessoa);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 
 		} catch (Exception e) {

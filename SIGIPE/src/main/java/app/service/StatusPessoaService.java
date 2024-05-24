@@ -26,7 +26,7 @@ public class StatusPessoaService {
 		return statusPessoa.getNome()+ " atualizado com sucesso";
 	}
 
-	public List<StatusPessoa> listAll(){
+	public List<StatusPessoa> findAll(){
 		return this.statusPessoaRepository.findAll();
 	}
 
@@ -37,7 +37,7 @@ public class StatusPessoaService {
 
 	}
 
-	public String delete(long idStatusPessoa) {
+	public String deleteById(long idStatusPessoa) {
 		this.statusPessoaRepository.deleteById(idStatusPessoa);
 		return "StatusPessoa deletado com sucesso!";
 
