@@ -61,12 +61,12 @@ public class ProfessorController {
 		
 	}
 	
-	@GetMapping("/listAll")
-	public ResponseEntity<List<Professor>> listAll (){
+	@GetMapping("/findAll")
+	public ResponseEntity<List<Professor>> findAll (){
 		
 		try {
 			
-			List<Professor> lista = this.professorService.listAll();
+			List<Professor> lista = this.professorService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -91,12 +91,12 @@ public class ProfessorController {
 		
 	}
 	
-	@DeleteMapping("/delete/{idProfessor}")
-	public ResponseEntity<String> delete(@PathVariable long idProfessor){
+	@DeleteMapping("/deleteById/{idProfessor}")
+	public ResponseEntity<String> deleteById(@PathVariable long idProfessor){
 		
 		try {
 			
-			String mensagem = this.professorService.delete(idProfessor);
+			String mensagem = this.professorService.deleteById(idProfessor);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 			
 		} catch (Exception e) {

@@ -61,12 +61,12 @@ public class AlunoController {
 
 	}
 
-	@GetMapping("/listAll")
-	public ResponseEntity<List<Aluno>> listAll() {
+	@GetMapping("/findAll")
+	public ResponseEntity<List<Aluno>> findAll() {
 
 		try {
 
-			List<Aluno> lista = this.alunoService.listAll();
+			List<Aluno> lista = this.alunoService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -91,12 +91,12 @@ public class AlunoController {
 
 	}
 
-	@DeleteMapping("/delete/{idAluno}")
-	public ResponseEntity<String> delete(@PathVariable long idAluno) {
+	@DeleteMapping("/deleteById/{idAluno}")
+	public ResponseEntity<String> deleteById(@PathVariable long idAluno) {
 
 		try {
 
-			String mensagem = this.alunoService.delete(idAluno);
+			String mensagem = this.alunoService.deleteById(idAluno);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 
 		} catch (Exception e) {

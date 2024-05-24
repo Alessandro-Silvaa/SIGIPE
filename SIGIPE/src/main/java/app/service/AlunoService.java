@@ -25,7 +25,7 @@ public class AlunoService {
 		return aluno.getNome()+ " atualizado com sucesso";
 	}
 
-	public List<Aluno> listAll(){
+	public List<Aluno> findAll(){
 		return this.alunoRepository.findAll();
 	}
 
@@ -36,7 +36,7 @@ public class AlunoService {
 
 	}
 
-	public String delete(long idAluno) {
+	public String deleteById(long idAluno) {
 		this.alunoRepository.deleteById(idAluno);
 		return "Aluno deletado com sucesso!";
 

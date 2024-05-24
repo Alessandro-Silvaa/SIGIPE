@@ -25,7 +25,7 @@ public class CoordenadorCursoService {
 		return coordenadorCurso.getNome()+ " atualizado com sucesso";
 	}
 
-	public List<CoordenadorCurso> listAll(){
+	public List<CoordenadorCurso> findAll(){
 		return this.coordenadorCursoRepository.findAll();
 	}
 
@@ -36,7 +36,7 @@ public class CoordenadorCursoService {
 
 	}
 
-	public String delete(long idCoordenadorCurso) {
+	public String deleteById(long idCoordenadorCurso) {
 		this.coordenadorCursoRepository.deleteById(idCoordenadorCurso);
 		return "CoordenadorCurso deletado com sucesso!";
 

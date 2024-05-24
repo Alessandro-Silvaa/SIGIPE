@@ -60,12 +60,12 @@ public class CoordenadorCursoController {
 
 	}
 
-	@GetMapping("/listAll")
-	public ResponseEntity<List<CoordenadorCurso>> listAll() {
+	@GetMapping("/findAll")
+	public ResponseEntity<List<CoordenadorCurso>> findAll() {
 
 		try {
 
-			List<CoordenadorCurso> lista = this.coordenadorCursoService.listAll();
+			List<CoordenadorCurso> lista = this.coordenadorCursoService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -90,12 +90,12 @@ public class CoordenadorCursoController {
 
 	}
 
-	@DeleteMapping("/delete/{idCoordenadorCurso}")
-	public ResponseEntity<String> delete(@PathVariable long idCoordenadorCurso) {
+	@DeleteMapping("/deleteById/{idCoordenadorCurso}")
+	public ResponseEntity<String> deleteById(@PathVariable long idCoordenadorCurso) {
 
 		try {
 
-			String mensagem = this.coordenadorCursoService.delete(idCoordenadorCurso);
+			String mensagem = this.coordenadorCursoService.deleteById(idCoordenadorCurso);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 
 		} catch (Exception e) {

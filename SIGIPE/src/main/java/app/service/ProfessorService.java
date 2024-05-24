@@ -25,7 +25,7 @@ public class ProfessorService {
 		return professor.getNome()+ " atualizado com sucesso";
 	}
 
-	public List<Professor> listAll(){
+	public List<Professor> findAll(){
 		return this.professorRepository.findAll();
 	}
 
@@ -36,7 +36,7 @@ public class ProfessorService {
 
 	}
 
-	public String delete(long idProfessor) {
+	public String deleteById(long idProfessor) {
 		this.professorRepository.deleteById(idProfessor);
 		return "Professor deletado com sucesso!";
 

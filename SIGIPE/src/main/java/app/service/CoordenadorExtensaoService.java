@@ -25,7 +25,7 @@ public class CoordenadorExtensaoService {
 		return coordenadorExtensao.getNome()+ " atualizado com sucesso";
 	}
 
-	public List<CoordenadorExtensao> listAll(){
+	public List<CoordenadorExtensao> findAll(){
 		return this.coordenadorExtensaoRepository.findAll();
 	}
 
@@ -36,7 +36,7 @@ public class CoordenadorExtensaoService {
 
 	}
 
-	public String delete(long idCoordenadorExtensao) {
+	public String deleteById(long idCoordenadorExtensao) {
 		this.coordenadorExtensaoRepository.deleteById(idCoordenadorExtensao);
 		return "CoordenadorExtensao deletado com sucesso!";
 
