@@ -21,7 +21,7 @@ import app.service.StatusDemandaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/status")
+@RequestMapping("/api/statusDemanda")
 @Validated
 @CrossOrigin("*")
 public class StatusDemandaController {
