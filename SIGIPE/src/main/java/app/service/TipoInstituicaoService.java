@@ -29,15 +29,15 @@ public class TipoInstituicaoService {
 		return tipoInstituicao.getNome() + " Alterado com sucesso";
 	}
 	
-	public List<TipoInstituicao> listAll(){
+	public List<TipoInstituicao> findAll(){
 		
 		return tipoInstituicaoRepository.findAll();
 		
 	}
 	
-	public String delete(long id) {
+	public String deleteById(long id) {
 		
-		if(id <= 1) 
+		if(id <= 0) 
 			
 			throw new RuntimeException();
 		
