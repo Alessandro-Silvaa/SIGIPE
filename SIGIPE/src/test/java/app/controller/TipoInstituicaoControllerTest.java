@@ -45,7 +45,7 @@ public class TipoInstituicaoControllerTest {
 	
 	@Test
 	void findAllOK() {
-		ResponseEntity<List<TipoInstituicao>> response = this.tipoinstituicaoController.listAll();
+		ResponseEntity<List<TipoInstituicao>> response = this.tipoinstituicaoController.findAll();
 		HttpStatusCode httpStatus = response.getStatusCode();
 		assertEquals(HttpStatus.OK, httpStatus);
 	}
@@ -126,7 +126,7 @@ public class TipoInstituicaoControllerTest {
 
          long id = tipoinstituicao.getIdTipoInstituicao();
 
-         ResponseEntity<String> response = this.tipoinstituicaoController.delete(id);
+         ResponseEntity<String> response = this.tipoinstituicaoController.deleteById(id);
 
          assertEquals(HttpStatus.OK,response.getStatusCode());
 
@@ -136,7 +136,7 @@ public class TipoInstituicaoControllerTest {
     @Test
     void DeleteByIdException(){
 
-        ResponseEntity<String> response = this.tipoinstituicaoController.delete(-1L);
+        ResponseEntity<String> response = this.tipoinstituicaoController.deleteById(-1L);
 
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
 
