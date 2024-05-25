@@ -78,12 +78,12 @@ public class InstituicaoController {
 
    }
 
-   @GetMapping("/listAll")
-    public ResponseEntity<List<Instituicao>> listAll() {
+   @GetMapping("/findAll")
+    public ResponseEntity<List<Instituicao>> findAll() {
 
        try {
 
-           List<Instituicao> lista = this.instituicaoService.listAll();
+           List<Instituicao> lista = this.instituicaoService.findAll();
            return new ResponseEntity<>(lista, HttpStatus.OK);
 
        } catch (Exception e) {
@@ -96,7 +96,7 @@ public class InstituicaoController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable long id){
         try {
-            String deletar = this.instituicaoService.delete(id);
+            String deletar = this.instituicaoService.deleteById(id);
             return new ResponseEntity<>(deletar, HttpStatus.OK);
 
         } catch (Exception e) {

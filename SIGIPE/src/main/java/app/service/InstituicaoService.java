@@ -36,12 +36,12 @@ public class InstituicaoService {
         return "Instituição alterada com sucesso";
     }
 
-    public List<Instituicao> listAll() {
+    public List<Instituicao> findAll() {
 
         return this.instituicaoRepository.findAll();
     }
 
-    public String delete(long id) {
+    public String deleteById(long id) {
 
         if (id <= 0)
 
