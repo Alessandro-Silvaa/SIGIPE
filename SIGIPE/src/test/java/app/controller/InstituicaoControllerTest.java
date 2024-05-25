@@ -45,7 +45,7 @@ public class InstituicaoControllerTest {
     @Test
     void Cenario01(){
 
-        ResponseEntity<List<Instituicao>> response = this.instituicaoController.listAll();
+        ResponseEntity<List<Instituicao>> response = this.instituicaoController.findAll();
 
         assertEquals(3, response.getBody().size());
     }
