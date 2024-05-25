@@ -75,12 +75,12 @@ public class TipoInstituicaoController {
 
 	   }
 	 
-	 @GetMapping("/listAll")
-	    public ResponseEntity<List<TipoInstituicao>> listAll() {
+	 @GetMapping("/findAll")
+	    public ResponseEntity<List<TipoInstituicao>> findAll() {
 
 	       try {
 
-	           List<TipoInstituicao> lista = this.tipoInstituicaoService.listAll();
+	           List<TipoInstituicao> lista = this.tipoInstituicaoService.findAll();
 	           return new ResponseEntity<>(lista, HttpStatus.OK);
 
 	       } catch (Exception e) {
@@ -90,10 +90,10 @@ public class TipoInstituicaoController {
 	       }
 	   }
 	 
-	 @DeleteMapping("/delete/{id}")
-	    public ResponseEntity<String> delete(@Valid @PathVariable long id){
+	 @DeleteMapping("/deleteById/{id}")
+	    public ResponseEntity<String> deleteById(@Valid @PathVariable long id){
 	        try {
-	            String deletar = this.tipoInstituicaoService.delete(id);
+	            String deletar = this.tipoInstituicaoService.deleteById(id);
 	            return new ResponseEntity<>(deletar, HttpStatus.OK);
 
 	        } catch (Exception e) {
