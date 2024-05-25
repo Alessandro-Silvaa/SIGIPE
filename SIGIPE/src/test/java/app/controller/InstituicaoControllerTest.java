@@ -128,7 +128,7 @@ public class InstituicaoControllerTest {
 
          long id = instituicao.getIdInstituicao();
 
-         ResponseEntity<String> response = this.instituicaoController.delete(id);
+         ResponseEntity<String> response = this.instituicaoController.deleteById(id);
 
          assertEquals(HttpStatus.OK,response.getStatusCode());
 
@@ -138,7 +138,7 @@ public class InstituicaoControllerTest {
     @Test
     void testMetodoDeleteByIdException(){
 
-        ResponseEntity<String> response = this.instituicaoController.delete(-1L);
+        ResponseEntity<String> response = this.instituicaoController.deleteById(-1L);
 
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
 

@@ -93,8 +93,8 @@ public class InstituicaoController {
        }
    }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@Valid @PathVariable long id){
+    @DeleteMapping("/deleteById/{id}")
+    public ResponseEntity<String> deleteById(@Valid @PathVariable long id){
         try {
             String deletar = this.instituicaoService.deleteById(id);
             return new ResponseEntity<>(deletar, HttpStatus.OK);
