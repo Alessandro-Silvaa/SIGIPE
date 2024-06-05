@@ -55,12 +55,12 @@ public class PeriodoController {
         }
    }
 
-   @GetMapping("/listAll")
-   public ResponseEntity<List<Periodo>> listAll(){
+   @GetMapping("/findAll")
+   public ResponseEntity<List<Periodo>> findAll(){
 
         try {
 
-            List<Periodo> listar = this.periodoService.listAll();
+            List<Periodo> listar = this.periodoService.findAll();
             return new ResponseEntity<>(listar,HttpStatus.OK);
 
         }catch (Exception e){

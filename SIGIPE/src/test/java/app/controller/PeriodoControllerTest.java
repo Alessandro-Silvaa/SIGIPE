@@ -48,7 +48,7 @@ public class PeriodoControllerTest {
     @Test
     void cenario01(){
 
-        ResponseEntity<List<Periodo>> response = this.periodoController.listAll();
+        ResponseEntity<List<Periodo>> response = this.periodoController.findAll();
 
         assertEquals(2,response.getBody().size());
     }
