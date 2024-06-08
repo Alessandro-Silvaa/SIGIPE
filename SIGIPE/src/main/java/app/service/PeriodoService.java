@@ -28,7 +28,7 @@ public class PeriodoService {
        return "Período Alterado";
    }
 
-   public List<Periodo> listAll(){
+   public List<Periodo> findAll(){
 
         return periodoRepository.findAll();
    }
