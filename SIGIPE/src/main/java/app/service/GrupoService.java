@@ -3,7 +3,10 @@ package app.service;
 import java.util.List;
 import java.util.Optional;
 
+import app.entity.Aluno;
+import app.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import app.entity.Grupo;
@@ -14,6 +17,9 @@ import jakarta.validation.Valid;
 public class GrupoService {
 	@Autowired
 	GrupoRepository grupoRepository;
+
+	@Autowired
+	AlunoRepository alunoRepository;
 
 	public List<Grupo> findAll() {
 		List<Grupo> lista = this.grupoRepository.findAll();
@@ -51,9 +57,9 @@ public class GrupoService {
 		}
 	}
 	
-	public List<Grupo> findByBuscaNome(String nome){
-		return this.grupoRepository.findByBuscaNome(nome);
+    public List<Grupo> findByNome(String grupo){return this.grupoRepository.findByNome(grupo);}
+
+    public List<Grupo> findGruposByAlunoId(Long idPessoa)throws Exception{
+		return grupoRepository.findGruposByAluno(idPessoa);
 	}
-
-
 }

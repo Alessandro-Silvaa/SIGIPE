@@ -21,7 +21,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class Aluno extends Pessoa{
-	
+
+	private int ra;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("alunos")
 	private Curso curso;
@@ -39,4 +41,13 @@ public class Aluno extends Pessoa{
 		inverseJoinColumns = @JoinColumn(name = "idGrupo")
 	)
 	private List<Grupo> grupos;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("alunos")
+	private Pessoa pessoas;
+
+	public Aluno(long id){
+		super(id);
+	}
+
 }

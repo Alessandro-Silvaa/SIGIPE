@@ -2,9 +2,11 @@ package app.controller;
 
 import java.util.List;
 
+import app.entity.Aluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,7 @@ public class GrupoController {
 	@Autowired
 	GrupoService grupoService;
 
+
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
@@ -42,7 +45,7 @@ public class GrupoController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable long id) {
+	public ResponseEntity<?> findById(@Valid @PathVariable long id) {
 		try {
 			Grupo grupo = this.grupoService.findById(id);
 			return ResponseEntity.ok().body(grupo);
@@ -57,7 +60,7 @@ public class GrupoController {
 	}
 
 	@DeleteMapping("/deleteById/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable long id) {
+	public ResponseEntity<String> deleteById(@Valid @PathVariable long id) {
 		try {
 			this.grupoService.deleteById(id);
 			return ResponseEntity.ok().body("Grupo excluída com sucesso");
@@ -70,6 +73,7 @@ public class GrupoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('Aluno')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Grupo grupo) {
 		try {
@@ -98,21 +102,17 @@ public class GrupoController {
 
 	}
 
-	@GetMapping("/findByBuscaNome")
-    public ResponseEntity<List<Grupo>> findByBuscaNome(@Valid @RequestParam String nome){
+   @GetMapping("/findGruposByAlunoId")
+	public ResponseEntity<List<Grupo>> findGruposByAlunoId(@Valid @RequestParam Long idPessoa){
 
-        try {
+		try {
 
-            List<Grupo> grupo = this.grupoService.findByBuscaNome(nome);
-            return new ResponseEntity<>(grupo,HttpStatus.OK);
+			List<Grupo> grupos = grupoService.findGruposByAlunoId(idPessoa);
+			return new ResponseEntity<>(grupos,HttpStatus.OK);
 
-        }catch (Exception e){
+		}catch (Exception e){
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		}
 
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-
-        }
-    }
-	
-	
-
+   }
 }

@@ -20,4 +20,6 @@ public class CoordenadorCurso extends Pessoa{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("coordenadores")
 	private Curso curso;
+
+
 }

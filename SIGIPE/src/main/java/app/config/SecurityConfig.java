@@ -37,6 +37,14 @@ public class SecurityConfig  {
 		.cors(AbstractHttpConfigurer::disable)
 		.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/api/login").permitAll()
+				//=====Rotas que os usuários com a Role Aluno tem autorização para acessar=====//
+				.requestMatchers("/api/demanda/findAll").hasRole("Aluno")
+				.requestMatchers("api/demanda/findById/").hasRole("Aluno")
+				.requestMatchers("/api/demanda/findByGrupo").hasRole("Aluno")
+                .requestMatchers("/api/demanda/subscribe").hasRole("Aluno")
+				.requestMatchers("/api/grupo/save").hasRole("Aluno")
+				.requestMatchers("/api/grupo/findGruposByAlunoId").hasRole("Aluno")
+				//==================================================================//
 				.anyRequest().authenticated())
 		.authenticationProvider(authenticationProvider)
 		.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

@@ -25,4 +25,5 @@ public class Professor extends Pessoa{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("professores")
 	private Periodo periodo;
+
 }

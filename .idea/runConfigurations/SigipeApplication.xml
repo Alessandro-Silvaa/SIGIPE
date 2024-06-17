@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SigipeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="SIGIPE" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="app.SigipeApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

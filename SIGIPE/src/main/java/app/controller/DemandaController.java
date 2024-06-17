@@ -5,16 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import app.entity.Demanda;
 import app.service.DemandaService;
@@ -95,4 +88,35 @@ public class DemandaController {
 		}
 
 	}
+
+	@GetMapping("/findByGrupo")
+	public ResponseEntity<List<Demanda>> findDemandaByGrupo(@Valid @RequestParam long grupoId){
+
+		try {
+
+			List<Demanda> demandas= demandaService.findDemandaByGrupoId(grupoId);
+			return new ResponseEntity<>(demandas,HttpStatus.OK);
+
+		}catch (Exception e){
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@GetMapping("/subscribe")
+	public ResponseEntity<String> inscreverEmDemanda(@Valid @RequestParam long demandaId,@RequestParam long alunoId){
+
+		try {
+
+			demandaService.inscreverEmDemanda(demandaId,alunoId);
+			return new ResponseEntity<>("Inscrição realizada com sucesso",HttpStatus.OK);
+
+		}catch (Exception e){
+
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+		}
+
+	}
+
 }

@@ -3,6 +3,11 @@ package app.service;
 import java.util.List;
 import java.util.Optional;
 
+import app.entity.Aluno;
+import app.entity.Grupo;
+import app.repository.AlunoRepository;
+import app.repository.GrupoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,13 @@ import jakarta.validation.Valid;
 public class DemandaService {
 	@Autowired
 	DemandaRepository demandaRepository;
+
+	@Autowired
+	private AlunoRepository alunoRepository;
+
+	@Autowired
+	private GrupoRepository grupoRepository;
+
 
 	public List<Demanda> findAll() {
 		List<Demanda> lista = this.demandaRepository.findAll();
@@ -58,4 +70,51 @@ public class DemandaService {
 			return false;
 		return true;
 	}
+
+	public List<Demanda> findDemandaByGrupoId(long grupoId){
+
+		return this.demandaRepository.findDemandaByGrupoId(grupoId);
+
+	}
+
+	@Transactional
+	public void inscreverEmDemanda(long demandaId, long alunoId) {
+		// Busca a demanda pelo ID
+		Optional<Demanda> optionalDemanda = demandaRepository.findById(demandaId);
+		Demanda demanda = optionalDemanda.orElseThrow(() -> new RuntimeException("Demanda não encontrada"));
+
+		// Busca o aluno pelo ID
+		Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
+		Aluno aluno = optionalAluno.orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+		// Verifica se existem grupos cadastrados para esta demanda
+		List<Grupo> grupos = demanda.getGrupos();
+
+		Grupo grupoSelecionado = null;
+
+		for (Grupo grupo : grupos) {
+			// Verifica se o grupo tem entre 4 e 5 alunos
+			if (grupo.getAlunos().size() >= 4 && grupo.getAlunos().size() <= 5) {
+				grupoSelecionado = grupo;
+				break;
+			}
+		}
+
+		if (grupoSelecionado == null) {
+			// Se não encontrou nenhum grupo com 4-5 alunos, cria um novo grupo
+			grupoSelecionado = new Grupo();
+			grupoSelecionado.setDemanda(demanda);
+			grupos.add(grupoSelecionado);
+		}
+
+		// Adiciona o aluno ao grupo selecionado
+		grupoSelecionado.getAlunos().add(aluno);
+		aluno.getGrupos().add(grupoSelecionado);
+
+		// Salva as alterações no banco de dados
+		grupoRepository.save(grupoSelecionado);
+		alunoRepository.save(aluno);
+		demandaRepository.save(demanda);
+	}
 }
+
