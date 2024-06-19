@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -20,6 +23,9 @@ import lombok.Setter;
 @Entity
 public class Grupo {
 	//Atributos de definição
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	//Atributos de relacionamento
@@ -37,8 +43,12 @@ public class Grupo {
 	private Turma turma;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("grupos")
-	private Demanda demanda;
+	@JsonIgnoreProperties("gruposSolicitacao")
+	private Demanda demandaSolicitada;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("gruposInscritos")
+	private Demanda demandaInscrita;
 	
 	@ManyToMany(mappedBy = "grupos")
 	@JsonIgnoreProperties("grupos")

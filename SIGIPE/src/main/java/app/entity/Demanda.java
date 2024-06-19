@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -21,6 +24,9 @@ import lombok.Setter;
 @Entity
 public class Demanda {
 	//Atributos de definição
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nome;
 	private int quantidadeGrupos;
@@ -39,15 +45,19 @@ public class Demanda {
 	@JsonIgnoreProperties("demandas")
 	private Demandante demandante;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JsonIgnoreProperties("demandas")
 	private Instituicao instituicao;
-	
-	@OneToMany(mappedBy = "demanda")
-	@JsonIgnoreProperties("demanda")
-	private List<Grupo> grupos;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
 	private List<Curso> cursos;
+	
+	@OneToMany(mappedBy = "demandaInscrita")
+	@JsonIgnoreProperties("demandaInscrita")
+	private List<Grupo> gruposInscritos;
+	
+	@OneToMany(mappedBy = "demandaSolicitada")
+	@JsonIgnoreProperties("demandaSolicitada")
+	private List<Grupo> gruposSolicitacao;
 }
