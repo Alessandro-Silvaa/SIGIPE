@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Curso;
+import app.dto.CursoDto;
 import app.service.CursoService;
 import jakarta.validation.Valid;
 
@@ -30,37 +30,37 @@ public class CursoController {
 	private CursoService cursoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<Curso> save(@Valid @RequestBody Curso curso) {
+	public ResponseEntity<CursoDto> save(@Valid @RequestBody CursoDto curso) {
 		try {
-			return new ResponseEntity<Curso>(this.cursoService.save(curso), HttpStatus.OK);
+			return new ResponseEntity<CursoDto>(this.cursoService.save(curso), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Curso> update(@Valid @RequestBody Curso curso, @PathVariable int id) {
+	public ResponseEntity<CursoDto> update(@Valid @RequestBody CursoDto curso, @PathVariable int id) {
 		try {
-			return new ResponseEntity<Curso>(this.cursoService.update(id, curso), HttpStatus.OK);
+			return new ResponseEntity<CursoDto>(this.cursoService.update(id, curso), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Curso>> findAll() {
+	public ResponseEntity<List<CursoDto>> findAll() {
 		try {
-			List<Curso> lista = this.cursoService.findAll();
-			return new ResponseEntity<List<Curso>>(lista, HttpStatus.OK);
+			List<CursoDto> lista = this.cursoService.findAll();
+			return new ResponseEntity<List<CursoDto>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Curso> findById(@PathVariable long id) {
+	public ResponseEntity<CursoDto> findById(@PathVariable long id) {
 		try {
-			return new ResponseEntity<Curso>(this.cursoService.findById(id), HttpStatus.OK);
+			return new ResponseEntity<CursoDto>(this.cursoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -68,9 +68,9 @@ public class CursoController {
 	}
 
 	@DeleteMapping("/deleteById/{id}")
-	public ResponseEntity<Curso> deleteById(@PathVariable long id) {
+	public ResponseEntity<CursoDto> deleteById(@PathVariable long id) {
 		try {
-			return new ResponseEntity<Curso>(this.cursoService.deleteById(id), HttpStatus.OK);
+			return new ResponseEntity<CursoDto>(this.cursoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

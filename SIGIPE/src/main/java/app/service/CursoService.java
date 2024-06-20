@@ -1,11 +1,13 @@
 package app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.dto.CursoDto;
 import app.entity.Curso;
 import app.repository.CursoRepository;
 
@@ -13,32 +15,56 @@ import app.repository.CursoRepository;
 public class CursoService {
 
 	@Autowired
-	private CursoRepository cursoRepository;
+	private CursoRepository repository;
 
-	public Curso save(Curso curso) {
-		return this.cursoRepository.save(curso);
+	public CursoDto save(CursoDto dto) {
+		Curso entidade = new Curso(dto);
+		entidade = this.repository.save(entidade);
+		dto = new CursoDto(entidade.getId(), entidade.getNome(), entidade.getQuantidadePeriodos());
+		return dto;
 	}
 
-	public Curso update(long id, Curso curso) {
-		curso.setId(id);
-		return this.cursoRepository.save(curso);
-	}
-
-	public List<Curso> findAll() {
-		return this.cursoRepository.findAll();
-	}
-
-	public Curso findById(long id) {
-		return this.cursoRepository.findById(id).get();
-	}
-
-	public Curso deleteById(long id) {
-		Optional<Curso> optionalCurso = this.cursoRepository.findById(id);
-		if (optionalCurso.isPresent()) {
-			Curso curso = optionalCurso.get();
-			this.cursoRepository.deleteById(id);
-			return curso;
+	public CursoDto update(long id, CursoDto dto) {
+		Optional<Curso> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			Curso entidade = new Curso(dto);
+			entidade.setId(id);
+			entidade = this.repository.save(entidade);
+			dto = new CursoDto(entidade.getId(), entidade.getNome(), entidade.getQuantidadePeriodos());
+			return dto;
 		}
-		throw new RuntimeException("Curso not found with id: " + id);
+		throw new RuntimeException();
+	}
+
+	public List<CursoDto> findAll() {
+		List<Curso> listaEntidades = this.repository.findAll();
+		List<CursoDto> listaDtos = new ArrayList<CursoDto>();
+
+		for (Curso entidade : listaEntidades) {
+			CursoDto dto = new CursoDto(entidade.getId(), entidade.getNome(), entidade.getQuantidadePeriodos());
+			listaDtos.add(dto);
+		}
+		return listaDtos;
+	}
+
+	public CursoDto findById(long id) {
+		Optional<Curso> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			Curso entidade = optional.get();
+			CursoDto dto = new CursoDto(entidade.getId(), entidade.getNome(), entidade.getQuantidadePeriodos());
+			return dto;
+		}
+		throw new RuntimeException();
+	}
+
+	public CursoDto deleteById(long id) {
+		Optional<Curso> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			Curso entidade = optional.get();
+			CursoDto dto = new CursoDto(entidade.getId(), entidade.getNome(), entidade.getQuantidadePeriodos());
+			this.repository.deleteById(id);
+			return dto;
+		}
+		throw new RuntimeException();
 	}
 }

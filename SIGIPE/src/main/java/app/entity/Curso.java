@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import app.dto.CursoDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -58,5 +59,11 @@ public class Curso {
 	@ManyToMany(mappedBy = "cursos")
 	@JsonIgnoreProperties("cursos")
 	private List<Demanda> demandas;
+	
+	public Curso(CursoDto dto) {
+		this.id = dto.id();
+		this.nome = dto.nome();
+		this.quantidadePeriodos = dto.quantidadePeriodos();
+	}
 	
 }

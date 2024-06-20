@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import app.dto.DemandanteDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,10 +33,10 @@ public class Demandante {
 	@NotBlank
 	private String nome;
 	@NotBlank
-	@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "Email inválido")
+	@Pattern(regexp = "a", message = "Email inválido")
     private String email;
 	@NotBlank
-	@Pattern(regexp = "\\(\\d{2}\\) (9\\d{4})|(\\d{4})-\\d{4})", message = "Telefone inválido")
+	@Pattern(regexp = "b", message = "Telefone inválido")
 	private String telefone;
 	
 	//Atributos de relacionamento
@@ -48,4 +49,10 @@ public class Demandante {
 	@JsonIgnoreProperties("demandante")
 	private List<Demanda> demandas;
 
+	public Demandante(DemandanteDto dto) {
+		this.id = dto.id();
+		this.nome = dto.nome();
+		this.email = dto.email();
+		this.telefone = dto.telefone();
+	}
 }

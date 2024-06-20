@@ -15,25 +15,29 @@ import app.repository.TipoInstituicaoRepository;
 public class TipoInstituicaoService {
 
 	@Autowired
-	private TipoInstituicaoRepository tipoInstituicaoRepository;
+	private TipoInstituicaoRepository repository;
 
 	public TipoInstituicaoDto save(TipoInstituicaoDto dto) {
 		TipoInstituicao entidade = new TipoInstituicao(dto);
-		entidade = this.tipoInstituicaoRepository.save(entidade);
+		entidade = this.repository.save(entidade);
 		dto = new TipoInstituicaoDto(entidade.getId(), entidade.getNome());
 		return dto;
 	}
 
 	public TipoInstituicaoDto update(long id, TipoInstituicaoDto dto) {
-		TipoInstituicao entidade = new TipoInstituicao(dto);
-		entidade.setId(id);
-		entidade = this.tipoInstituicaoRepository.save(entidade);
-		dto = new TipoInstituicaoDto(entidade.getId(), entidade.getNome());
-		return dto;
+		Optional<TipoInstituicao> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			TipoInstituicao entidade = new TipoInstituicao(dto);
+			entidade.setId(id);
+			entidade = this.repository.save(entidade);
+			dto = new TipoInstituicaoDto(entidade.getId(), entidade.getNome());
+			return dto;
+		}
+		throw new RuntimeException();
 	}
 
 	public List<TipoInstituicaoDto> findAll() {
-		List<TipoInstituicao> listaEntidades = this.tipoInstituicaoRepository.findAll();
+		List<TipoInstituicao> listaEntidades = this.repository.findAll();
 		List<TipoInstituicaoDto> listaDtos = new ArrayList<TipoInstituicaoDto>();
 
 		for (TipoInstituicao entidade : listaEntidades) {
@@ -43,25 +47,24 @@ public class TipoInstituicaoService {
 		return listaDtos;
 	}
 
-	public TipoInstituicaoDto findById(long idTipoInstituicao) {
-		Optional<TipoInstituicao> optionalTipo = this.tipoInstituicaoRepository.findById(idTipoInstituicao);
-		if (optionalTipo.isPresent()) {
-			TipoInstituicao entidade = optionalTipo.get();
+	public TipoInstituicaoDto findById(long id) {
+		Optional<TipoInstituicao> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			TipoInstituicao entidade = optional.get();
 			TipoInstituicaoDto dto = new TipoInstituicaoDto(entidade.getId(), entidade.getNome());
 			return dto;
 		}
 		throw new RuntimeException();
 	}
 
-	public TipoInstituicaoDto deleteById(long idTipoInstituicao) {
-		Optional<TipoInstituicao> optionalTipo = this.tipoInstituicaoRepository.findById(idTipoInstituicao);
-		if (optionalTipo.isPresent()) {
-			TipoInstituicao tipo = optionalTipo.get();
-			TipoInstituicaoDto dto = new TipoInstituicaoDto(tipo.getId(), tipo.getNome());
-			this.tipoInstituicaoRepository.deleteById(idTipoInstituicao);
+	public TipoInstituicaoDto deleteById(long id) {
+		Optional<TipoInstituicao> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			TipoInstituicao entidade = optional.get();
+			TipoInstituicaoDto dto = new TipoInstituicaoDto(entidade.getId(), entidade.getNome());
+			this.repository.deleteById(id);
 			return dto;
 		}
 		throw new RuntimeException();
 	}
-
 }
