@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +29,13 @@ public class Demandante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@NotBlank
 	private String nome;
-	private String email;
+	@NotBlank
+	@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "Email inválido")
+    private String email;
+	@NotBlank
+	@Pattern(regexp = "\\(\\d{2}\\) (9\\d{4})|(\\d{4})-\\d{4})", message = "Telefone inválido")
 	private String telefone;
 	
 	//Atributos de relacionamento

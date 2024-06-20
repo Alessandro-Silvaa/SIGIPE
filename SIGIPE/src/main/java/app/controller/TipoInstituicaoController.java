@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.TipoInstituicao;
+import app.dto.TipoInstituicaoDto;
 import app.service.TipoInstituicaoService;
 import jakarta.validation.Valid;
 
@@ -30,37 +30,37 @@ public class TipoInstituicaoController {
 	private TipoInstituicaoService tipoInstituicaoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<TipoInstituicao> save(@Valid @RequestBody TipoInstituicao tipoInstituicao) {
+	public ResponseEntity<TipoInstituicaoDto> save(@Valid @RequestBody TipoInstituicaoDto tipoInstituicao) {
 		try {
-			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.save(tipoInstituicao), HttpStatus.OK);
+			return new ResponseEntity<TipoInstituicaoDto>(this.tipoInstituicaoService.save(tipoInstituicao), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<TipoInstituicao> update(@Valid @RequestBody TipoInstituicao tipoInstituicao, @PathVariable int id) {
+	public ResponseEntity<TipoInstituicaoDto> update(@Valid @RequestBody TipoInstituicaoDto tipoInstituicao, @PathVariable int id) {
 		try {
-			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.update(id, tipoInstituicao), HttpStatus.OK);
+			return new ResponseEntity<TipoInstituicaoDto>(this.tipoInstituicaoService.update(id, tipoInstituicao), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/findAll")
-	public ResponseEntity<List<TipoInstituicao>> findAll() {
+	public ResponseEntity<List<TipoInstituicaoDto>> findAll() {
 		try {
-			List<TipoInstituicao> lista = this.tipoInstituicaoService.findAll();
-			return new ResponseEntity<List<TipoInstituicao>>(lista, HttpStatus.OK);
+			List<TipoInstituicaoDto> lista = this.tipoInstituicaoService.findAll();
+			return new ResponseEntity<List<TipoInstituicaoDto>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<TipoInstituicao> findById(@PathVariable long id) {
+	public ResponseEntity<TipoInstituicaoDto> findById(@PathVariable long id) {
 		try {
-			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.findById(id), HttpStatus.OK);
+			return new ResponseEntity<TipoInstituicaoDto>(this.tipoInstituicaoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -68,9 +68,9 @@ public class TipoInstituicaoController {
 	}
 
 	@DeleteMapping("/deleteById/{id}")
-	public ResponseEntity<TipoInstituicao> deleteById(@PathVariable long id) {
+	public ResponseEntity<TipoInstituicaoDto> deleteById(@PathVariable long id) {
 		try {
-			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.deleteById(id), HttpStatus.OK);
+			return new ResponseEntity<TipoInstituicaoDto>(this.tipoInstituicaoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
