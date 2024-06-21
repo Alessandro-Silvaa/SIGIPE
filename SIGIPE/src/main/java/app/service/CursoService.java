@@ -3,11 +3,13 @@ package app.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Curso;
 import app.repository.CursoRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CursoService {
@@ -32,10 +34,19 @@ public class CursoService {
 		return this.cursoRepository.findById(id).get();
 	}
 
+	@Transactional
 	public Curso deleteById(long id) {
 		Optional<Curso> optionalCurso = this.cursoRepository.findById(id);
 		if (optionalCurso.isPresent()) {
 			Curso curso = optionalCurso.get();
+			
+			// Inicialize as coleções necessárias
+	        Hibernate.initialize(curso.getTurmas());
+	        Hibernate.initialize(curso.getAlunos());
+	        Hibernate.initialize(curso.getProfessores());
+	        Hibernate.initialize(curso.getCoordenadores());
+	        Hibernate.initialize(curso.getDemandas());
+			
 			this.cursoRepository.deleteById(id);
 			return curso;
 		}

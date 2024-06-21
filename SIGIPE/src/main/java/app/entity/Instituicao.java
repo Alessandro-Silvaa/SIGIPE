@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,15 +33,15 @@ public class Instituicao {
 	
 	//Atributos de relacionamento
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("instituicoes")
 	private TipoInstituicao tipo;
 	
-	@OneToMany(mappedBy = "instituicao")
+	@OneToMany(mappedBy = "instituicao", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("instituicao")
 	private List<Demandante> demandantes;
 	
-	@OneToMany(mappedBy = "instituicao")
+	@OneToMany(mappedBy = "instituicao", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("instituicao")
 	private List<Demanda> demandas;
 }

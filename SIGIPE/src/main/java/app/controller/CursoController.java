@@ -72,6 +72,7 @@ public class CursoController {
 		try {
 			return new ResponseEntity<Curso>(this.cursoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

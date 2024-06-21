@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,31 +38,31 @@ public class Demanda {
 	
 	//Atributos de relacionamento
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandas")
 	private StatusDemanda status;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandas")
 	private Demandante demandante;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandas")
 	private Instituicao instituicao;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandas")
 	private List<Curso> cursos;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandas")
 	private List<Turma> turmas;
 	
-	@OneToMany(mappedBy = "demandaInscrita")
+	@OneToMany(mappedBy = "demandaInscrita", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandaInscrita")
 	private List<Grupo> gruposInscritos;
 	
-	@OneToMany(mappedBy = "demandaSolicitada")
+	@OneToMany(mappedBy = "demandaSolicitada", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("demandaSolicitada")
 	private List<Grupo> gruposSolicitacao;
 }

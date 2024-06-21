@@ -2,6 +2,8 @@ package app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,8 @@ public class TurmaController {
 
 	@Autowired
 	private TurmaService turmaService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(TurmaController.class);
 
 	@PostMapping("/save")
 	public ResponseEntity<Turma> save(@Valid @RequestBody Turma turma) {
@@ -43,6 +47,8 @@ public class TurmaController {
 		try {
 			return new ResponseEntity<Turma>(this.turmaService.update(id, turma), HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e);
+			logger.error(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

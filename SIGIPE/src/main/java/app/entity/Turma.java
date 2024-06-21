@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,19 +33,19 @@ public class Turma{
 	
 	//Atributos de relacionamento
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("turmas")
 	private Curso curso;
 	
-	@OneToMany(mappedBy = "turma")
+	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("turma")
 	private List<Aluno> alunos;
 
-	@OneToMany(mappedBy = "turma")
+	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("turma")
 	private List<Professor> professores;
 	
-	@ManyToMany(mappedBy = "turmas")
+	@ManyToMany(mappedBy = "turmas", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("turmas")
 	private List<Demanda> demandas;
 }

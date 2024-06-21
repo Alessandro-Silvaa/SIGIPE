@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,24 +34,23 @@ public class Curso {
 	
 	//Atributos de relacionamentowqk
 	
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("curso")
 	private List<Aluno> alunos;
 
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("curso")
 	private List<Professor> professores;
 
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("curso")	
 	private List<CoordenadorCurso> coordenadores;
 	
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("curso")	
 	private List<Turma> turmas;
 	
-	@ManyToMany(mappedBy = "cursos")
+	@ManyToMany(mappedBy = "cursos", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("cursos")
 	private List<Demanda> demandas;
-	
 }
