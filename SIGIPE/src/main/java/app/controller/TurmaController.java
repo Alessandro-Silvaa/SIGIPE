@@ -76,5 +76,14 @@ public class TurmaController {
 		}
 
 	}
+	
+	@PostMapping("/gerarTurmas/{idCurso}")
+	public ResponseEntity<List<Turma>> gerarTurmas(@PathVariable long idCurso) {
+		try {
+			return new ResponseEntity<List<Turma>>(this.turmaService.gerarTurmas(idCurso), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }
