@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,6 @@ public class Turma{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String semestreAno;
 	private int periodoCurso;
 	
 	//Atributos de relacionamento
@@ -44,7 +44,7 @@ public class Turma{
 	@JsonIgnoreProperties("turma")
 	private List<Professor> professores;
 	
-	@OneToMany(mappedBy = "turma")
-	@JsonIgnoreProperties("turma")
-	private List<Grupo> grupos;
+	@ManyToMany(mappedBy = "turmas")
+	@JsonIgnoreProperties("turmas")
+	private List<Demanda> demandas;
 }

@@ -46,10 +46,6 @@ public class Curso {
 	private List<CoordenadorCurso> coordenadores;
 	
 	@OneToMany(mappedBy = "curso")
-	@JsonIgnoreProperties("curso")
-	private List<Grupo> grupos;
-	
-	@OneToMany(mappedBy = "curso")
 	@JsonIgnoreProperties("curso")	
 	private List<Turma> turmas;
 	

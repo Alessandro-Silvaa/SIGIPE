@@ -1,8 +1,5 @@
 package app.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +27,4 @@ public abstract class Pessoa {
 	private long id;
 	private String nome;
 	private String cpf;
-	
-	//Atributos de relacionamento
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("pessoas")
-	private StatusPessoa status;
 }

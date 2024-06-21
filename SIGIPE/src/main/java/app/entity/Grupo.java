@@ -31,18 +31,6 @@ public class Grupo {
 	//Atributos de relacionamento
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("grupos")
-	private StatusGrupo status;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("grupos")
-	private Curso curso;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("grupos")
-	private Turma turma;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("gruposSolicitacao")
 	private Demanda demandaSolicitada;
 	
@@ -50,8 +38,8 @@ public class Grupo {
 	@JsonIgnoreProperties("gruposInscritos")
 	private Demanda demandaInscrita;
 	
-	@ManyToMany(mappedBy = "grupos")
-	@JsonIgnoreProperties("grupos")
+	@ManyToMany(mappedBy = "grupo")
+	@JsonIgnoreProperties("grupo")
 	private List<Aluno> alunos;
 	
 }

@@ -45,13 +45,17 @@ public class Demanda {
 	@JsonIgnoreProperties("demandas")
 	private Demandante demandante;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
 	private Instituicao instituicao;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("demandas")
 	private List<Curso> cursos;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("demandas")
+	private List<Turma> turmas;
 	
 	@OneToMany(mappedBy = "demandaInscrita")
 	@JsonIgnoreProperties("demandaInscrita")
