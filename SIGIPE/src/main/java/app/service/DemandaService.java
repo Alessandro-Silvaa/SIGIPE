@@ -1,5 +1,6 @@
 package app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 @Service
 public class DemandaService {
+
 	@Autowired
 	DemandaRepository demandaRepository;
 
@@ -77,44 +79,6 @@ public class DemandaService {
 
 	}
 
-	@Transactional
-	public void inscreverEmDemanda(long demandaId, long alunoId) {
-		// Busca a demanda pelo ID
-		Optional<Demanda> optionalDemanda = demandaRepository.findById(demandaId);
-		Demanda demanda = optionalDemanda.orElseThrow(() -> new RuntimeException("Demanda não encontrada"));
 
-		// Busca o aluno pelo ID
-		Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
-		Aluno aluno = optionalAluno.orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
-
-		// Verifica se existem grupos cadastrados para esta demanda
-		List<Grupo> grupos = demanda.getGrupos();
-
-		Grupo grupoSelecionado = null;
-
-		for (Grupo grupo : grupos) {
-			// Verifica se o grupo tem entre 4 e 5 alunos
-			if (grupo.getAlunos().size() >= 4 && grupo.getAlunos().size() <= 5) {
-				grupoSelecionado = grupo;
-				break;
-			}
-		}
-
-		if (grupoSelecionado == null) {
-			// Se não encontrou nenhum grupo com 4-5 alunos, cria um novo grupo
-			grupoSelecionado = new Grupo();
-			grupoSelecionado.setDemanda(demanda);
-			grupos.add(grupoSelecionado);
-		}
-
-		// Adiciona o aluno ao grupo selecionado
-		grupoSelecionado.getAlunos().add(aluno);
-		aluno.getGrupos().add(grupoSelecionado);
-
-		// Salva as alterações no banco de dados
-		grupoRepository.save(grupoSelecionado);
-		alunoRepository.save(aluno);
-		demandaRepository.save(demanda);
-	}
 }
 

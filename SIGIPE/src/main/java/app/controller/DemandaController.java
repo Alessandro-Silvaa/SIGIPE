@@ -14,13 +14,13 @@ import app.service.DemandaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/demanda")
+@RequestMapping("/api/demanda")
 @Validated
 @CrossOrigin("*")
 public class DemandaController {
 	@Autowired
 	DemandaService demandaService;
-
+	@PreAuthorize("hasRole('aluno') OR hasRole('professor')")
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
@@ -32,7 +32,7 @@ public class DemandaController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
 	}
-
+	@PreAuthorize("hasRole('aluno')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
 		try {
@@ -88,7 +88,7 @@ public class DemandaController {
 		}
 
 	}
-
+	@PreAuthorize("hasRole('aluno')")
 	@GetMapping("/findByGrupo")
 	public ResponseEntity<List<Demanda>> findDemandaByGrupo(@Valid @RequestParam long grupoId){
 
@@ -103,20 +103,6 @@ public class DemandaController {
 
 	}
 
-	@GetMapping("/subscribe")
-	public ResponseEntity<String> inscreverEmDemanda(@Valid @RequestParam long demandaId,@RequestParam long alunoId){
 
-		try {
-
-			demandaService.inscreverEmDemanda(demandaId,alunoId);
-			return new ResponseEntity<>("Inscrição realizada com sucesso",HttpStatus.OK);
-
-		}catch (Exception e){
-
-			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-
-		}
-
-	}
 
 }

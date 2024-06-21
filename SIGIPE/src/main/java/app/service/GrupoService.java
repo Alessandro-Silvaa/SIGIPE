@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import app.entity.Aluno;
+import app.entity.Demanda;
 import app.repository.AlunoRepository;
+import app.repository.DemandaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class GrupoService {
 
 	@Autowired
 	AlunoRepository alunoRepository;
+
+	@Autowired
+	DemandaRepository demandaRepository;
 
 	public List<Grupo> findAll() {
 		List<Grupo> lista = this.grupoRepository.findAll();
@@ -59,7 +65,24 @@ public class GrupoService {
 	
     public List<Grupo> findByNome(String grupo){return this.grupoRepository.findByNome(grupo);}
 
-    public List<Grupo> findGruposByAlunoId(Long idPessoa)throws Exception{
+	public List<Grupo> findGruposByAlunoId(long idPessoa){
 		return grupoRepository.findGruposByAluno(idPessoa);
+	}
+
+	@Transactional
+	public Grupo associarDemandaAoGrupo(long grupoId, long demandaId) {
+		// Busca o grupo pelo ID
+		Grupo grupo = grupoRepository.findById(grupoId)
+				.orElseThrow(() -> new RuntimeException("Grupo não encontrado com o ID: " + grupoId));
+
+		// Busca a demanda pelo ID
+		Demanda demanda = demandaRepository.findById(demandaId)
+				.orElseThrow(() -> new RuntimeException("Demanda não encontrada com o ID: " + demandaId));
+
+		// Associa a demanda ao grupo
+		grupo.setDemanda(demanda);
+
+		// Salva e retorna o grupo atualizado
+		return grupoRepository.save(grupo);
 	}
 }

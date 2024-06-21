@@ -14,7 +14,11 @@ public interface GrupoRepository extends JpaRepository<Grupo, Long>{
 	public List<Grupo> findByNome(String nome);
 
 	@Query("SELECT g FROM Grupo g JOIN g.alunos a WHERE a.idPessoa = :idPessoa")
-	List<Grupo> findGruposByAluno(@Param("idPessoa")Long idPessoa);
+	List<Grupo> findGruposByAluno(@Param("idPessoa") Long idPessoa);
+
+	@Query("SELECT g FROM Grupo g JOIN g.demanda d WHERE d.idDemanda = :idDemanda")
+	List<Grupo> buscarGruposComDemanda(@Param("idDemanda") Long idDemanda);
+
 
 
 }

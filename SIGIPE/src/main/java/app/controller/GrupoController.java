@@ -24,14 +24,14 @@ import app.service.GrupoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/grupo")
+@RequestMapping("/api/grupo")
 @Validated
 @CrossOrigin("*")
 public class GrupoController {
 	@Autowired
 	GrupoService grupoService;
 
-
+	@PreAuthorize("hasRole('luno')")
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
@@ -45,7 +45,7 @@ public class GrupoController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@Valid @PathVariable long id) {
+	public ResponseEntity<?> findById(@PathVariable long id) {
 		try {
 			Grupo grupo = this.grupoService.findById(id);
 			return ResponseEntity.ok().body(grupo);
@@ -102,17 +102,30 @@ public class GrupoController {
 
 	}
 
-   @GetMapping("/findGruposByAlunoId")
-	public ResponseEntity<List<Grupo>> findGruposByAlunoId(@Valid @RequestParam Long idPessoa){
+	@PreAuthorize("hasRole('aluno')")
+	@GetMapping("/findGruposByAlunoId")
+	public ResponseEntity<List<Grupo>> buscarGruposPorIdAluno(@RequestParam long idPessoa) {
+		try {
+			List<Grupo> grupos = grupoService.findGruposByAlunoId(idPessoa);
+			return new ResponseEntity<>(grupos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	@PreAuthorize("hasRole('aluno')")
+	@PostMapping("/associarDemanda")
+	public ResponseEntity<Grupo> associarDemandaAoGrupo(@RequestParam long grupoId,@RequestParam long demandaId){
 
 		try {
 
-			List<Grupo> grupos = grupoService.findGruposByAlunoId(idPessoa);
-			return new ResponseEntity<>(grupos,HttpStatus.OK);
+               Grupo grupo = grupoService.associarDemandaAoGrupo(grupoId,demandaId);
+			   return new ResponseEntity<>(grupo,HttpStatus.OK);
 
 		}catch (Exception e){
-			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
 		}
 
-   }
+	}
 }
