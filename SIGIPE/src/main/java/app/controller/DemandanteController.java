@@ -44,6 +44,7 @@ public class DemandanteController {
 		try {
 			return new ResponseEntity<DemandanteDto>(this.demandanteService.update(id, demandante), HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
