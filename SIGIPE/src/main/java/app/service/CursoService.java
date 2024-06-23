@@ -21,9 +21,19 @@ public class CursoService {
 		return this.cursoRepository.save(curso);
 	}
 
-	public Curso update(long id, Curso curso) {
-		curso.setId(id);
-		return this.cursoRepository.save(curso);
+	public Curso update(long id, Curso cursoNovo) {
+		Optional<Curso> optCurso = this.cursoRepository.findById(id);
+		if(optCurso.isPresent()) {
+			Curso cursoOld = optCurso.get();
+			cursoNovo.setId(id);
+			cursoNovo.setAlunos(cursoOld.getAlunos());
+			cursoNovo.setProfessores(cursoOld.getProfessores());
+			cursoNovo.setCoordenadores(cursoOld.getCoordenadores());
+			cursoNovo.setDemandas(cursoOld.getDemandas());
+			cursoNovo.setTurmas(cursoOld.getTurmas());
+			return this.cursoRepository.save(cursoNovo);
+		}
+		throw new RuntimeException("Id não encontrado.");
 	}
 
 	public List<Curso> findAll() {
@@ -50,6 +60,6 @@ public class CursoService {
 			this.cursoRepository.deleteById(id);
 			return curso;
 		}
-		throw new RuntimeException("Curso not found with id: " + id);
+		throw new RuntimeException("Id não encontrado.");
 	}
 }

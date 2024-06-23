@@ -1,12 +1,14 @@
 package app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.CoordenadorExtensao;
 import app.repository.CoordenadorExtensaoRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CoordenadorExtensaoService {
@@ -18,9 +20,14 @@ public class CoordenadorExtensaoService {
 		return this.coordenadorExtensaoRepository.save(coordenadorExtensao);
 	}
 
-	public CoordenadorExtensao update(long id, CoordenadorExtensao coordenadorExtensao) {
-		coordenadorExtensao.setId(id);
-		return this.coordenadorExtensaoRepository.save(coordenadorExtensao);
+	public CoordenadorExtensao update(long id, CoordenadorExtensao coordenadorExtensaoNovo) {
+		Optional<CoordenadorExtensao> optCoordenadorExtensao = this.coordenadorExtensaoRepository.findById(id);
+		if(optCoordenadorExtensao.isPresent()) {
+			coordenadorExtensaoNovo.setId(id);
+			
+			return this.coordenadorExtensaoRepository.save(coordenadorExtensaoNovo);
+		}
+		throw new RuntimeException("Id não encontrado.");
 	}
 
 	public List<CoordenadorExtensao> findAll() {
@@ -28,15 +35,21 @@ public class CoordenadorExtensaoService {
 	}
 
 	public CoordenadorExtensao findById(long idCoordenadorExtensao) {
-		return this.coordenadorExtensaoRepository.findById(idCoordenadorExtensao).get();
+		Optional<CoordenadorExtensao> optionalCoordenadorExtensao = this.coordenadorExtensaoRepository.findById(idCoordenadorExtensao);
+		if (optionalCoordenadorExtensao.isPresent())
+			return optionalCoordenadorExtensao.get();
+		throw new RuntimeException("Id não encontrado.");
 	}
 
+	@Transactional
 	public CoordenadorExtensao deleteById(long idCoordenadorExtensao) {
-		CoordenadorExtensao coordenadorExtensao = findById(idCoordenadorExtensao);
-		if(coordenadorExtensao != null) {
+		Optional<CoordenadorExtensao> optionalCoordenadorExtensao = this.coordenadorExtensaoRepository.findById(idCoordenadorExtensao);
+		if (optionalCoordenadorExtensao.isPresent()) {
+			CoordenadorExtensao coordenadorExtensao = optionalCoordenadorExtensao.get();
+			
 			this.coordenadorExtensaoRepository.deleteById(idCoordenadorExtensao);
-			return coordenadorExtensao;			
+			return coordenadorExtensao;
 		}
-		throw new RuntimeException();
+		throw new RuntimeException("Id não encontrado.");
 	}
 }

@@ -2,6 +2,8 @@ package app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +30,21 @@ public class CoodenadorCursoController {
 
 	@Autowired
 	private CoordenadorCursoService coordenadorCursoService;
+	
+	private Logger logger = LoggerFactory.getLogger(CoordenadorCurso.class);
 
 	@PostMapping("/save")
 	public ResponseEntity<CoordenadorCurso> save(@Valid @RequestBody CoordenadorCurso coordenadorCurso) {
+	    logger.trace("Recepção de requisição de save dados: " + coordenadorCurso);
+	    System.out.println(coordenadorCurso.getNome());
+	    System.out.println(coordenadorCurso.getCpf());
+	    System.out.println(coordenadorCurso.getCurso().getId());
 		try {
-			return new ResponseEntity<CoordenadorCurso>(this.coordenadorCursoService.save(coordenadorCurso), HttpStatus.OK);
+			coordenadorCurso = this.coordenadorCursoService.save(coordenadorCurso);
+	        logger.info("Save bem sucedido com dados: " + coordenadorCurso);
+			return new ResponseEntity<CoordenadorCurso>(coordenadorCurso, HttpStatus.OK);
 		} catch (Exception e) {
+	        logger.error("Save falho com dados", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -43,6 +54,7 @@ public class CoodenadorCursoController {
 		try {
 			return new ResponseEntity<CoordenadorCurso>(this.coordenadorCursoService.update(id, coordenadorCurso), HttpStatus.OK);
 		} catch (Exception e) {
+	        logger.error("Save falho com dados", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

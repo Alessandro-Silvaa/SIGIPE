@@ -3,11 +3,13 @@ package app.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.TipoInstituicao;
 import app.repository.TipoInstituicaoRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class TipoInstituicaoService {
@@ -19,9 +21,16 @@ public class TipoInstituicaoService {
 		return this.tipoInstituicaoRepository.save(tipoInstituicao);
 	}
 
-	public TipoInstituicao update(long id, TipoInstituicao tipoInstituicao) {
-		tipoInstituicao.setId(id);
-		return this.tipoInstituicaoRepository.save(tipoInstituicao);
+	public TipoInstituicao update(long id, TipoInstituicao tipoInstituicaoNovo) {
+		Optional<TipoInstituicao> optTipoInstituicao = this.tipoInstituicaoRepository.findById(id);
+		if(optTipoInstituicao.isPresent()) {
+			TipoInstituicao tipoInstituicaoOld = optTipoInstituicao.get();
+			tipoInstituicaoNovo.setId(id);
+			tipoInstituicaoNovo.setInstituicoes(tipoInstituicaoOld.getInstituicoes());
+			
+			return this.tipoInstituicaoRepository.save(tipoInstituicaoNovo);
+		}
+		throw new RuntimeException("Id não encontrado.");
 	}
 
 	public List<TipoInstituicao> findAll() {
@@ -29,17 +38,24 @@ public class TipoInstituicaoService {
 	}
 
 	public TipoInstituicao findById(long idTipoInstituicao) {
-		return this.tipoInstituicaoRepository.findById(idTipoInstituicao).get();
+		Optional<TipoInstituicao> optionalTipoInstituicao = this.tipoInstituicaoRepository.findById(idTipoInstituicao);
+		if (optionalTipoInstituicao.isPresent())
+			return optionalTipoInstituicao.get();
+		throw new RuntimeException("Id não encontrado.");
 	}
 
+	@Transactional
 	public TipoInstituicao deleteById(long idTipoInstituicao) {
-		Optional<TipoInstituicao> optionalTipo = this.tipoInstituicaoRepository.findById(idTipoInstituicao);
-		if(optionalTipo.isPresent()) {
-			TipoInstituicao tipo = optionalTipo.get();
+		Optional<TipoInstituicao> optionalTipoInstituicao = this.tipoInstituicaoRepository.findById(idTipoInstituicao);
+		if (optionalTipoInstituicao.isPresent()) {
+			TipoInstituicao tipoInstituicao = optionalTipoInstituicao.get();
+			
+			// Inicialize as coleções necessárias
+	        Hibernate.initialize(tipoInstituicao.getInstituicoes());
+			
 			this.tipoInstituicaoRepository.deleteById(idTipoInstituicao);
-			return tipo;
+			return tipoInstituicao;
 		}
-		throw new RuntimeException();
+		throw new RuntimeException("Id não encontrado.");
 	}
-
 }

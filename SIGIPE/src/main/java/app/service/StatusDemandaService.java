@@ -1,12 +1,15 @@
 package app.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.StatusDemanda;
 import app.repository.StatusDemandaRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class StatusDemandaService {
@@ -18,9 +21,16 @@ public class StatusDemandaService {
 		return this.statusDemandaRepository.save(statusDemanda);
 	}
 
-	public StatusDemanda update(long id, StatusDemanda statusDemanda) {
-		statusDemanda.setId(id);
-		return this.statusDemandaRepository.save(statusDemanda);
+	public StatusDemanda update(long id, StatusDemanda statusDemandaNovo) {
+		Optional<StatusDemanda> optStatusDemanda = this.statusDemandaRepository.findById(id);
+		if(optStatusDemanda.isPresent()) {
+			StatusDemanda statusDemandaOld = optStatusDemanda.get();
+			statusDemandaNovo.setId(id);
+			statusDemandaNovo.setDemandas(statusDemandaOld.getDemandas());
+			
+			return this.statusDemandaRepository.save(statusDemandaNovo);
+		}
+		throw new RuntimeException("Id não encontrado.");
 	}
 
 	public List<StatusDemanda> findAll() {
@@ -28,16 +38,24 @@ public class StatusDemandaService {
 	}
 
 	public StatusDemanda findById(long idStatusDemanda) {
-		return this.statusDemandaRepository.findById(idStatusDemanda).get();
+		Optional<StatusDemanda> optionalStatusDemanda = this.statusDemandaRepository.findById(idStatusDemanda);
+		if (optionalStatusDemanda.isPresent())
+			return optionalStatusDemanda.get();
+		throw new RuntimeException("Id não encontrado.");
 	}
 
+	@Transactional
 	public StatusDemanda deleteById(long idStatusDemanda) {
-		StatusDemanda statusDemanda = findById(idStatusDemanda);
-		if(statusDemanda != null) {
+		Optional<StatusDemanda> optionalStatusDemanda = this.statusDemandaRepository.findById(idStatusDemanda);
+		if (optionalStatusDemanda.isPresent()) {
+			StatusDemanda statusDemanda = optionalStatusDemanda.get();
+			
+			// Inicialize as coleções necessárias
+	        Hibernate.initialize(statusDemanda.getDemandas());
+			
 			this.statusDemandaRepository.deleteById(idStatusDemanda);
-			return statusDemanda;			
+			return statusDemanda;
 		}
-		throw new RuntimeException();
+		throw new RuntimeException("Id não encontrado.");
 	}
-
 }

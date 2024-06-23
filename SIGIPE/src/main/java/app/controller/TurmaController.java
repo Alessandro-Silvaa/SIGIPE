@@ -31,10 +31,11 @@ public class TurmaController {
 	@Autowired
 	private TurmaService turmaService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(TurmaController.class);
+	private Logger logger = LoggerFactory.getLogger(TurmaController.class);
 
 	@PostMapping("/save")
 	public ResponseEntity<Turma> save(@Valid @RequestBody Turma turma) {
+	    logger.trace("Recepção de requisição de save dados: " + turma);
 		try {
 			return new ResponseEntity<Turma>(this.turmaService.save(turma), HttpStatus.OK);
 		} catch (Exception e) {
@@ -44,17 +45,20 @@ public class TurmaController {
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Turma> update(@Valid @RequestBody Turma turma, @PathVariable int id) {
-		try {
-			return new ResponseEntity<Turma>(this.turmaService.update(id, turma), HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e);
-			logger.error(e.getMessage());
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
+	    logger.trace("Recepção de requisição de update com id: " + id + " e dados: " + turma);
+	    try {
+	        Turma updatedTurma = this.turmaService.update(id, turma);
+	        logger.info("Update bem sucedido para o id: " + id);
+	        return new ResponseEntity<Turma>(updatedTurma, HttpStatus.OK);
+	    } catch (Exception e) {
+	        logger.error("Update falho para o id: " + id, e);
+	        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+	    }
 	}
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Turma>> findAll() {
+	    logger.trace("Recepção de requisição de findAll");
 		try {
 			List<Turma> lista = this.turmaService.findAll();
 			return new ResponseEntity<List<Turma>>(lista, HttpStatus.OK);
@@ -65,6 +69,7 @@ public class TurmaController {
 
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Turma> findById(@PathVariable long id) {
+		logger.trace("Recepção de requisição de findById com id: " + id);
 		try {
 			return new ResponseEntity<Turma>(this.turmaService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
@@ -75,6 +80,7 @@ public class TurmaController {
 
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Turma> deleteById(@PathVariable long id) {
+		logger.trace("Recepção de requisição de deleteById com id: " + id);
 		try {
 			return new ResponseEntity<Turma>(this.turmaService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
@@ -85,6 +91,7 @@ public class TurmaController {
 	
 	@PostMapping("/gerarTurmas/{idCurso}")
 	public ResponseEntity<List<Turma>> gerarTurmas(@PathVariable long idCurso) {
+		logger.trace("Recepção de requisição de gerarTurmas para curso com id: " + idCurso);
 		try {
 			return new ResponseEntity<List<Turma>>(this.turmaService.gerarTurmas(idCurso), HttpStatus.OK);
 		} catch (Exception e) {

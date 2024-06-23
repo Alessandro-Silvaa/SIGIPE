@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import app.entity.Curso;
 import app.entity.Turma;
 import app.repository.CursoRepository;
 import app.repository.TurmaRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class TurmaService {
@@ -25,9 +27,18 @@ public class TurmaService {
 		return this.turmaRepository.save(turma);
 	}
 
-	public Turma update(long id, Turma turma) {
-		turma.setId(id);
-		return this.turmaRepository.save(turma);
+	public Turma update(long id, Turma turmaNovo) {
+		Optional<Turma> optTurma = this.turmaRepository.findById(id);
+		if(optTurma.isPresent()) {
+			Turma turmaOld = optTurma.get();
+			turmaNovo.setId(id);
+			turmaNovo.setAlunos(turmaOld.getAlunos());
+			turmaNovo.setCurso(turmaOld.getCurso());
+			turmaNovo.setDemandas(turmaOld.getDemandas());
+			turmaNovo.setProfessores(turmaOld.getProfessores());
+			return this.turmaRepository.save(turmaNovo);
+		}
+		throw new RuntimeException("Id não encontrado.");
 	}
 
 	public List<Turma> findAll() {
@@ -35,16 +46,28 @@ public class TurmaService {
 	}
 
 	public Turma findById(long idTurma) {
-		return this.turmaRepository.findById(idTurma).get();
+		Optional<Turma> optionalTurma = this.turmaRepository.findById(idTurma);
+		if (optionalTurma.isPresent())
+			return optionalTurma.get();
+		throw new RuntimeException("Id não encontrado.");
 	}
 
+	@Transactional
 	public Turma deleteById(long idTurma) {
-		Turma turma = findById(idTurma);
-		if(turma != null) {
+		Optional<Turma> optionalTurma = this.turmaRepository.findById(idTurma);
+		if (optionalTurma.isPresent()) {
+			Turma turma = optionalTurma.get();
+			
+			// Inicialize as coleções necessárias
+	        Hibernate.initialize(turma.getAlunos());
+	        Hibernate.initialize(turma.getProfessores());
+	        Hibernate.initialize(turma.getDemandas());
+	        Hibernate.initialize(turma.getCurso());
+			
 			this.turmaRepository.deleteById(idTurma);
-			return turma;			
+			return turma;
 		}
-		throw new RuntimeException();
+		throw new RuntimeException("Id não encontrado.");
 	}
 	
 	public List<Turma> gerarTurmas(long idCurso) {
@@ -62,5 +85,4 @@ public class TurmaService {
 		}
 		throw new RuntimeException();
 	}
-
 }
