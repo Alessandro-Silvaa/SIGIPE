@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import app.entity.Aluno;
 import app.entity.Demanda;
+import app.entity.StatusDemanda;
 import app.repository.AlunoRepository;
 import app.repository.DemandaRepository;
+import app.repository.StatusDemandaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +28,9 @@ public class GrupoService {
 
 	@Autowired
 	DemandaRepository demandaRepository;
+
+	@Autowired
+	StatusDemandaRepository statusDemandaRepository;
 
 	public List<Grupo> findAll() {
 		List<Grupo> lista = this.grupoRepository.findAll();
@@ -84,5 +89,20 @@ public class GrupoService {
 
 		// Salva e retorna o grupo atualizado
 		return grupoRepository.save(grupo);
+	}
+
+	@Transactional
+	public void alterarStatusDemanda(long demandaId, long statusId) {
+
+		// Busca a demanda pelo ID
+		Demanda demanda = demandaRepository.findById(demandaId)
+				.orElseThrow(() -> new RuntimeException("Demanda não encontrada com o ID: " + demandaId));
+
+		//Busca o status correspondente
+		StatusDemanda statusDemanda = statusDemandaRepository.findById(statusId)
+				.orElseThrow(() -> new RuntimeException("Status não encontrado com o ID: " + statusId));
+
+		//Define o novo status da demanda
+		demanda.setStatus(statusDemanda);
 	}
 }

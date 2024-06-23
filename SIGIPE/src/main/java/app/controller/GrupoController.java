@@ -31,7 +31,7 @@ public class GrupoController {
 	@Autowired
 	GrupoService grupoService;
 
-	@PreAuthorize("hasRole('luno')")
+	@PreAuthorize("hasRole('aluno') OR hasRole('professor')")
 	@GetMapping("/findAll")
 	public ResponseEntity<?> findAll() {
 		try {
@@ -73,7 +73,7 @@ public class GrupoController {
 		}
 	}
 
-	@PreAuthorize("hasRole('Aluno')")
+	@PreAuthorize("hasRole('aluno')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Grupo grupo) {
 		try {
@@ -112,6 +112,7 @@ public class GrupoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	@PreAuthorize("hasRole('aluno')")
 	@PostMapping("/associarDemanda")
 	public ResponseEntity<Grupo> associarDemandaAoGrupo(@RequestParam long grupoId,@RequestParam long demandaId){
@@ -124,6 +125,23 @@ public class GrupoController {
 		}catch (Exception e){
 
                  return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+
+		}
+
+	}
+
+	@PreAuthorize("hasRole('professor')")
+	@PutMapping("/alterarStatusDemanda")
+	public ResponseEntity<Void> alterarStatusDemanda(@RequestParam long demandaId,@RequestParam long statusId){
+
+		try {
+
+			grupoService.alterarStatusDemanda(demandaId,statusId);
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		}catch (Exception e){
+
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
 
 		}
 

@@ -32,7 +32,7 @@ public class DemandaController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu a excessão: " + e.getMessage());
 		}
 	}
-	@PreAuthorize("hasRole('aluno')")
+	@PreAuthorize("hasRole('aluno') ")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
 		try {
