@@ -35,17 +35,11 @@ public class CoodenadorCursoController {
 
 	@PostMapping("/save")
 	public ResponseEntity<CoordenadorCurso> save(@Valid @RequestBody CoordenadorCurso coordenadorCurso) {
-	    logger.trace("Recepção de requisição de save dados: " + coordenadorCurso);
-	    System.out.println(coordenadorCurso.getNome());
-	    System.out.println(coordenadorCurso.getCpf());
-	    System.out.println(coordenadorCurso.getCurso().getId());
 		try {
-			coordenadorCurso = this.coordenadorCursoService.save(coordenadorCurso);
-	        logger.info("Save bem sucedido com dados: " + coordenadorCurso);
-			return new ResponseEntity<CoordenadorCurso>(coordenadorCurso, HttpStatus.OK);
-		} catch (Exception e) {
-	        logger.error("Save falho com dados", e);
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			CoordenadorCurso savedCoordenadorCurso = coordenadorCursoService.save(coordenadorCurso);
+			return ResponseEntity.ok(savedCoordenadorCurso);
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 

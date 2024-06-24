@@ -26,6 +26,7 @@ import lombok.Setter;
 public class Turma{
 	//Atributos de definição
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
