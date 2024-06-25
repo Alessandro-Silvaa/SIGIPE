@@ -44,7 +44,7 @@ public class TurmaController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Turma> update(@Valid @RequestBody Turma turma, @PathVariable int id) {
+	public ResponseEntity<Turma> update(@Valid @RequestBody Turma turma, @PathVariable long id) {
 	    logger.trace("Recepção de requisição de update com id: " + id + " e dados: " + turma);
 	    try {
 	        Turma updatedTurma = this.turmaService.update(id, turma);

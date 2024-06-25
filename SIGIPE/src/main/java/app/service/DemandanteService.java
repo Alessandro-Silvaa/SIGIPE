@@ -1,8 +1,11 @@
 package app.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import app.entity.Instituicao;
+import app.repository.InstituicaoRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +20,38 @@ public class DemandanteService {
 	@Autowired
 	private DemandanteRepository demandanteRepository;
 
+	@Autowired
+	InstituicaoRepository instituicaoRepository;
+
 	public Demandante save(Demandante demandante) {
 		return this.demandanteRepository.save(demandante);
 	}
 
+	@Transactional
 	public Demandante update(long id, Demandante demandanteNovo) {
 		Optional<Demandante> optDemandante = this.demandanteRepository.findById(id);
-		if(optDemandante.isPresent()) {
+		if (optDemandante.isPresent()) {
 			Demandante demandanteOld = optDemandante.get();
 			demandanteNovo.setId(id);
-			demandanteNovo.setInstituicao(demandanteOld.getInstituicao());
+
+			System.out.println(demandanteNovo.getInstituicao().getId());
+			System.out.println(demandanteNovo.getInstituicao().getNome());
+
+			if (demandanteOld.getInstituicao() == null ||
+					!Objects.equals(demandanteNovo.getInstituicao().getId(), demandanteOld.getInstituicao().getId())) {
+				Optional<Instituicao> optInstituicao = this.instituicaoRepository.findById(demandanteNovo.getInstituicao().getId());
+				if (optInstituicao.isPresent()) {
+					demandanteNovo.setInstituicao(optInstituicao.get());
+				} else {
+					Instituicao instituicao = this.instituicaoRepository.save(demandanteNovo.getInstituicao());
+					demandanteNovo.setInstituicao(instituicao);
+				}
+			} else {
+				demandanteNovo.setInstituicao(demandanteOld.getInstituicao());
+			}
+
 			demandanteNovo.setDemandas(demandanteOld.getDemandas());
-			
+
 			return this.demandanteRepository.save(demandanteNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");

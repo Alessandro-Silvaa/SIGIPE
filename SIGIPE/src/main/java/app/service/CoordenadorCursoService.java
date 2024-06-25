@@ -90,7 +90,7 @@ public class CoordenadorCursoService {
 			
 			// Inicialize as coleções necessárias
 	        Hibernate.initialize(coordenadorCurso.getCurso());
-			
+
 			this.coordenadorCursoRepository.deleteById(idCoordenadorCurso);
 			return coordenadorCurso;
 		}

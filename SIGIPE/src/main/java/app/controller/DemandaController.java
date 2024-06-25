@@ -39,14 +39,14 @@ public class DemandaController {
 		}
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Demanda> update(@Valid @RequestBody Demanda demanda, @PathVariable int id) {
-		try {
-			return new ResponseEntity<Demanda>(this.demandaService.update(id, demanda), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		@PutMapping("/update/{id}")
+		public ResponseEntity<Demanda> update(@Valid @RequestBody Demanda demanda, @PathVariable int id) {
+			try {
+				return new ResponseEntity<Demanda>(this.demandaService.update(id, demanda), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			}
 		}
-	}
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Demanda>> findAll() {

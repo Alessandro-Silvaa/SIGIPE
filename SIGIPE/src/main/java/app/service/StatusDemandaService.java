@@ -21,17 +21,23 @@ public class StatusDemandaService {
 		return this.statusDemandaRepository.save(statusDemanda);
 	}
 
+	@Transactional
 	public StatusDemanda update(long id, StatusDemanda statusDemandaNovo) {
 		Optional<StatusDemanda> optStatusDemanda = this.statusDemandaRepository.findById(id);
-		if(optStatusDemanda.isPresent()) {
+		if (optStatusDemanda.isPresent()) {
 			StatusDemanda statusDemandaOld = optStatusDemanda.get();
 			statusDemandaNovo.setId(id);
+
+			System.out.println(statusDemandaNovo.getId());
+			System.out.println(statusDemandaNovo.getNome());
+
 			statusDemandaNovo.setDemandas(statusDemandaOld.getDemandas());
-			
+
 			return this.statusDemandaRepository.save(statusDemandaNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");
 	}
+
 
 	public List<StatusDemanda> findAll() {
 		return this.statusDemandaRepository.findAll();

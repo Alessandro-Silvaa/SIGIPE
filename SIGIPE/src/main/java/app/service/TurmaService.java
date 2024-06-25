@@ -2,6 +2,7 @@ package app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.hibernate.Hibernate;
@@ -27,15 +28,34 @@ public class TurmaService {
 		return this.turmaRepository.save(turma);
 	}
 
+	@Transactional
 	public Turma update(long id, Turma turmaNovo) {
 		Optional<Turma> optTurma = this.turmaRepository.findById(id);
-		if(optTurma.isPresent()) {
+		if (optTurma.isPresent()) {
 			Turma turmaOld = optTurma.get();
 			turmaNovo.setId(id);
+
+			System.out.println(turmaNovo.getCurso().getId());
+			System.out.println(turmaNovo.getCurso().getNome());
+			System.out.println(turmaNovo.getCurso().getQuantidadePeriodos());
+
+			if (turmaOld.getCurso() == null ||
+					!Objects.equals(turmaNovo.getCurso().getId(), turmaOld.getCurso().getId())) {
+				Optional<Curso> optCurso = this.cursoRepository.findById(turmaNovo.getCurso().getId());
+				if (optCurso.isPresent()) {
+					turmaNovo.setCurso(optCurso.get());
+				} else {
+					Curso curso = this.cursoRepository.save(turmaNovo.getCurso());
+					turmaNovo.setCurso(curso);
+				}
+			} else {
+				turmaNovo.setCurso(turmaOld.getCurso());
+			}
+
 			turmaNovo.setAlunos(turmaOld.getAlunos());
-			turmaNovo.setCurso(turmaOld.getCurso());
 			turmaNovo.setDemandas(turmaOld.getDemandas());
 			turmaNovo.setProfessores(turmaOld.getProfessores());
+
 			return this.turmaRepository.save(turmaNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");

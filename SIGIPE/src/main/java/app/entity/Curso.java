@@ -43,11 +43,11 @@ public class Curso {
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")	
+	@JsonIgnoreProperties("curso")
 	private List<CoordenadorCurso> coordenadores;
 	
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")	
+	@JsonIgnoreProperties("curso")
 	private List<Turma> turmas;
 	
 	@ManyToMany(mappedBy = "cursos", fetch = FetchType.EAGER)
