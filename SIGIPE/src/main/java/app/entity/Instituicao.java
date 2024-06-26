@@ -2,6 +2,7 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -26,7 +27,7 @@ public class Instituicao {
 	
 	//Atributos de relacionamento
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("instituicoes")
+	@JsonBackReference
 	private TipoInstituicao tipo;
 
 	@OneToOne(fetch = FetchType.EAGER)

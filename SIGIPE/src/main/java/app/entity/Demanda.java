@@ -2,8 +2,10 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,15 +33,15 @@ public class Demanda {
 	//Atributos de relacionamento
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandas")
+	@JsonBackReference
 	private StatusDemanda status;
 	
 	@OneToOne(mappedBy = "demanda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demanda")
+	@JsonBackReference
 	private Demandante demandante;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demanda")
+	@JsonBackReference
 	private Instituicao instituicao;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -47,14 +49,14 @@ public class Demanda {
 	private List<Curso> cursos;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandas")
+	@JsonBackReference
 	private List<Turma> turmas;
 	
 	@OneToMany(mappedBy = "demandaInscrita", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandaInscrita")
+	@JsonManagedReference
 	private List<Grupo> gruposInscritos;
 	
 	@OneToMany(mappedBy = "demandaSolicitada", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandaSolicitada")
+	@JsonManagedReference
 	private List<Grupo> gruposSolicitacao;
 }

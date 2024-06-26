@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class TipoInstituicao {
 	//Atributos de relacionamento
 	
 	@OneToMany(mappedBy = "tipo", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("tipo")
+	@JsonManagedReference
 	private List<Instituicao> instituicoes;
 	
 }

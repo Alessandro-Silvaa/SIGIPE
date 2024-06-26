@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +32,6 @@ public class StatusDemanda {
 	//Atributos de relacionamento
 	
 	@OneToMany(mappedBy = "status", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("status")
+	@JsonManagedReference
 	private List<Demanda> demandas;
 }

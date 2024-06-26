@@ -2,8 +2,10 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,18 +37,18 @@ public class Turma{
 	//Atributos de relacionamento
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("turmas")
+	@JsonBackReference
 	private Curso curso;
 	
 	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("turma")
+	@JsonManagedReference
 	private List<Aluno> alunos;
 
 	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("turma")
+	@JsonManagedReference
 	private List<Professor> professores;
 	
 	@ManyToMany(mappedBy = "turmas", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("turmas")
+	@JsonBackReference
 	private List<Demanda> demandas;
 }

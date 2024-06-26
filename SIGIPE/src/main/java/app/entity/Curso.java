@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,33 +25,33 @@ import lombok.Setter;
 @Entity
 public class Curso {
 	//Atributos de definição
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@NotBlank
 	private String nome;
 	private int quantidadePeriodos;
-	
+
 	//Atributos de relacionamentowqk
-	
+
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")
+	@JsonManagedReference
 	private List<Aluno> alunos;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties(value = {"curso","professores.turma.curso"})
+	@JsonManagedReference
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")
+	@JsonManagedReference
 	private List<CoordenadorCurso> coordenadores;
-	
+
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")
+	@JsonManagedReference
 	private List<Turma> turmas;
-	
+
 	@ManyToMany(mappedBy = "cursos", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("cursos")
+	@JsonManagedReference
 	private List<Demanda> demandas;
 }
