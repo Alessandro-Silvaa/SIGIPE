@@ -46,7 +46,7 @@ public class DemandaService {
 
 			try {
 				// Verificação e atualização da Instituição
-				if (demandaNovo.getInstituicao() != null &&
+				if (demandaNovo.getInstituicao() !=  null&&
 						(demandaOld.getInstituicao() == null ||
 								!Objects.equals(demandaNovo.getInstituicao().getId(), demandaOld.getInstituicao().getId()))) {
 					Optional<Instituicao> optInstituicao = this.instituicaoRepository.findById(demandaNovo.getInstituicao().getId());

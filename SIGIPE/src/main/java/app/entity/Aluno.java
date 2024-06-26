@@ -18,7 +18,6 @@ import lombok.Setter;
 @Entity
 public class Aluno extends Pessoa{
 	//Atributos de relacionamento
-	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("alunos")
 	private Turma turma;

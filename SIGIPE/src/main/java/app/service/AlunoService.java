@@ -3,6 +3,12 @@ package app.service;
 import java.util.List;
 import java.util.Optional;
 
+import app.entity.Curso;
+import app.entity.Grupo;
+import app.entity.Turma;
+import app.repository.CursoRepository;
+import app.repository.GrupoRepository;
+import app.repository.TurmaRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +23,53 @@ public class AlunoService {
 	@Autowired
 	private AlunoRepository alunoRepository;
 
+	@Autowired
+	private TurmaRepository turmaRepository;
+
+	@Autowired
+	private CursoRepository cursoRepository;
+
+	@Autowired
+	private GrupoRepository grupoRepository;
+
+	@Transactional
 	public Aluno save(Aluno aluno) {
+		// Verificar e associar Turma
+		if (aluno.getTurma() != null && aluno.getTurma().getId() != 0) {
+			Optional<Turma> optTurma = this.turmaRepository.findById(aluno.getTurma().getId());
+			if (optTurma.isPresent()) {
+				aluno.setTurma(optTurma.get());
+			} else {
+				Turma turma = this.turmaRepository.save(aluno.getTurma());
+				aluno.setTurma(turma);
+			}
+		}
+
+		// Verificar e associar Curso
+		if (aluno.getCurso() != null && aluno.getCurso().getId() != 0) {
+			Optional<Curso> optCurso = this.cursoRepository.findById(aluno.getCurso().getId());
+			if (optCurso.isPresent()) {
+				aluno.setCurso(optCurso.get());
+			} else {
+				Curso curso = this.cursoRepository.save(aluno.getCurso());
+				aluno.setCurso(curso);
+			}
+		}
+
+		// Verificar e associar Grupo
+		if (aluno.getGrupo() != null && aluno.getGrupo().getId() != 0) {
+			Optional<Grupo> optGrupo = this.grupoRepository.findById(aluno.getGrupo().getId());
+			if (optGrupo.isPresent()) {
+				aluno.setGrupo(optGrupo.get());
+			} else {
+				Grupo grupo = this.grupoRepository.save(aluno.getGrupo());
+				aluno.setGrupo(grupo);
+			}
+		}
+
 		return this.alunoRepository.save(aluno);
 	}
+
 
 	public Aluno update(long id, Aluno alunoNovo) {
 		Optional<Aluno> optAluno = this.alunoRepository.findById(id);

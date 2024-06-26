@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import app.entity.Demanda;
 import app.entity.Instituicao;
+import app.repository.DemandaRepository;
 import app.repository.InstituicaoRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,11 @@ import jakarta.transaction.Transactional;
 public class DemandanteService {
 
 	@Autowired
-	private DemandanteRepository demandanteRepository;
+	DemandanteRepository demandanteRepository;
 
 	@Autowired
-	InstituicaoRepository instituicaoRepository;
+	private DemandaRepository demandaRepository;
+
 
 	public Demandante save(Demandante demandante) {
 		return this.demandanteRepository.save(demandante);
@@ -34,23 +37,19 @@ public class DemandanteService {
 			Demandante demandanteOld = optDemandante.get();
 			demandanteNovo.setId(id);
 
-			System.out.println(demandanteNovo.getInstituicao().getId());
-			System.out.println(demandanteNovo.getInstituicao().getNome());
-
-			if (demandanteOld.getInstituicao() == null ||
-					!Objects.equals(demandanteNovo.getInstituicao().getId(), demandanteOld.getInstituicao().getId())) {
-				Optional<Instituicao> optInstituicao = this.instituicaoRepository.findById(demandanteNovo.getInstituicao().getId());
-				if (optInstituicao.isPresent()) {
-					demandanteNovo.setInstituicao(optInstituicao.get());
+			// Verificar e associar Demanda
+			if (demandanteOld.getDemanda() == null ||
+					!Objects.equals(demandanteNovo.getDemanda().getId(), demandanteOld.getDemanda().getId())) {
+				Optional<Demanda> optDemanda = this.demandaRepository.findById(demandanteNovo.getDemanda().getId());
+				if (optDemanda.isPresent()) {
+					demandanteNovo.setDemanda(optDemanda.get());
 				} else {
-					Instituicao instituicao = this.instituicaoRepository.save(demandanteNovo.getInstituicao());
-					demandanteNovo.setInstituicao(instituicao);
+					Demanda demanda = this.demandaRepository.save(demandanteNovo.getDemanda());
+					demandanteNovo.setDemanda(demanda);
 				}
 			} else {
-				demandanteNovo.setInstituicao(demandanteOld.getInstituicao());
+				demandanteNovo.setDemanda(demandanteOld.getDemanda());
 			}
-
-			demandanteNovo.setDemandas(demandanteOld.getDemandas());
 
 			return this.demandanteRepository.save(demandanteNovo);
 		}
@@ -73,11 +72,11 @@ public class DemandanteService {
 		Optional<Demandante> optionalDemandante = this.demandanteRepository.findById(idDemandante);
 		if (optionalDemandante.isPresent()) {
 			Demandante demandante = optionalDemandante.get();
-			
-			// Inicialize as coleções necessárias
-	        Hibernate.initialize(demandante.getDemandas());
-	        Hibernate.initialize(demandante.getInstituicao());
-			
+
+			// Inicializar as coleções necessárias
+			Hibernate.initialize(demandante.getDemanda());
+
+			// Deletar o Demandante
 			this.demandanteRepository.deleteById(idDemandante);
 			return demandante;
 		}
