@@ -39,7 +39,7 @@ public class Curso {
 	private List<Aluno> alunos;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("curso")
+	@JsonIgnoreProperties(value = {"curso","professores.turma.curso"})
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
