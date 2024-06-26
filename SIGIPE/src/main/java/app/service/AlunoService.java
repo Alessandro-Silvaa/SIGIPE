@@ -1,6 +1,7 @@
 package app.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import app.entity.Curso;
@@ -71,19 +72,59 @@ public class AlunoService {
 	}
 
 
+
+	@Transactional
 	public Aluno update(long id, Aluno alunoNovo) {
 		Optional<Aluno> optAluno = this.alunoRepository.findById(id);
-		if(optAluno.isPresent()) {
+		if (optAluno.isPresent()) {
 			Aluno alunoOld = optAluno.get();
 			alunoNovo.setId(id);
-			alunoNovo.setCurso(alunoOld.getCurso());
-			alunoNovo.setGrupo(alunoOld.getGrupo());
-			alunoNovo.setTurma(alunoOld.getTurma());
-			
+
+			// Verificar e associar Turma
+			if (alunoOld.getTurma() == null || !Objects.equals(alunoNovo.getTurma().getId(), alunoOld.getTurma().getId())) {
+				Optional<Turma> optTurma = this.turmaRepository.findById(alunoNovo.getTurma().getId());
+				if (optTurma.isPresent()) {
+					alunoNovo.setTurma(optTurma.get());
+				} else {
+					Turma turma = this.turmaRepository.save(alunoNovo.getTurma());
+					alunoNovo.setTurma(turma);
+				}
+			} else {
+				alunoNovo.setTurma(alunoOld.getTurma());
+			}
+
+			// Verificar e associar Curso
+			if (alunoOld.getCurso() == null || !Objects.equals(alunoNovo.getCurso().getId(), alunoOld.getCurso().getId())) {
+				Optional<Curso> optCurso = this.cursoRepository.findById(alunoNovo.getCurso().getId());
+				if (optCurso.isPresent()) {
+					alunoNovo.setCurso(optCurso.get());
+				} else {
+					Curso curso = this.cursoRepository.save(alunoNovo.getCurso());
+					alunoNovo.setCurso(curso);
+				}
+			} else {
+				alunoNovo.setCurso(alunoOld.getCurso());
+			}
+
+			// Verificar e associar Grupo
+			if (alunoOld.getGrupo() == null || !Objects.equals(alunoNovo.getGrupo().getId(), alunoOld.getGrupo().getId())) {
+				Optional<Grupo> optGrupo = this.grupoRepository.findById(alunoNovo.getGrupo().getId());
+				if (optGrupo.isPresent()) {
+					alunoNovo.setGrupo(optGrupo.get());
+				} else {
+					Grupo grupo = this.grupoRepository.save(alunoNovo.getGrupo());
+					alunoNovo.setGrupo(grupo);
+				}
+			} else {
+				alunoNovo.setGrupo(alunoOld.getGrupo());
+			}
+
+			// Salvar o aluno atualizado
 			return this.alunoRepository.save(alunoNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");
 	}
+
 
 	public List<Aluno> findAll() {
 		return this.alunoRepository.findAll();
