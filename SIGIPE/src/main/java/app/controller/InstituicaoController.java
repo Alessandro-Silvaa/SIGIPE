@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ public class InstituicaoController {
 	@Autowired
 	private InstituicaoService instituicaoService;
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Instituicao> save(@Valid @RequestBody Instituicao instituicao) {
 		try {
@@ -38,6 +40,7 @@ public class InstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Instituicao> update(@Valid @RequestBody Instituicao instituicao, @PathVariable int id) {
 		try {
@@ -47,6 +50,7 @@ public class InstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Instituicao>> findAll() {
 		try {
@@ -57,6 +61,7 @@ public class InstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Instituicao> findById(@PathVariable long id) {
 		try {
@@ -67,6 +72,7 @@ public class InstituicaoController {
 
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Instituicao> deleteById(@PathVariable long id) {
 		try {

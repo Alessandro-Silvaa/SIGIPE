@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,7 @@ public class TurmaController {
 	
 	private Logger logger = LoggerFactory.getLogger(TurmaController.class);
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Turma> save(@Valid @RequestBody Turma turma) {
 	    logger.trace("Recepção de requisição de save dados: " + turma);
@@ -43,6 +45,7 @@ public class TurmaController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Turma> update(@Valid @RequestBody Turma turma, @PathVariable long id) {
 	    logger.trace("Recepção de requisição de update com id: " + id + " e dados: " + turma);
@@ -56,6 +59,7 @@ public class TurmaController {
 	    }
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Turma>> findAll() {
 	    logger.trace("Recepção de requisição de findAll");
@@ -67,6 +71,7 @@ public class TurmaController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Turma> findById(@PathVariable long id) {
 		logger.trace("Recepção de requisição de findById com id: " + id);
@@ -77,7 +82,7 @@ public class TurmaController {
 		}
 
 	}
-
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Turma> deleteById(@PathVariable long id) {
 		logger.trace("Recepção de requisição de deleteById com id: " + id);
@@ -88,7 +93,8 @@ public class TurmaController {
 		}
 
 	}
-	
+
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/gerarTurmas/{idCurso}")
 	public ResponseEntity<List<Turma>> gerarTurmas(@PathVariable long idCurso) {
 		logger.trace("Recepção de requisição de gerarTurmas para curso com id: " + idCurso);

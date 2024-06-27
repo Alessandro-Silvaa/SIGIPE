@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ public class StatusDemandaController {
 	@Autowired
 	private StatusDemandaService statusDemandaService;
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<StatusDemanda> save(@Valid @RequestBody StatusDemanda statusDemanda) {
 		try {
@@ -38,6 +40,7 @@ public class StatusDemandaController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<StatusDemanda> update(@Valid @RequestBody StatusDemanda statusDemanda, @PathVariable int id) {
 		try {
@@ -47,6 +50,7 @@ public class StatusDemandaController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<StatusDemanda>> findAll() {
 		try {
@@ -57,6 +61,7 @@ public class StatusDemandaController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<StatusDemanda> findById(@PathVariable long id) {
 		try {
@@ -67,6 +72,7 @@ public class StatusDemandaController {
 
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<StatusDemanda> deleteById(@PathVariable long id) {
 		try {

@@ -34,6 +34,7 @@ public class GrupoController {
 
 	private Logger logger = LoggerFactory.getLogger(CursoController.class);
 
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Grupo> save(@Valid @RequestBody Grupo grupo) {
 		try {
@@ -43,7 +44,7 @@ public class GrupoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	@PreAuthorize("hasRole('aluno')")
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Grupo> update(@Valid @RequestBody Grupo grupo, @PathVariable int id) {
 		try {
@@ -54,6 +55,7 @@ public class GrupoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('aluno') OR hasRole('professor') OR hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Grupo>> findAll() {
 		try {
@@ -64,6 +66,7 @@ public class GrupoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('aluno') OR hasRole('professor') OR hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{idGrupo}")
 	public ResponseEntity<Grupo> findById(@PathVariable long idGrupo) {
 		try {
@@ -74,6 +77,7 @@ public class GrupoController {
 
 	}
 
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{idGrupo}")
 	public ResponseEntity<Grupo> deleteById(@PathVariable long idGrupo) {
 		try {

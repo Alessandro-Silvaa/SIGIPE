@@ -34,6 +34,7 @@ public class AlunoController {
 
 	private Logger logger = LoggerFactory.getLogger(CursoController.class);
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Aluno> save(@Valid @RequestBody Aluno aluno) {
 		try {
@@ -44,7 +45,7 @@ public class AlunoController {
 		}
 	}
 
-	@PreAuthorize("hasRole('aluno')")
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Aluno> update(@Valid @RequestBody Aluno aluno, @PathVariable int id) {
 		try {
@@ -55,6 +56,7 @@ public class AlunoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Aluno>> findAll() {
 		try {
@@ -64,7 +66,7 @@ public class AlunoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	@PreAuthorize("hasRole('aluno') OR hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Aluno> findById(@PathVariable long id) {
 		try {
@@ -75,6 +77,8 @@ public class AlunoController {
 
 	}
 
+
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Aluno> deleteById(@PathVariable long id) {
 		try {

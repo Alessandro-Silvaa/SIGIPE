@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,7 @@ public class CursoController {
 
 	private Logger logger = LoggerFactory.getLogger(CursoController.class);
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Curso> save(@Valid @RequestBody Curso curso) {
 		try {
@@ -43,6 +45,7 @@ public class CursoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Curso> update(@Valid @RequestBody Curso curso, @PathVariable int id) {
 		try {
@@ -53,6 +56,7 @@ public class CursoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Curso>> findAll() {
 		try {
@@ -64,6 +68,7 @@ public class CursoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Curso> findById(@PathVariable long id) {
 		try {
@@ -75,6 +80,7 @@ public class CursoController {
 
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Curso> deleteById(@PathVariable long id) {
 		try {

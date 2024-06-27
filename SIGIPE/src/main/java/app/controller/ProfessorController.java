@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ public class ProfessorController {
 	@Autowired
 	private ProfessorService professorService;
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<Professor> save(@Valid @RequestBody Professor professor) {
 		try {
@@ -38,6 +40,7 @@ public class ProfessorController {
 		}
 	}
 
+	@PreAuthorize("hasRole('professor') OR hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Professor> update(@Valid @RequestBody Professor professor, @PathVariable int id) {
 		try {
@@ -47,6 +50,8 @@ public class ProfessorController {
 		}
 	}
 
+
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Professor>> findAll() {
 		try {
@@ -57,6 +62,7 @@ public class ProfessorController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Professor> findById(@PathVariable long id) {
 		try {
@@ -67,6 +73,7 @@ public class ProfessorController {
 
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<Professor> deleteById(@PathVariable long id) {
 		try {

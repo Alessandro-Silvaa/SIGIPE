@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,7 @@ public class TipoInstituicaoController {
 
 	private Logger logger = LoggerFactory.getLogger(CursoController.class);
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
 	public ResponseEntity<TipoInstituicao> save(@Valid @RequestBody TipoInstituicao tipoInstituicao) {
 		try {
@@ -43,6 +45,7 @@ public class TipoInstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<TipoInstituicao> update(@Valid @RequestBody TipoInstituicao tipoInstituicao, @PathVariable int id) {
 		try {
@@ -53,6 +56,7 @@ public class TipoInstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findAll")
 	public ResponseEntity<List<TipoInstituicao>> findAll() {
 		try {
@@ -63,6 +67,7 @@ public class TipoInstituicaoController {
 		}
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<TipoInstituicao> findById(@PathVariable long id) {
 		try {
@@ -73,6 +78,7 @@ public class TipoInstituicaoController {
 
 	}
 
+	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@DeleteMapping("/deleteById/{id}")
 	public ResponseEntity<TipoInstituicao> deleteById(@PathVariable long id) {
 		try {
