@@ -51,10 +51,6 @@ public class CoordenadorCursoService {
 			CoordenadorCurso coordenadorCursoOld = optCoordenadorCurso.get();
 			coordenadorCursoNovo.setId(id);
 
-			System.out.println(coordenadorCursoNovo.getCurso().getId());
-			System.out.println(coordenadorCursoNovo.getCurso().getNome());
-			System.out.println(coordenadorCursoNovo.getCurso().getQuantidadePeriodos());
-
 			if (coordenadorCursoOld.getCurso() == null ||
 					!Objects.equals(coordenadorCursoNovo.getCurso().getId(), coordenadorCursoOld.getCurso().getId())) {
 				Optional<Curso> optCurso = this.cursoRespository.findById(coordenadorCursoNovo.getCurso().getId());

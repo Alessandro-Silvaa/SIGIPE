@@ -2,6 +2,8 @@ package app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +31,14 @@ public class TipoInstituicaoController {
 	@Autowired
 	private TipoInstituicaoService tipoInstituicaoService;
 
+	private Logger logger = LoggerFactory.getLogger(CursoController.class);
+
 	@PostMapping("/save")
 	public ResponseEntity<TipoInstituicao> save(@Valid @RequestBody TipoInstituicao tipoInstituicao) {
 		try {
 			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.save(tipoInstituicao), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro no salvamento", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -43,6 +48,7 @@ public class TipoInstituicaoController {
 		try {
 			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.update(id, tipoInstituicao), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro no alteramento", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

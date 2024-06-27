@@ -1,9 +1,12 @@
 package app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import app.entity.Aluno;
 import app.entity.Demanda;
+import app.repository.AlunoRepository;
 import app.repository.DemandaRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +25,26 @@ public class GrupoService {
 	@Autowired
 	private DemandaRepository demandaRepository;
 
+	@Autowired
+	private AlunoRepository alunoRepository;
+
 	@Transactional
 	public Grupo save(Grupo grupo) {
-		// Verificar e associar demandaSolicitada
-		if (grupo.getDemandaSolicitada() != null && grupo.getDemandaSolicitada().getId() != 0) {
-			Demanda demandaSolicitada = demandaRepository.findById(grupo.getDemandaSolicitada().getId())
-					.orElseThrow(() -> new IllegalArgumentException("Demanda solicitada não encontrada"));
-			grupo.setDemandaSolicitada(demandaSolicitada);
-		}
+		List<Aluno> lista = new ArrayList<>();
+		grupo.getAlunos().forEach((aluno ) ->{
+			Optional<Aluno> optionalAluno = this.alunoRepository.findById(aluno.getId());
+			if(optionalAluno.isPresent()){
+				lista.add(optionalAluno.get());
+				System.out.println(aluno.getNome());
+			}
+			else{
+				throw new RuntimeException("Não foi possivel encontrar o aluno de ID: " + aluno.getId());
+			}
 
+		});
+		grupo.setAlunos(lista);
 
-		// Verificar e associar demandaInscrita
-		if (grupo.getDemandaInscrita() != null && grupo.getDemandaInscrita().getId() != 0) {
-			Demanda demandaInscrita = demandaRepository.findById(grupo.getDemandaInscrita().getId())
-					.orElseThrow(() -> new IllegalArgumentException("Demanda inscrita não encontrada"));
-			grupo.setDemandaInscrita(demandaInscrita);
-		}
-
+		System.out.println(grupo.getAlunos().get(1).getNome());
 		return grupoRepository.save(grupo);
 	}
 
