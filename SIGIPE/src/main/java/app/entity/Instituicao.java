@@ -3,7 +3,6 @@ package app.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,13 +26,6 @@ public class Instituicao {
 	
 	//Atributos de relacionamento
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonBackReference(value = "tipo-instituicoes")
 	private TipoInstituicao tipo;
-
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "demanda_id",referencedColumnName = "id")
-	@JsonIgnoreProperties("instituicao")
-	private Demanda demanda;
-
-
 }

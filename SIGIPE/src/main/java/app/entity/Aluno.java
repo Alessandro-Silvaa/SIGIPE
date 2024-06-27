@@ -1,5 +1,6 @@
 package app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -19,14 +20,14 @@ import lombok.Setter;
 public class Aluno extends Pessoa{
 	//Atributos de relacionamento
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("alunos")
+	@JsonBackReference(value = "turma-alunos")
 	private Turma turma;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("alunos")
+	@JsonBackReference(value = "curso-alunos")
 	private Curso curso;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("alunos")
+	@JsonBackReference(value = "grupo-alunos")
 	private Grupo grupo;
 }

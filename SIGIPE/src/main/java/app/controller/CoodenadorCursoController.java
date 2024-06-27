@@ -39,6 +39,7 @@ public class CoodenadorCursoController {
 			CoordenadorCurso savedCoordenadorCurso = coordenadorCursoService.save(coordenadorCurso);
 			return ResponseEntity.ok(savedCoordenadorCurso);
 		} catch (RuntimeException e) {
+			logger.error("Erro no salvamento", e);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
@@ -48,7 +49,7 @@ public class CoodenadorCursoController {
 		try {
 			return new ResponseEntity<CoordenadorCurso>(this.coordenadorCursoService.update(id, coordenadorCurso), HttpStatus.OK);
 		} catch (Exception e) {
-	        logger.error("Save falho com dados", e);
+	        logger.error("Erro na atualização", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -59,6 +60,7 @@ public class CoodenadorCursoController {
 			List<CoordenadorCurso> lista = this.coordenadorCursoService.findAll();
 			return new ResponseEntity<List<CoordenadorCurso>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -68,6 +70,7 @@ public class CoodenadorCursoController {
 		try {
 			return new ResponseEntity<CoordenadorCurso>(this.coordenadorCursoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
@@ -78,6 +81,7 @@ public class CoodenadorCursoController {
 		try {
 			return new ResponseEntity<CoordenadorCurso>(this.coordenadorCursoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na deleção", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 

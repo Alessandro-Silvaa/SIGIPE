@@ -3,7 +3,6 @@ package app.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -27,15 +26,15 @@ public class Grupo {
 	//Atributos de relacionamento
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonBackReference(value = "demanda-gruposSolicitacao")
 	private Demanda demandaSolicitada;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonBackReference(value = "demanda-gruposInscritos")
 	private Demanda demandaInscrita;
 	
 	@OneToMany(mappedBy = "grupo", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "grupo-alunos")
 	private List<Aluno> alunos;
 	
 }

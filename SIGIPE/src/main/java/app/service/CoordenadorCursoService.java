@@ -30,13 +30,17 @@ public class CoordenadorCursoService {
 	@Transactional
 	public CoordenadorCurso save(CoordenadorCurso coordenadorCurso) {
 		logger.debug("CoordenadorCurso recebido para salvar: " + coordenadorCurso);
+		if(coordenadorCurso.getCurso() != null){
 		Optional<Curso> optCurso = this.cursoRespository.findById(coordenadorCurso.getCurso().getId());
 		if(optCurso.isPresent()) {
 			coordenadorCurso.setCurso(optCurso.get());
-			coordenadorCurso = this.coordenadorCursoRepository.save(coordenadorCurso);
-			return coordenadorCurso;
-		}
+
+		}else{
 		throw new RuntimeException("Curso não encontrado");
+		}
+		}
+			coordenadorCurso = this.coordenadorCursoRepository.save(coordenadorCurso);
+		return coordenadorCurso;
 	}
 
 

@@ -81,7 +81,12 @@ public class ProfessorService {
 
 
 	public List<Professor> findAll() {
-		return this.professorRepository.findAll();
+
+		List<Professor> lista = this.professorRepository.findAll();
+		lista.forEach((l) -> {
+			System.out.println(l.getCurso().getNome());
+		});
+		return lista;
 	}
 
 	public Professor findById(long idProfessor) {

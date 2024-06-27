@@ -2,9 +2,7 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Curso {
 	//Atributos de definição
 
@@ -34,24 +33,23 @@ public class Curso {
 	private int quantidadePeriodos;
 
 	//Atributos de relacionamentowqk
-
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "curso-alunos")
 	private List<Aluno> alunos;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	//@JsonManagedReference(value = "curso-professores")
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "curso-coordenadores")
 	private List<CoordenadorCurso> coordenadores;
 
 	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "curso-turmas")
 	private List<Turma> turmas;
 
 	@ManyToMany(mappedBy = "cursos", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonIgnoreProperties("cursos")
 	private List<Demanda> demandas;
 }

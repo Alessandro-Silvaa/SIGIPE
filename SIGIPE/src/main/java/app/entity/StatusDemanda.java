@@ -2,7 +2,6 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
@@ -30,8 +29,7 @@ public class StatusDemanda {
 	private String nome;
 	
 	//Atributos de relacionamento
-	
 	@OneToMany(mappedBy = "status", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "status-demandas")
 	private List<Demanda> demandas;
 }

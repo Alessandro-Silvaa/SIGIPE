@@ -1,8 +1,5 @@
 package app.entity;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,9 +22,4 @@ public class Demandante {
 	private String email;
 	private String telefone;
 
-	//Atributos relacionais
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id")
-	private Demanda demanda;
 }

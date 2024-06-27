@@ -37,20 +37,6 @@ public class DemandanteService {
 			Demandante demandanteOld = optDemandante.get();
 			demandanteNovo.setId(id);
 
-			// Verificar e associar Demanda
-			if (demandanteOld.getDemanda() == null ||
-					!Objects.equals(demandanteNovo.getDemanda().getId(), demandanteOld.getDemanda().getId())) {
-				Optional<Demanda> optDemanda = this.demandaRepository.findById(demandanteNovo.getDemanda().getId());
-				if (optDemanda.isPresent()) {
-					demandanteNovo.setDemanda(optDemanda.get());
-				} else {
-					Demanda demanda = this.demandaRepository.save(demandanteNovo.getDemanda());
-					demandanteNovo.setDemanda(demanda);
-				}
-			} else {
-				demandanteNovo.setDemanda(demandanteOld.getDemanda());
-			}
-
 			return this.demandanteRepository.save(demandanteNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");
@@ -72,9 +58,6 @@ public class DemandanteService {
 		Optional<Demandante> optionalDemandante = this.demandanteRepository.findById(idDemandante);
 		if (optionalDemandante.isPresent()) {
 			Demandante demandante = optionalDemandante.get();
-
-			// Inicializar as coleções necessárias
-			Hibernate.initialize(demandante.getDemanda());
 
 			// Deletar o Demandante
 			this.demandanteRepository.deleteById(idDemandante);

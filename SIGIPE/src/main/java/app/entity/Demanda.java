@@ -2,10 +2,8 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Demanda {
 	//Atributos de definição
 	
@@ -33,15 +32,13 @@ public class Demanda {
 	//Atributos de relacionamento
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonBackReference(value = "status-demandas")
 	private StatusDemanda status;
 	
-	@OneToOne(mappedBy = "demanda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Demandante demandante;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
 	private Instituicao instituicao;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -49,14 +46,14 @@ public class Demanda {
 	private List<Curso> cursos;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonIgnoreProperties("demandas")
 	private List<Turma> turmas;
 	
 	@OneToMany(mappedBy = "demandaInscrita", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "demanda-gruposInscritos")
 	private List<Grupo> gruposInscritos;
 	
 	@OneToMany(mappedBy = "demandaSolicitada", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "demanda-gruposSolicitacao")
 	private List<Grupo> gruposSolicitacao;
 }

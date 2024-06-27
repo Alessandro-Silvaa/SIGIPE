@@ -19,35 +19,48 @@ public class CursoService {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
-
-	@Autowired
-	private ProfessorRepository professorRepository;
-
+	
 	@Autowired
 	private CoordenadorCursoRepository coordenadorCursoRepository;
 
 	@Autowired
-	private TurmaRepository turmaRepository;
+	private TurmaRepository turmasRepository;
 
 	@Autowired
 	private DemandaRepository demandaRepository;
 
 	public Curso save(Curso curso) {return this.cursoRepository.save(curso);}
 
+	@Transactional
 	public Curso update(long id, Curso cursoNovo) {
 		Optional<Curso> optCurso = this.cursoRepository.findById(id);
-		if(optCurso.isPresent()) {
+		if (optCurso.isPresent()) {
 			Curso cursoOld = optCurso.get();
 			cursoNovo.setId(id);
-			cursoNovo.setAlunos(cursoOld.getAlunos());
-			cursoNovo.setProfessores(cursoOld.getProfessores());
-			cursoNovo.setCoordenadores(cursoOld.getCoordenadores());
-			cursoNovo.setDemandas(cursoOld.getDemandas());
-			cursoNovo.setTurmas(cursoOld.getTurmas());
+			/*
+			// Verifica e associa Turma existente
+			if (cursoNovo.getTurmas() != null && cursoNovo.getTurmas().isEmpty()) {
+				List<Turma> turmas = turmasRepository.findById(cursoNovo.getTurmas().isEmpty())
+						.orElseThrow(() -> new IllegalArgumentException("Turma não encontrada"));
+				cursoNovo.setTurmas(turmas);
+			} else {
+				cursoNovo.setTurmas(null); // Limpa a associação se não houver nova turmas
+			}
+
+			// Verifica e associa Curso existente
+			if (cursoNovo.getCurso() != null && cursoNovo.getCurso().getId() != 0) {
+				Curso curso = cursoRepository.findById(cursoNovo.getCurso().getId())
+						.orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
+				cursoOld.setCurso(curso);
+			} else {
+				cursoOld.setCurso(null); // Limpa a associação se não houver novo curso
+			}
+*/
 			return this.cursoRepository.save(cursoNovo);
 		}
 		throw new RuntimeException("Id não encontrado.");
 	}
+
 
 	public List<Curso> findAll() {
 		return this.cursoRepository.findAll();

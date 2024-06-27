@@ -30,17 +30,6 @@ public class InstituicaoService {
 
 	@Transactional
 	public Instituicao save(Instituicao instituicao) {
-		// Verificar e associar Demanda
-		if (instituicao.getDemanda() != null && instituicao.getDemanda().getId() != 0) {
-			Optional<Demanda> optDemanda = this.demandaRepository.findById(instituicao.getDemanda().getId());
-			if (optDemanda.isPresent()) {
-				instituicao.setDemanda(optDemanda.get());
-			} else {
-				Demanda demanda = this.demandaRepository.save(instituicao.getDemanda());
-				instituicao.setDemanda(demanda);
-			}
-		}
-
 		// Verificar e associar TipoInstituicao
 		if (instituicao.getTipo() != null && instituicao.getTipo().getId() != 0) {
 			Optional<TipoInstituicao> optTipoInstituicao = this.tipoInstituicaoRepository.findById(instituicao.getTipo().getId());
@@ -62,20 +51,6 @@ public class InstituicaoService {
 		if (optInstituicao.isPresent()) {
 			Instituicao instituicaoOld = optInstituicao.get();
 			instituicaoNovo.setId(id);
-
-			// Verificar e associar Demanda
-			if (instituicaoOld.getDemanda() == null ||
-					!Objects.equals(instituicaoNovo.getDemanda().getId(), instituicaoOld.getDemanda().getId())) {
-				Optional<Demanda> optDemanda = this.demandaRepository.findById(instituicaoNovo.getDemanda().getId());
-				if (optDemanda.isPresent()) {
-					instituicaoNovo.setDemanda(optDemanda.get());
-				} else {
-					Demanda demanda = this.demandaRepository.save(instituicaoNovo.getDemanda());
-					instituicaoNovo.setDemanda(demanda);
-				}
-			} else {
-				instituicaoNovo.setDemanda(instituicaoOld.getDemanda());
-			}
 
 			// Verificar e associar TipoInstituicao
 			if (instituicaoOld.getTipo() == null ||
@@ -116,7 +91,6 @@ public class InstituicaoService {
 			
 			// Inicialize as coleções necessárias
 	        //Hibernate.initialize(instituicao.getDemandantes());
-	        Hibernate.initialize(instituicao.getDemanda());
 	        Hibernate.initialize(instituicao.getTipo());
 			
 			this.instituicaoRepository.deleteById(idInstituicao);
