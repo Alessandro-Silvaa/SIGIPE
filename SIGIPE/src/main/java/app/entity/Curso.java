@@ -33,14 +33,21 @@ public class Curso {
 	private String nome;
 	private int quantidadePeriodos;
 
-	// Atributos de relacionamentowqk
-	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
+	// Atributos de relacionamento
+	@OneToMany(mappedBy = "curso", 
+			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
+			fetch = FetchType.EAGER)
 	private List<Aluno> alunos;
 
-	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "curso", 
+			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
+			fetch = FetchType.EAGER)
 	private List<Professor> professores;
 
-	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "curso",
+			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
+			fetch = FetchType.EAGER)
+	@JsonIgnoreProperties(value = "coordenadores")
 	private List<CoordenadorCurso> coordenadores;
 
 	@OneToMany(mappedBy = "curso", 
