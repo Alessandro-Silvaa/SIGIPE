@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/statusDemanda")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class StatusDemandaController {
 

@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/demanda")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class DemandaController {
 

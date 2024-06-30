@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/instituicao")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class InstituicaoController {
 
@@ -34,7 +34,7 @@ public class InstituicaoController {
 	@PostMapping("/save")
 	public ResponseEntity<Instituicao> save(@Valid @RequestBody Instituicao instituicao) {
 		try {
-			return new ResponseEntity<Instituicao>(this.instituicaoService.save(instituicao), HttpStatus.OK);
+			return new ResponseEntity<Instituicao>(this.instituicaoService.save(instituicao), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -42,9 +42,9 @@ public class InstituicaoController {
 
 	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Instituicao> update(@Valid @RequestBody Instituicao instituicao, @PathVariable int id) {
+	public ResponseEntity<Instituicao> update(@Valid @RequestBody Instituicao instituicao,@PathVariable long id) {
 		try {
-			return new ResponseEntity<Instituicao>(this.instituicaoService.update(id, instituicao), HttpStatus.OK);
+			return new ResponseEntity<>(this.instituicaoService.update(instituicao,id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -55,7 +55,7 @@ public class InstituicaoController {
 	public ResponseEntity<List<Instituicao>> findAll() {
 		try {
 			List<Instituicao> lista = this.instituicaoService.findAll();
-			return new ResponseEntity<List<Instituicao>>(lista, HttpStatus.OK);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
