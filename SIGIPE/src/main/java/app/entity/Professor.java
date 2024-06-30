@@ -22,7 +22,7 @@ public class Professor extends Pessoa {
 	@JsonIgnoreProperties(value = "professores")
 	private Turma turma;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties(value = "professores")
 	private Curso curso;
 }
