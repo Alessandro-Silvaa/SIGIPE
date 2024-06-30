@@ -2,8 +2,6 @@ package app.entity;
 
 import java.util.List;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +29,6 @@ public class TipoInstituicao {
 	//Atributos de relacionamento
 	
 	@OneToMany(mappedBy = "tipo", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "tipo-instituicoes")
 	private List<Instituicao> instituicoes;
 	
 }

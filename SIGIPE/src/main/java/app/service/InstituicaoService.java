@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import app.entity.Demanda;
-import app.entity.TipoInstituicao;
-import app.repository.DemandaRepository;
-import app.repository.TipoInstituicaoRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Instituicao;
+import app.entity.TipoInstituicao;
+import app.repository.DemandaRepository;
 import app.repository.InstituicaoRepository;
+import app.repository.TipoInstituicaoRepository;
 import jakarta.transaction.Transactional;
 
 @Service

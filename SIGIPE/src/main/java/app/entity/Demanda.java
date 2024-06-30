@@ -15,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Demanda {
 	//Atributos de definição
 	
@@ -42,18 +41,14 @@ public class Demanda {
 	private Instituicao instituicao;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandas")
 	private List<Curso> cursos;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("demandas")
 	private List<Turma> turmas;
 	
 	@OneToMany(mappedBy = "demandaInscrita", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "demanda-gruposInscritos")
 	private List<Grupo> gruposInscritos;
 	
 	@OneToMany(mappedBy = "demandaSolicitada", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "demanda-gruposSolicitacao")
 	private List<Grupo> gruposSolicitacao;
 }

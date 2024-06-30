@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import app.entity.Aluno;
-import app.entity.Demanda;
-import app.repository.AlunoRepository;
-import app.repository.DemandaRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entity.Aluno;
 import app.entity.Grupo;
+import app.repository.AlunoRepository;
+import app.repository.DemandaRepository;
 import app.repository.GrupoRepository;
 import jakarta.transaction.Transactional;
 

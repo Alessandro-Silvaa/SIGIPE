@@ -2,11 +2,8 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,19 +33,16 @@ public class Turma{
 	
 	//Atributos de relacionamento
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference(value = "curso-turmas")
+	@ManyToOne(fetch = FetchType.EAGER)//turma não deve afetar nada em curso
+	@JsonIgnoreProperties(value = "turmas")
 	private Curso curso;
 	
 	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "turma-alunos")
 	private List<Aluno> alunos;
 
 	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "turma-professores")
 	private List<Professor> professores;
 	
 	@ManyToMany(mappedBy = "turmas", fetch = FetchType.EAGER)
-	@JsonIgnoreProperties("turmas")
 	private List<Demanda> demandas;
 }

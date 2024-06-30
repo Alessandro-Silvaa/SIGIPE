@@ -1,21 +1,20 @@
 package app.service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-import app.entity.Curso;
-import app.entity.Grupo;
-import app.entity.Turma;
-import app.repository.CursoRepository;
-import app.repository.GrupoRepository;
-import app.repository.TurmaRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Aluno;
+import app.entity.Curso;
+import app.entity.Grupo;
+import app.entity.Turma;
 import app.repository.AlunoRepository;
+import app.repository.CursoRepository;
+import app.repository.GrupoRepository;
+import app.repository.TurmaRepository;
 import jakarta.transaction.Transactional;
 
 @Service
