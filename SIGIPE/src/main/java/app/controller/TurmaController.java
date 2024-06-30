@@ -95,11 +95,11 @@ public class TurmaController {
 	}
 
 	@PreAuthorize("hasRole('coordenadorExtensao')")
-	@PostMapping("/gerarTurmas/{idCurso}")
-	public ResponseEntity<List<Turma>> gerarTurmas(@PathVariable long idCurso) {
-		logger.trace("Recepção de requisição de gerarTurmas para curso com id: " + idCurso);
+	@PostMapping("/gerarTurmas")
+	public ResponseEntity<List<Turma>> gerarTurmas() {
+		logger.trace("Recepção de requisição de gerarTurmas");
 		try {
-			return new ResponseEntity<List<Turma>>(this.turmaService.gerarTurmas(idCurso), HttpStatus.OK);
+			return new ResponseEntity<List<Turma>>(this.turmaService.gerarTurmas(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

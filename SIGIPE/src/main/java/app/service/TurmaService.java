@@ -39,8 +39,8 @@ public class TurmaService {
 			System.out.println(turmaNovo.getCurso().getNome());
 			System.out.println(turmaNovo.getCurso().getQuantidadePeriodos());
 
-			if (turmaOld.getCurso() == null ||
-					!Objects.equals(turmaNovo.getCurso().getId(), turmaOld.getCurso().getId())) {
+			if (turmaOld.getCurso() == null
+					|| !Objects.equals(turmaNovo.getCurso().getId(), turmaOld.getCurso().getId())) {
 				Optional<Curso> optCurso = this.cursoRepository.findById(turmaNovo.getCurso().getId());
 				if (optCurso.isPresent()) {
 					turmaNovo.setCurso(optCurso.get());
@@ -77,32 +77,31 @@ public class TurmaService {
 		Optional<Turma> optionalTurma = this.turmaRepository.findById(idTurma);
 		if (optionalTurma.isPresent()) {
 			Turma turma = optionalTurma.get();
-			
+
 			// Inicialize as coleções necessárias
-	        Hibernate.initialize(turma.getAlunos());
-	        Hibernate.initialize(turma.getProfessores());
-	        Hibernate.initialize(turma.getDemandas());
-	        Hibernate.initialize(turma.getCurso());
-			
+			Hibernate.initialize(turma.getAlunos());
+			Hibernate.initialize(turma.getProfessores());
+			Hibernate.initialize(turma.getDemandas());
+			Hibernate.initialize(turma.getCurso());
+
 			this.turmaRepository.deleteById(idTurma);
 			return turma;
 		}
 		throw new RuntimeException("Id não encontrado.");
 	}
-	
-	public List<Turma> gerarTurmas(long idCurso) {
-		Optional<Curso> optionalCurso = this.cursoRepository.findById(idCurso);
-		if(optionalCurso.isPresent()) {
-			Curso curso = optionalCurso.get();
-			ArrayList<Turma> turmas = new ArrayList<Turma>();
-			for(int i = 1; i <= curso.getQuantidadePeriodos(); i++) {
+
+	public List<Turma> gerarTurmas() {
+		ArrayList<Turma> turmas = new ArrayList<Turma>();
+		List<Curso> listaCursos = cursoRepository.findAll();
+		listaCursos.forEach(curso -> {
+			for (int i = 1; i <= curso.getQuantidadePeriodos(); i++) {
 				Turma turma = new Turma();
 				turma.setPeriodoCurso(i);
 				turma.setCurso(curso);
 				turmas.add(turma);
 			}
-			return this.turmaRepository.saveAll(turmas);
-		}
-		throw new RuntimeException();
+		});
+		turmaRepository.deleteAll();
+		return this.turmaRepository.saveAll(turmas);
 	}
 }
