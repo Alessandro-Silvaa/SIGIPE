@@ -42,12 +42,13 @@ public class Curso {
 	@OneToMany(mappedBy = "curso", 
 			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
 			fetch = FetchType.EAGER)
+	@JsonIgnoreProperties(value = "curso")
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso",
 			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
 			fetch = FetchType.EAGER)
-	@JsonIgnoreProperties(value = "coordenadores")
+	@JsonIgnoreProperties(value = "curso")
 	private List<CoordenadorCurso> coordenadores;
 
 	@OneToMany(mappedBy = "curso", 

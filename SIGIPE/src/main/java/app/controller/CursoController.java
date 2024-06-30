@@ -48,6 +48,12 @@ public class CursoController {
 	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Curso> update(@Valid @RequestBody Curso curso, @PathVariable int id) {
+		System.out.println(curso.getNome());
+		System.out.println(curso.getId());
+		System.out.println(curso.getQuantidadePeriodos());
+		curso.getCoordenadores().forEach(e -> {
+			System.out.println(e.getNome());
+		});
 		try {
 			return new ResponseEntity<Curso>(this.cursoService.update(id, curso), HttpStatus.OK);
 		} catch (Exception e) {
