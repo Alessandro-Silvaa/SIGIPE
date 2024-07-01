@@ -2,7 +2,8 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Curso {
 	// Atributos de definição
 
@@ -42,19 +44,16 @@ public class Curso {
 	@OneToMany(mappedBy = "curso", 
 			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
 			fetch = FetchType.EAGER)
-	@JsonIgnoreProperties(value = "curso")
 	private List<Professor> professores;
 
 	@OneToMany(mappedBy = "curso",
 			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
 			fetch = FetchType.EAGER)
-	@JsonIgnoreProperties(value = "curso")
 	private List<CoordenadorCurso> coordenadores;
 
 	@OneToMany(mappedBy = "curso", 
 			cascade = CascadeType.REMOVE, //curso deve ser capaz de afetar turma. Deletar um curso e suas turmas
 			fetch = FetchType.EAGER)
-	@JsonIgnoreProperties(value = "curso")
 	private List<Turma> turmas;
 
 	@ManyToMany(mappedBy = "cursos", fetch = FetchType.EAGER)

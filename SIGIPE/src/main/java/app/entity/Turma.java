@@ -2,7 +2,8 @@ package app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Turma{
 	//Atributos de definição
 	
@@ -34,7 +36,6 @@ public class Turma{
 	//Atributos de relacionamento
 	
 	@ManyToOne(fetch = FetchType.EAGER)//turma não deve afetar nada em curso
-	@JsonIgnoreProperties(value = "turmas")
 	private Curso curso;
 	
 	@OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
