@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/professor")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class ProfessorController {
 

@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tipoInstituicao")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class TipoInstituicaoController {
 
@@ -63,6 +63,7 @@ public class TipoInstituicaoController {
 			List<TipoInstituicao> lista = this.tipoInstituicaoService.findAll();
 			return new ResponseEntity<List<TipoInstituicao>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -73,6 +74,7 @@ public class TipoInstituicaoController {
 		try {
 			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
@@ -84,6 +86,7 @@ public class TipoInstituicaoController {
 		try {
 			return new ResponseEntity<TipoInstituicao>(this.tipoInstituicaoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na deleção", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}

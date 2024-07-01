@@ -24,52 +24,30 @@ public class InstituicaoService {
 	@Autowired
 	private TipoInstituicaoRepository tipoInstituicaoRepository;
 
-	@Autowired
-	private DemandaRepository demandaRepository;
 
-	@Transactional
 	public Instituicao save(Instituicao instituicao) {
-		// Verificar e associar TipoInstituicao
-		if (instituicao.getTipo() != null && instituicao.getTipo().getId() != 0) {
-			Optional<TipoInstituicao> optTipoInstituicao = this.tipoInstituicaoRepository.findById(instituicao.getTipo().getId());
-			if (optTipoInstituicao.isPresent()) {
-				instituicao.setTipo(optTipoInstituicao.get());
-			} else {
-				TipoInstituicao tipoInstituicao = this.tipoInstituicaoRepository.save(instituicao.getTipo());
-				instituicao.setTipo(tipoInstituicao);
-			}
-		}
+
+		String nome = instituicao.getNome();
 
 		return this.instituicaoRepository.save(instituicao);
 	}
 
 
 	@Transactional
-	public Instituicao update(long id, Instituicao instituicaoNovo) {
+	public Instituicao update(Instituicao instituicao,long id) {
 		Optional<Instituicao> optInstituicao = this.instituicaoRepository.findById(id);
 		if (optInstituicao.isPresent()) {
-			Instituicao instituicaoOld = optInstituicao.get();
-			instituicaoNovo.setId(id);
-
-			// Verificar e associar TipoInstituicao
-			if (instituicaoOld.getTipo() == null ||
-					!Objects.equals(instituicaoNovo.getTipo().getId(), instituicaoOld.getTipo().getId())) {
-				Optional<TipoInstituicao> optTipoInstituicao = this.tipoInstituicaoRepository.findById(instituicaoNovo.getTipo().getId());
-				if (optTipoInstituicao.isPresent()) {
-					instituicaoNovo.setTipo(optTipoInstituicao.get());
-				} else {
-					TipoInstituicao tipoInstituicao = this.tipoInstituicaoRepository.save(instituicaoNovo.getTipo());
-					instituicaoNovo.setTipo(tipoInstituicao);
-				}
-			} else {
-				instituicaoNovo.setTipo(instituicaoOld.getTipo());
-			}
-
-			// Salvar a instituição atualizada
-			return this.instituicaoRepository.save(instituicaoNovo);
+			Instituicao existingInstituicao = optInstituicao.get();
+			// Atualizar os campos necessários
+			existingInstituicao.setNome(instituicao.getNome());
+			existingInstituicao.setCidade(instituicao.getCidade());
+			existingInstituicao.setTipo(instituicao.getTipo());
+			return this.instituicaoRepository.save(existingInstituicao);
+		} else {
+			throw new RuntimeException("Instituição não encontrada.");
 		}
-		throw new RuntimeException("Instituição não encontrada para o ID: " + id);
 	}
+
 
 	public List<Instituicao> findAll() {
 		return this.instituicaoRepository.findAll();

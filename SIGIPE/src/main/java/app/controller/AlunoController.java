@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/aluno")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class AlunoController {
 
@@ -63,6 +63,7 @@ public class AlunoController {
 			List<Aluno> lista = this.alunoService.findAll();
 			return new ResponseEntity<List<Aluno>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -72,6 +73,7 @@ public class AlunoController {
 		try {
 			return new ResponseEntity<Aluno>(this.alunoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
@@ -84,6 +86,7 @@ public class AlunoController {
 		try {
 			return new ResponseEntity<Aluno>(this.alunoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na deleção", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 

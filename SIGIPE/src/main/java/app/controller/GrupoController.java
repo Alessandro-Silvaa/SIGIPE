@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/grupo")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class GrupoController {
 
@@ -62,6 +62,7 @@ public class GrupoController {
 			List<Grupo> lista = this.grupoService.findAll();
 			return new ResponseEntity<List<Grupo>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -72,6 +73,7 @@ public class GrupoController {
 		try {
 			return new ResponseEntity<Grupo>(this.grupoService.findById(idGrupo), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
@@ -83,6 +85,7 @@ public class GrupoController {
 		try {
 			return new ResponseEntity<Grupo>(this.grupoService.deleteById(idGrupo), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na deleção", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 

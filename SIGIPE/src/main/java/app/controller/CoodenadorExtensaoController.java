@@ -2,6 +2,8 @@ package app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +25,14 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/coordenadorExtensao")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @Validated
 public class CoodenadorExtensaoController {
 
 	@Autowired
 	private CoordenadorExtensaoService coordenadorExtensaoService;
+
+	private Logger logger = LoggerFactory.getLogger(CursoController.class);
 
 	@PreAuthorize("hasRole('coordenadorExtensao')")
 	@PostMapping("/save")
@@ -36,6 +40,7 @@ public class CoodenadorExtensaoController {
 		try {
 			return new ResponseEntity<CoordenadorExtensao>(this.coordenadorExtensaoService.save(coordenadorExtensao), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro no salvamento", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -46,6 +51,7 @@ public class CoodenadorExtensaoController {
 		try {
 			return new ResponseEntity<CoordenadorExtensao>(this.coordenadorExtensaoService.update(id, coordenadorExtensao), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na alteração", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -57,6 +63,7 @@ public class CoodenadorExtensaoController {
 			List<CoordenadorExtensao> lista = this.coordenadorExtensaoService.findAll();
 			return new ResponseEntity<List<CoordenadorExtensao>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -67,6 +74,7 @@ public class CoodenadorExtensaoController {
 		try {
 			return new ResponseEntity<CoordenadorExtensao>(this.coordenadorExtensaoService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na busca", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
@@ -78,6 +86,7 @@ public class CoodenadorExtensaoController {
 		try {
 			return new ResponseEntity<CoordenadorExtensao>(this.coordenadorExtensaoService.deleteById(id), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("Erro na deleção", e);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
